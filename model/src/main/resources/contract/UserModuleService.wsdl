@@ -1,0 +1,911 @@
+<definitions name="UserModule" 
+	targetNamespace="module.user.wsdl.fisheries.ec.europa.eu"
+	xmlns:module="module.user.wsdl.fisheries.ec.europa.eu" 
+	xmlns:tv="types.user.wsdl.fisheries.ec.europa.eu"   
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+
+	<types>
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="module.user.wsdl.fisheries.ec.europa.eu">
+			<xsd:import namespace="types.user.wsdl.fisheries.ec.europa.eu" 	schemaLocation="UserContextElement.xsd" />
+
+			<!-- User Terminal Base Request -->
+			<xsd:simpleType name="UserModuleMethod">
+				<xsd:restriction base="xsd:string">
+					<xsd:enumeration value="GET_USER_CONTEXT" />
+					<xsd:enumeration value="PUT_USER_PREFERENCES" />
+					<xsd:enumeration value="GET_CONTACT_DETAILS" />
+					<xsd:enumeration value="GET_ORGANISATIONS" />
+					<xsd:enumeration value="FIND_ORGANISATIONS" />
+					<xsd:enumeration value="GET_DEPLOYMENT_DESCRIPTOR" />
+					<xsd:enumeration value="DEPLOY_APPLICATION" />
+					<xsd:enumeration value="REDEPLOY_APPLICATION" />
+					<xsd:enumeration value="UNDEPLOY_APPLICATION" />
+					<xsd:enumeration value="DEPLOY_DATASETS" />
+					<xsd:enumeration value="PING" />
+					<xsd:enumeration value="PUT_PREFERENCE" />
+					<xsd:enumeration value="CREATE_PREFERENCE" />
+					<xsd:enumeration value="UPDATE_PREFERENCE" />
+					<xsd:enumeration value="DELETE_PREFERENCE" />
+					<xsd:enumeration value="CREATE_DATASET" />
+					<xsd:enumeration value="DELETE_DATASET" />
+					<xsd:enumeration value="UPDATE_DATASET" />
+					<xsd:enumeration value="FIND_DATASETS" />
+				</xsd:restriction>
+			</xsd:simpleType>
+
+			<xsd:complexType name="UserBaseRequest" abstract="true">
+				<xsd:sequence>
+					<xsd:element name="method" type="module:UserModuleMethod" />
+				</xsd:sequence>
+			</xsd:complexType>
+
+			<!-- get user request -->
+			<xsd:element name="getUserContextRequest">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="module:UserBaseRequest">
+							<xsd:sequence>
+								<xsd:element name="contextId" type="tv:UserContextId" />
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+
+			<xsd:element name="getUserContextResponse">
+				<xsd:complexType>
+					<xsd:sequence>
+						<xsd:element name="context" type="tv:UserContext" minOccurs="1"/>
+					</xsd:sequence>
+				</xsd:complexType>
+			</xsd:element>
+		
+	
+	<!-- set user preferences  -->
+	<xsd:element name="putUserPreferencesRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="context" type="tv:UserContext" minOccurs="1"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+    <xsd:element name="putUserPreferencesResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="response" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>	
+	
+	<!--  deploy, redeploy application request, deploy datasets-->
+	<xsd:element name="deployApplicationRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="application" type="tv:Application" minOccurs="1"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+    <xsd:element name="deployApplicationResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="response" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>	
+	
+	<xsd:element name="redeployApplicationRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="application" type="tv:Application" minOccurs="1"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+    <xsd:element name="redeployApplicationResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="response" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>	
+	
+	<!-- undeploy application -->
+	<xsd:element name="undeployApplicationRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="applicationName" type="xsd:string" minOccurs="1"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+    <xsd:element name="undeployApplicationResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="response" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>	
+	
+	<xsd:element name="getDeploymentDescriptorRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="applicationName" type="xsd:string" minOccurs="1"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<xsd:element name="getOrganisationRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="organizationName" type="xsd:string" minOccurs="1"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	 <xsd:element name="findOrganisationsRequest">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="module:UserBaseRequest">
+          <xsd:sequence>
+            <xsd:element name="nationIsoName" type="xsd:string" minOccurs="1"/>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+	
+	<xsd:element name="getContactDetailsRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="userName" type="xsd:string" minOccurs="1"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<!-- get contact details request -->
+	<xsd:element name="getContactDetailResponse">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="contactDetails" type="tv:ContactDetails" minOccurs="1"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	<!-- get Organisation details -->
+	<xsd:element name="getOrganisationResponse">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="organisation" type="tv:Organisation" minOccurs="1"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	 <xsd:element name="findOrganisationsResponse">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="module:UserBaseRequest">
+          <xsd:sequence>
+            <xsd:element name="organisation" type="tv:Organisation" minOccurs="0" 
+              maxOccurs="unbounded"/>
+          </xsd:sequence>
+        </xsd:extension>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+	
+	<xsd:element name="getDeploymentDescriptorResponse">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="application" type="tv:Application" minOccurs="1"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+	
+	     <!-- Ping request -->
+  <xsd:element name="pingRequest">
+    <xsd:complexType>
+      <xsd:complexContent>
+        <xsd:extension base="module:UserBaseRequest"/>
+      </xsd:complexContent>
+    </xsd:complexType>
+  </xsd:element>
+
+  <xsd:element name="pingResponse">
+    <xsd:complexType>
+      <xsd:sequence>
+        <xsd:element name="response" type="xsd:string"/>
+      </xsd:sequence>
+    </xsd:complexType>
+  </xsd:element>
+	
+	<!--   requests/response for put, create, update, delete preference-->
+
+    <xsd:element name="putPreferenceRequest">
+        <xsd:complexType>
+          <xsd:complexContent>
+            <xsd:extension base="module:UserBaseRequest">
+              <xsd:sequence>
+                <xsd:element name="userPreference" type="tv:UserPreference" minOccurs="1"/>
+              </xsd:sequence>
+            </xsd:extension>
+          </xsd:complexContent>
+        </xsd:complexType>
+      </xsd:element>
+
+    <xsd:element name="putPreferenceResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="response" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>  
+
+		<xsd:element name="createPreferenceRequest">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="module:UserBaseRequest">
+							<xsd:sequence>
+								<xsd:element name="userPreference" type="tv:UserPreference" minOccurs="1"/>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			
+	 <xsd:element name="createPreferenceResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="response" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>		
+
+	<xsd:element name="updatePreferenceRequest">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="module:UserBaseRequest">
+							<xsd:sequence>
+								<xsd:element name="userPreference" type="tv:UserPreference" minOccurs="1"/>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+	
+	 <xsd:element name="updatePreferenceResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="response" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>	
+    		
+	<xsd:element name="deletePreferenceRequest">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="module:UserBaseRequest">
+							<xsd:sequence>
+								<xsd:element name="userPreference" type="tv:UserPreference" minOccurs="1"/>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			
+	 <xsd:element name="deletePreferenceResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="response" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>			
+	
+	<xsd:element name="createDatasetRequest">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="module:UserBaseRequest">
+							<xsd:sequence>
+								<xsd:element name="dataset" type="tv:DatasetExtension" minOccurs="1"/>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			
+	 <xsd:element name="createDatasetResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="response" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>		
+    
+	<xsd:element name="deleteDatasetRequest">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="module:UserBaseRequest">
+							<xsd:sequence>
+								<xsd:element name="dataset" type="tv:DatasetExtension" minOccurs="1"/>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			
+	 <xsd:element name="deleteDatasetResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="response" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>		    
+    	
+    	
+    <xsd:element name="updateDatasetRequest">
+				<xsd:complexType>
+					<xsd:complexContent>
+						<xsd:extension base="module:UserBaseRequest">
+							<xsd:sequence>
+								<xsd:element name="dataset" type="tv:DatasetExtension" minOccurs="1"/>
+							</xsd:sequence>
+						</xsd:extension>
+					</xsd:complexContent>
+				</xsd:complexType>
+			</xsd:element>
+			
+	 <xsd:element name="updateDatasetResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="response" type="xsd:string"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>		
+    	
+    <xsd:element name="filterDatasetRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="datasetFilter" type="tv:DatasetFilter" minOccurs="1"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+			
+	 <xsd:element name="filterDatasetResponse">
+        <xsd:complexType>
+            <xsd:sequence>
+                <xsd:element name="datasetList" type="tv:DatasetList"/>
+            </xsd:sequence>
+        </xsd:complexType>
+    </xsd:element>
+
+
+	 <xsd:element name="FindOrganisations">
+	 	<xsd:complexType>
+	 		<xsd:sequence>
+	 			<xsd:element name="in" type="xsd:string"></xsd:element>
+	 		</xsd:sequence>
+	 	</xsd:complexType>
+	 </xsd:element>
+	 
+   <xsd:element name="FindOrganisationsRequest" type="xsd:string"></xsd:element>
+   <xsd:element name="FindOrganisationsFault" type="xsd:string"></xsd:element>
+</xsd:schema>
+		
+		<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+			<xsd:import
+				namespace="types.user.wsdl.fisheries.ec.europa.eu"
+				schemaLocation="UserContextElement.xsd">
+			</xsd:import></xsd:schema></types>
+
+
+	
+	<!-- fault section  -->
+	
+	<message name="UserModuleFaultException">
+		<part name="body" element="tv:UserFault" />
+	</message>
+
+	<message name="GetUserContextRequest">
+		<part name="body" element="module:getUserContextRequest" />
+	</message>
+
+	<message name="GetUserContextResponse">
+		<part name="body" element="module:getUserContextResponse" />
+	</message>
+
+	<message name="PutUserPreferencesRequest">
+		<part name="body" element="module:putUserPreferencesRequest" />
+	</message>
+	
+	<message name="PutUserPreferencesResponse">
+		<part name="body" element="module:putUserPreferencesResponse" />
+	</message>	
+	
+	<message name="DeployApplicationRequest">
+		<part name="body" element="module:deployApplicationRequest"/>
+	</message>
+
+	<message name="DeployApplicationResponse">
+		<part name="body" element="module:deployApplicationResponse"/>
+	</message>
+
+	<message name="GetOrganisationRequest">
+		<part name="body" element="module:getOrganisationRequest"/>
+	</message>
+	
+	<message name="GetContactDetailsRequest">
+		<part name="body" element="module:getContactDetailsRequest"/>
+	</message>
+	
+	<message name="GetContactDetailResponse">
+		<part name="body" element="module:getContactDetailResponse"/>
+	</message>
+	
+	<message name="GetOrganisationResponse">
+		<part name="body" element="module:getOrganisationResponse"/>
+	</message>
+	
+	<message name="RedeployApplicationRequest">
+		<part name="body" element="module:redeployApplicationRequest"/>
+	</message>
+
+	<message name="RedeployApplicationResponse">
+		<part name="body" element="module:redeployApplicationResponse"/>
+	</message>
+	
+	<message name="UndeployApplicationRequest">
+		<part name="body" element="module:undeployApplicationRequest"/>
+	</message>
+
+	<message name="UndeployApplicationResponse">
+		<part name="body" element="module:undeployApplicationResponse"/>
+	</message>
+	
+	<message name="GetDeploymentDescriptorRequest">
+		<part name="body" element="module:getDeploymentDescriptorRequest"/>
+	</message>
+	
+	<message name="GetDeploymentDescriptorResponse">
+		<part name="body" element="module:getDeploymentDescriptorResponse"/>
+	</message>
+	
+	<message name="PingRequest">
+    	<part name="body" element="module:pingRequest"/>
+  	</message>
+
+  <message name="PingResponse">
+    <part name="body" element="module:pingResponse"/>
+  </message>
+
+  <message name="PutPreferenceRequest">
+      <part name="body" element="module:putPreferenceRequest"/>
+    </message>
+
+  <message name="PutPreferenceResponse">
+    <part name="body" element="module:putPreferenceResponse"/>
+  </message>
+	
+	<message name="CreatePreferenceRequest">
+    	<part name="body" element="module:createPreferenceRequest"/>
+  	</message>
+
+  <message name="CreatePreferenceResponse">
+    <part name="body" element="module:createPreferenceResponse"/>
+  </message>
+	
+	<message name="UpdatePreferenceRequest">
+    	<part name="body" element="module:updatePreferenceRequest"/>
+  	</message>
+
+  <message name="UpdatePreferenceResponse">
+    <part name="body" element="module:updatePreferenceResponse"/>
+  </message>
+	
+	<message name="DeletePreferenceRequest">
+    	<part name="body" element="module:deletePreferenceRequest"/>
+  	</message>
+
+  <message name="DeletePreferenceResponse">
+    <part name="body" element="module:deletePreferenceResponse"/>
+  </message>
+	
+	<message name="CreateDatasetRequest">
+    	<part name="body" element="module:createDatasetRequest"/>
+  	</message>
+
+  <message name="CreateDatasetResponse">
+    <part name="body" element="module:createDatasetResponse"/>
+  </message>
+	
+	<message name="DeleteDatasetRequest">
+    	<part name="body" element="module:deleteDatasetRequest"/>
+  	</message>
+
+  <message name="DeleteDatasetResponse">
+    <part name="body" element="module:deleteDatasetResponse"/>
+  </message>
+	
+	<message name="UpdateDatasetRequest">
+    	<part name="body" element="module:updateDatasetRequest"/>
+  	</message>
+
+  <message name="UpdateDatasetResponse">
+    <part name="body" element="module:updateDatasetResponse"/>
+  </message>
+  
+  <message name="FilterDatasetRequest">
+    	<part name="body" element="module:filterDatasetRequest"/>
+  	</message>
+
+  <message name="FilterDatasetResponse">
+    <part name="body" element="module:filterDatasetResponse"/>
+  </message>
+
+  <message name="FindOrganisationsRequest">
+  	<part name="body" element="module:findOrganisationsRequest"></part>
+  </message>
+  
+  <message name="FindOrganisationsResponse">
+  	<part name="body" element="module:findOrganisationsResponse"></part>
+  </message>
+  
+  <message name="FindOrganisationsFault">
+  	<part name="body" element="tv:UserFault"></part>
+  </message>
+  <portType name="UserModulePortType">
+		<operation name="GetUserContext">
+			<input message="module:GetUserContextRequest" />
+			<output message="module:GetUserContextResponse" />
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+		
+		<operation name="PutUserPreferences">
+			<input message="module:PutUserPreferencesRequest"/>
+			<output message="module:PutUserPreferencesResponse" />
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+		
+		<operation name="DeployApplication">
+			<input message="module:DeployApplicationRequest" />
+			<output message="module:DeployApplicationResponse" />
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+		
+		<operation name="UndeployApplication">
+			<input message="module:UndeployApplicationRequest" />
+			<output message="module:UndeployApplicationRequest" />
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+		
+		<operation name="RedeployApplication">
+			<input message="module:RedeployApplicationRequest" />
+			<output message="module:RedeployApplicationResponse" />
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+		
+		<operation name="GetContactDetails">
+			<input message="module:GetContactDetailsRequest" />
+			<output message="module:GetContactDetailResponse" />
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+		
+		<operation name="GetOrganisation">
+			<input message="module:GetOrganisationRequest" />
+			<output message="module:GetOrganisationResponse"/>
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+		
+		<operation name="GetDeploymentDescriptor">
+			<input message="module:GetDeploymentDescriptorRequest" />
+			<output message="module:GetDeploymentDescriptorResponse"/>
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+		
+		<operation name="Ping">
+      		<input message="module:PingRequest"/>
+      		<output message="module:PingResponse"/>
+    	</operation>
+    	
+    <operation name="PutPreference">
+      <input message="module:PutPreferenceRequest" />
+      <output message="module:PutPreferenceResponse"/>
+      <fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+    </operation>    	
+    	
+    	<operation name="CreatePreference">
+			<input message="module:CreatePreferenceRequest" />
+			<output message="module:CreatePreferenceResponse"/>
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+    	
+    	<operation name="UpdatePreference">
+			<input message="module:UpdatePreferenceRequest" />
+			<output message="module:UpdatePreferenceResponse"/>
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+		
+		<operation name="DeletePreference">
+			<input message="module:DeletePreferenceRequest" />
+			<output message="module:DeletePreferenceResponse"/>
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+		
+		<operation name="CreateDataset">
+			<input message="module:CreateDatasetRequest" />
+			<output message="module:CreateDatasetResponse"/>
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+		
+		<operation name="DeleteDataset">
+			<input message="module:DeleteDatasetRequest" />
+			<output message="module:DeleteDatasetResponse"/>
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+		
+		<operation name="UpdateDataset">
+			<input message="module:UpdateDatasetRequest" />
+			<output message="module:UpdateDatasetResponse"/>
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+		
+		<operation name="FindDatasets">
+			<input message="module:FilterDatasetRequest" />
+			<output message="module:FilterDatasetResponse"/>
+			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+		</operation>
+
+		<operation name="FindOrganisations">
+			<input message="module:FindOrganisationsRequest"></input>
+			<output message="module:FindOrganisationsResponse"></output>
+            <fault name="UserModuleFaultException" message="module:FindOrganisationsFault"></fault>
+        </operation>
+  </portType>
+
+	<binding name="UserModuleSoapBinding" type="module:UserModulePortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+		<operation name="GetUserContext">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+		<operation name="PutUserPreferences">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+		<operation name="DeployApplication">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+		<operation name="UndeployApplication">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+		<operation name="RedeployApplication">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+		<operation name="GetContactDetails">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+		<operation name="GetOrganisation">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+		<operation name="GetDeploymentDescriptor">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+		<operation name="CreatePreference">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+		<operation name="UpdatePreference">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+		<operation name="DeletePreference">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+		<operation name="CreateDataset">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+		<operation name="DeleteDataset">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+		<operation name="UpdateDataset">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+		
+		<operation name="FindDatasets">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+		
+    <operation name="Ping">
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation> 
+    
+	</binding>
+
+	<service name="UserModuleService">
+		<port name="UserModulePortType" binding="module:UserModuleSoapBinding">
+			<soap:address location="http://REPLACE_ME" />
+		</port>
+	</service>
+
+</definitions>

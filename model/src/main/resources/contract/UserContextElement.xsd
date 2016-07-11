@@ -1,0 +1,248 @@
+<?xml version="1.0"?>
+<xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+	xmlns="types.user.wsdl.fisheries.ec.europa.eu" targetNamespace="types.user.wsdl.fisheries.ec.europa.eu"
+	version="1.0">
+
+	<xsd:element name="userContextId" type="UserContextId" />
+
+	<xsd:complexType name="UserContextId">
+		<xsd:sequence>
+			<xsd:element name="userName" type="xsd:string" />
+			<xsd:element name="applicationName" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="userContext" type="UserContext" />
+
+	<xsd:complexType name="UserContext">
+		<xsd:sequence>
+			<xsd:element name="userName" type="xsd:string" />
+			<xsd:element name="applicationName" type="xsd:string" />
+			<xsd:element name="contextSet" type="ContextSet" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="ContextSet">
+		<xsd:sequence>
+			<xsd:element name="contexts" type="Context" minOccurs="0"
+				maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Context">
+		<xsd:sequence>
+			<xsd:element name="role" type="Role" />
+			<xsd:element name="scope" type="Scope" minOccurs="0" maxOccurs="1" />
+			<xsd:element name="preferences" type="Preferences" minOccurs="0" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Role">
+		<xsd:sequence>
+			<xsd:element name="roleName" type="xsd:string" />
+			<xsd:element name="feature" type="Feature" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+ <xsd:complexType name="Feature">
+    <xsd:complexContent>
+      <xsd:extension base="NameAndDescription">
+	      <xsd:sequence>
+	          <xsd:element name="group" type="xsd:string" minOccurs="0"/>
+	      </xsd:sequence>
+      </xsd:extension>
+    </xsd:complexContent>
+  </xsd:complexType>
+
+	<xsd:complexType name="Scope">
+		<xsd:sequence>
+			<xsd:element name="scopeName" type="xsd:string" />
+			<xsd:element name="activeFrom" type="xsd:date" minOccurs="0" />
+			<xsd:element name="activeTo" type="xsd:date" minOccurs="0" />
+			<xsd:element name="dataFrom" type="xsd:date" minOccurs="0" />
+			<xsd:element name="dataTo" type="xsd:date" minOccurs="0" />
+			<xsd:element name="dataset" type="Dataset" minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Option">
+		<xsd:complexContent>
+			<xsd:extension base="NameAndDescription">
+				<xsd:sequence>
+					<xsd:element name="dataType" type="xsd:string" minOccurs="0" />
+          <xsd:element name="defaultValue" type="xsd:string" minOccurs="0"/>
+					<xsd:element name="group" type="xsd:string" minOccurs="0" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="Dataset">
+		<xsd:complexContent>
+			<xsd:extension base="NameAndDescription">
+				<xsd:sequence>
+					<xsd:element name="category" type="xsd:string" />
+					<xsd:element name="discriminator" type="xsd:string"
+						minOccurs="0" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+	<xsd:complexType name="DatasetExtension">
+		<xsd:complexContent>
+			<xsd:extension base="Dataset">
+				<xsd:sequence>
+					<xsd:element name="applicationName" type="xsd:string" minOccurs="1" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+	
+
+	<xsd:complexType name="Preferences">
+		<xsd:sequence>
+			<xsd:element name="preference" type="Preference"
+				minOccurs="0" maxOccurs="unbounded" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Preference">
+		<xsd:sequence>
+			<xsd:element name="applicationName" type="xsd:string" />
+			<xsd:element name="optionName" type="xsd:string" />
+			<xsd:element name="optionValue" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:element name="UserFault">
+		<xsd:complexType>
+			<xsd:sequence>
+				<xsd:element name="code" type="xsd:integer" />
+				<xsd:element name="fault" type="xsd:string" />
+			</xsd:sequence>
+		</xsd:complexType>
+	</xsd:element>
+
+	<xsd:complexType name="NameAndDescription">
+		<xsd:sequence>
+			<xsd:element name="name" type="Name" />
+			<xsd:element name="description" type="Description"
+				minOccurs="0" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+
+	<xsd:simpleType name="Description">
+		<xsd:restriction base="xsd:string">
+			<xsd:maxLength value="512" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Name">
+		<xsd:restriction base="xsd:token">
+			<xsd:maxLength value="128" />
+		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:complexType name="Application">
+		<xsd:complexContent>
+			<xsd:extension base="NameAndDescription">
+				<xsd:sequence>
+					<xsd:element name="parent" type="Name" minOccurs="0" maxOccurs="1" />
+					<xsd:element name="datasetRetain" type="xsd:boolean" minOccurs="0" maxOccurs="1" default="false"/>
+					<xsd:element name="dataset" type="Dataset" minOccurs="0" maxOccurs="unbounded" />
+					<xsd:element name="option" type="Option" minOccurs="0" 	maxOccurs="unbounded" />
+					<xsd:element name="feature" type="Feature" minOccurs="0" maxOccurs="unbounded" />
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>
+	</xsd:complexType>
+
+  <xsd:simpleType name="Status">
+    <xsd:restriction base="xsd:token">
+      <xsd:enumeration value="Enabled" />
+      <xsd:enumeration value="Disabled" />
+    </xsd:restriction>
+  </xsd:simpleType>
+
+	<xsd:complexType name="ContactDetails">
+		<xsd:sequence>
+			<xsd:element name="firstName" type="xsd:string" />
+			<xsd:element name="lastName" type="xsd:string" />
+			<xsd:element name="phoneNumber" type="xsd:string" />
+			<xsd:element name="mobileNumber" type="xsd:string" />
+			<xsd:element name="faxNumber" type="xsd:string" />
+			<xsd:element name="eMail" type="xsd:string" />
+			<xsd:element name="organisationName" type="xsd:string" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="EndPoint">
+		<xsd:complexContent>
+			<xsd:extension base="NameAndDescription">
+				<xsd:sequence>
+					<xsd:element name="uri" type="xsd:string" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="email" type="xsd:string" />
+					<xsd:element name="enabled" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+					<xsd:element name="channels" type="Channel" minOccurs="0" maxOccurs="unbounded"/>
+					<xsd:element name="contactDetails" type="ContactDetails" minOccurs="0" maxOccurs="unbounded"/>
+				</xsd:sequence>
+			</xsd:extension>
+		</xsd:complexContent>	
+	</xsd:complexType>
+
+	<xsd:complexType name="Channel">
+		<xsd:sequence>
+			<xsd:element name="dataFlow" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="service" type="xsd:string" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="priority" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+		</xsd:sequence>
+	</xsd:complexType>
+
+	<xsd:complexType name="Organisation">
+			<xsd:complexContent>
+				<xsd:extension base="NameAndDescription">
+					<xsd:sequence>
+						<xsd:element name="parentOrganisation" type="Name" minOccurs="0" maxOccurs="1" />
+						<xsd:element name="email" type="xsd:string" minOccurs="0" maxOccurs="1" />
+						<xsd:element name="status" type="xsd:boolean" minOccurs="1" maxOccurs="1" />
+						<xsd:element name="nation" type="xsd:string" minOccurs="1" maxOccurs="1" />
+						<xsd:element name="childOrganisation" type="xsd:string" minOccurs="0" maxOccurs="unbounded" />
+						<xsd:element name="endPoints" type="EndPoint" minOccurs="0" maxOccurs="unbounded" />
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+		
+	
+	
+	<xsd:complexType name="UserPreference">
+		<xsd:sequence>
+			<xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="applicationName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="roleName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="scopeName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="optionName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="optionValue" type="xsd:base64Binary" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	
+	<xsd:complexType name="DatasetFilter">
+		<xsd:sequence>
+			<xsd:element name="applicationName" type="xsd:string" minOccurs="1" maxOccurs="1"/>
+			<xsd:element name="name" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="category" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+			<xsd:element name="discriminator" type="xsd:string" minOccurs="0" maxOccurs="1"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	<xsd:complexType name="DatasetList">
+		<xsd:sequence>
+			<xsd:element name="list" type="DatasetExtension" minOccurs="0" maxOccurs="unbounded"/>
+		</xsd:sequence>
+	</xsd:complexType>
+	
+	
+</xsd:schema>
