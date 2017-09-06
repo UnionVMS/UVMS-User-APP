@@ -132,29 +132,13 @@
            <username>${jgitflow.username}</username>
            <password>${jgitflow.password}</password>
           </configuration>
-        </plugin>
-      
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-site-plugin</artifactId>
-        <configuration>
-          <skip>true</skip>
-        </configuration>
-      </plugin>
+        </plugin>      
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-deploy-plugin</artifactId>
         <configuration>
           <deployAtEnd>true</deployAtEnd>
         </configuration>
-      </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-javadoc-plugin</artifactId>
-        <version>2.10.4</version>
-            <configuration>
-              <additionalparam>-Xdoclint:none</additionalparam>
-            </configuration>
       </plugin>
     </plugins>
   </build>
