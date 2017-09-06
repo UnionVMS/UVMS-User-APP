@@ -23,6 +23,12 @@
       <artifactId>user-service</artifactId>
       <version>${project.parent.version}</version>
       <type>ejb</type>
+      <exclusions>
+      	<exclusion>
+      		<groupId>com.sun.xml.bind</groupId>
+    		<artifactId>jaxb-impl</artifactId>      		
+      	</exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>${project.groupId}</groupId>
@@ -105,7 +111,6 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-ear-plugin</artifactId>
-        <version>2.10.1</version>
         <configuration>
           <modules>
             <ejbModule>
@@ -210,13 +215,4 @@
     </profile>
   </profiles>
 
-  <dependencyManagement>
-    <dependencies>
-      <dependency>
-        <groupId>org.slf4j</groupId>
-        <artifactId>slf4j-api</artifactId>
-        <version>1.7.2</version>
-      </dependency>
-    </dependencies>
-  </dependencyManagement>
 </project>
