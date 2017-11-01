@@ -31,6 +31,7 @@ import javax.jms.TextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import eu.europa.ec.fisheries.uvms.commons.message.impl.JMSUtils;
 import eu.europa.ec.fisheries.uvms.user.message.constants.MessageConstants;
 import eu.europa.ec.fisheries.uvms.user.message.event.ErrorEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.carrier.EventMessage;
@@ -51,17 +52,16 @@ public class MessageProducerBean implements UserMessageProducer {
     @Resource(lookup = MessageConstants.CONNECTION_FACTORY)
     private ConnectionFactory connectionFactory;
 
-    private Connection connection = null;
-    private Session session = null;
-
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void sendMessageBackToRecipient(TextMessage requestMessage, String returnMessage) throws UserMessageException {
+        Connection connection=null;
         try {
-
+            connection = connectionFactory.createConnection();
+            final Session session = JMSUtils.connectToQueue(connection);
+ 
             LOG.info("[ Sending message back to recipient on queue ] {}", requestMessage.getJMSReplyTo());
 
-            connectToQueue();
             TextMessage message = session.createTextMessage();
             message.setJMSDestination(requestMessage.getJMSReplyTo());
             message.setJMSCorrelationID(requestMessage.getJMSMessageID());
@@ -73,16 +73,18 @@ public class MessageProducerBean implements UserMessageProducer {
             LOG.error("[ Error when sending message. ] {}", e.getMessage());
             throw new UserMessageException("[ Error when sending message. ]", e);
         } finally {
-            disconnectQueue();
+        	JMSUtils.disconnectQueue(connection);
         }
     }    
     
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void sendErrorMessageBackToRecipient(@Observes @ErrorEvent EventMessage message) throws UserMessageException {
+        Connection connection=null;
         try {
-
-            connectToQueue();
+            connection = connectionFactory.createConnection();
+            final Session session = JMSUtils.connectToQueue(connection);
+            
             TextMessage requestMessage = message.getJmsMessage();
 
             UserFault userFault = new UserFault();
@@ -103,26 +105,8 @@ public class MessageProducerBean implements UserMessageProducer {
             LOG.error("[ Error when sending message. ] {}", e.getMessage());
             throw new UserMessageException("[ Error when sending message. ]", e);
         } finally {
-            disconnectQueue();
+        	JMSUtils.disconnectQueue(connection);
         }
-    }
-
-    private void disconnectQueue() {
-        try {
-            if (connection != null) {
-                connection.stop();
-                connection.close();
-            }
-        } catch (JMSException e) {
-            LOG.error("[ Error when closing JMS connection ] {}", e.getMessage());
-        }
-
-    }
-    
-    private void connectToQueue() throws JMSException {
-        connection = connectionFactory.createConnection();
-        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        connection.start();
     }
 
 }

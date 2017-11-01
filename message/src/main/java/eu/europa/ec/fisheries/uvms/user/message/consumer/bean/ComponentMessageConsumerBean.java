@@ -20,13 +20,13 @@ import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.jms.Connection;
 import javax.jms.ConnectionFactory;
-import javax.jms.JMSException;
 import javax.jms.Queue;
 import javax.jms.Session;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import eu.europa.ec.fisheries.uvms.commons.message.impl.JMSUtils;
 import eu.europa.ec.fisheries.uvms.user.message.constants.MessageConstants;
 import eu.europa.ec.fisheries.uvms.user.message.consumer.UserMessageConsumer;
 import eu.europa.ec.fisheries.uvms.user.message.exception.UserMessageException;
@@ -43,19 +43,19 @@ public class ComponentMessageConsumerBean implements UserMessageConsumer {
     @Resource(lookup = MessageConstants.CONNECTION_FACTORY)
     private ConnectionFactory connectionFactory;
 
-    private Connection connection = null;
-    private Session session = null;
-
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     @Override
     public <T> T getMessage(String correlationId, Class type) throws UserMessageException {
+    	if (correlationId == null || correlationId.isEmpty()) {
+    		LOG.error("[ No CorrelationID provided when listening to JMS message, aborting ]");
+    		throw new UserMessageException("No CorrelationID provided!");
+    	}
+    	
+        Connection connection=null;
         try {
+            connection = connectionFactory.createConnection();
+            final Session session = JMSUtils.connectToQueue(connection);
 
-            if (correlationId == null || correlationId.isEmpty()) {
-                LOG.error("[ No CorrelationID provided when listening to JMS message, aborting ]");
-                throw new UserMessageException("No CorrelationID provided!");
-            }
-            connectToQueue();
 
             return (T) session.createConsumer(responseQueue, "JMSCorrelationID='" + correlationId + "'").receive(ONE_MINUTE);
 
@@ -63,20 +63,8 @@ public class ComponentMessageConsumerBean implements UserMessageConsumer {
             LOG.error("[ Error when getting medssage ] {}", e.getMessage());
             throw new UserMessageException("Error when retrieving message: ", e);
         } finally {
-            try {
-                connection.stop();
-                connection.close();
-            } catch (JMSException e) {
-                LOG.error("[ Error when closing JMS connection ] {}", e.getMessage());
-                throw new UserMessageException("Error closing JMS connection", e);
-            }
+        	JMSUtils.disconnectQueue(connection);
         }
-    }
-
-    private void connectToQueue() throws JMSException {
-        connection = connectionFactory.createConnection();
-        session = connection.createSession(false, Session.AUTO_ACKNOWLEDGE);
-        connection.start();
     }
 
 }
