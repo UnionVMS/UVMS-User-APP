@@ -52,23 +52,20 @@ public class UserServiceBean implements UserService {
     final static Logger LOG = LoggerFactory.getLogger(UserServiceBean.class);
 
     @EJB
-    ParameterService parameterService;
+    private ParameterService parameterService;
 
     @EJB
-    UserMessageConsumer consumer;
+    private UserMessageConsumer consumer;
 
     @EJB
-    UserMessageProducer producer;
+    private UserMessageProducer producer;
 
     @EJB
-    InformationService informationService;
+    private InformationService informationService;
     
     @EJB
-    DeploymentService deploymentService;
+    private DeploymentService deploymentService;
     
-    
-    // final UserContextProxy userContextProxy = new UserContextProxy();
-
     /**
      * {@inheritDoc}
      *
