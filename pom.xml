@@ -25,7 +25,7 @@
     <usm.authentication.version>2.0.0</usm.authentication.version>
     <usm.administration.version>2.0.0</usm.administration.version>
     <uvms.logger.version>1.2.0</uvms.logger.version>
-    <uvms.commons.version>3.0.3</uvms.commons.version>
+    <uvms.commons.version>3.0.5</uvms.commons.version>
   </properties>
 
   <dependencies>
