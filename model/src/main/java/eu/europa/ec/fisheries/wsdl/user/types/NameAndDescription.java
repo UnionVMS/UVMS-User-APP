@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  *       &lt;sequence>
  *         &lt;element name="name" type="{types.user.wsdl.fisheries.ec.europa.eu}Name"/>
  *         &lt;element name="description" type="{types.user.wsdl.fisheries.ec.europa.eu}Description" minOccurs="0"/>
+ *         &lt;element name="id" type="{types.user.wsdl.fisheries.ec.europa.eu}Id"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,15 +35,16 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "NameAndDescription", propOrder = {
     "name",
-    "description"
+    "description",
+    "id"
 })
 @XmlSeeAlso({
-    Organisation.class,
-    Application.class,
+    Option.class,
     Dataset.class,
-    EndPoint.class,
     Feature.class,
-    Option.class
+    EndPoint.class,
+    Organisation.class,
+    Application.class
 })
 public class NameAndDescription
     implements Serializable
@@ -53,6 +55,7 @@ public class NameAndDescription
     @XmlJavaTypeAdapter(CollapsedStringAdapter.class)
     protected String name;
     protected String description;
+    protected long id;
 
     /**
      * Gets the value of the name property.
@@ -100,6 +103,22 @@ public class NameAndDescription
      */
     public void setDescription(String value) {
         this.description = value;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
     }
 
 }

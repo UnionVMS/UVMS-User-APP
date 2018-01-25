@@ -33,28 +33,30 @@ import javax.xml.bind.annotation.XmlType;
     "method"
 })
 @XmlSeeAlso({
-    RedeployApplicationRequest.class,
-    FindOrganisationsResponse.class,
-    DeployApplicationRequest.class,
-    FindOrganisationsRequest.class,
-    PutUserPreferencesRequest.class,
-    DeleteDatasetRequest.class,
-    GetContactDetailResponse.class,
     FilterDatasetRequest.class,
+    GetDeploymentDescriptorResponse.class,
+    GetOrganisationRequest.class,
+    CreatePreferenceRequest.class,
+    UndeployApplicationRequest.class,
+    PutUserPreferencesRequest.class,
+    UpdatePreferenceRequest.class,
+    RedeployApplicationRequest.class,
+    DeployApplicationRequest.class,
+    CreateDatasetRequest.class,
+    PingRequest.class,
+    DeletePreferenceRequest.class,
+    FindOrganisationsRequest.class,
+    GetAllOrganisationResponse.class,
+    GetContactDetailResponse.class,
+    FindOrganisationsResponse.class,
+    GetAllOrganisationRequest.class,
     GetDeploymentDescriptorRequest.class,
     UpdateDatasetRequest.class,
-    DeletePreferenceRequest.class,
-    CreateDatasetRequest.class,
-    GetOrganisationRequest.class,
-    UndeployApplicationRequest.class,
     GetContactDetailsRequest.class,
-    CreatePreferenceRequest.class,
-    GetDeploymentDescriptorResponse.class,
-    PutPreferenceRequest.class,
-    UpdatePreferenceRequest.class,
     GetUserContextRequest.class,
-    PingRequest.class,
-    GetOrganisationResponse.class
+    GetOrganisationResponse.class,
+    PutPreferenceRequest.class,
+    DeleteDatasetRequest.class
 })
 public abstract class UserBaseRequest
     implements Serializable

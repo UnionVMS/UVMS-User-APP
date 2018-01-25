@@ -18,10 +18,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-
-import eu.europa.ec.mare.usm.information.domain.EndPoint;
-
 public class OrganisationConverter {
 	/*
 		Information-Model:
@@ -57,7 +53,6 @@ public class OrganisationConverter {
 	    
 		eu.europa.ec.fisheries.wsdl.user.types.Organisation typesOrganisation =
 				new eu.europa.ec.fisheries.wsdl.user.types.Organisation();
-		
 		typesOrganisation.setParentOrganisation(domainOrganisation.getParentOrganisation());
 		//typesOrganisation nu are setter pt childOrganisations
 		//nici pt endPoints
@@ -66,7 +61,7 @@ public class OrganisationConverter {
 		typesOrganisation.setName(domainOrganisation.getName());
 		typesOrganisation.setDescription(domainOrganisation.getDescription());
 		typesOrganisation.setStatus(domainOrganisation.isEnabled());
-		typesOrganisation.setParentOrganisation(domainOrganisation.getParentOrganisation());
+//		typesOrganisation.setParentOrganisation(domainOrganisation.getParentOrganisation());
 		
 		List<eu.europa.ec.fisheries.wsdl.user.types.EndPoint> typesEndPoints = typesOrganisation.getEndPoints();
 		List<eu.europa.ec.mare.usm.information.domain.EndPoint> domainEndPoints = domainOrganisation.getEndPoints();
@@ -99,5 +94,53 @@ public class OrganisationConverter {
 		
 		return typesOrganisation;
 	}
-	
+
+	public static  List<eu.europa.ec.fisheries.wsdl.user.types.Organisation>
+	convertAdministrationModelToUserModel(List<eu.europa.ec.mare.usm.administration.domain.Organisation>
+											   adminOrganisationList) {
+		if (adminOrganisationList == null || adminOrganisationList.isEmpty()) {
+			return null;
+		}
+
+		List<eu.europa.ec.fisheries.wsdl.user.types.Organisation> typesOrganisation =
+				new ArrayList<eu.europa.ec.fisheries.wsdl.user.types.Organisation>();
+		for (eu.europa.ec.mare.usm.administration.domain.Organisation orgDomain: adminOrganisationList) {
+			typesOrganisation.add(convertAdministrationModelToUserModel(orgDomain));
+		}
+
+		return typesOrganisation;
+	}
+
+	public static  eu.europa.ec.fisheries.wsdl.user.types.Organisation
+	convertAdministrationModelToUserModel(eu.europa.ec.mare.usm.administration.domain.Organisation domainOrganisation)
+	{
+		if (domainOrganisation == null) {
+			return null;
+		}
+
+		eu.europa.ec.fisheries.wsdl.user.types.Organisation typesOrganisation =
+				new eu.europa.ec.fisheries.wsdl.user.types.Organisation();
+		typesOrganisation.setId( domainOrganisation.getOrganisationId() );
+		typesOrganisation.setParentOrganisation(domainOrganisation.getParent());
+		typesOrganisation.setEmail(domainOrganisation.getEmail());
+		typesOrganisation.setNation(domainOrganisation.getNation());
+		typesOrganisation.setName(domainOrganisation.getName());
+		typesOrganisation.setDescription(domainOrganisation.getDescription());
+		typesOrganisation.setStatus((domainOrganisation.getStatus() != null ? (domainOrganisation.getStatus().equalsIgnoreCase("E" ) ? true : false): false) );
+
+		List<eu.europa.ec.fisheries.wsdl.user.types.EndPoint> typesEndPoints = typesOrganisation.getEndPoints();
+		List<eu.europa.ec.mare.usm.administration.domain.EndPoint> domainEndPoints = domainOrganisation.getEndpoints();
+		if (domainEndPoints != null) {
+			Iterator<eu.europa.ec.mare.usm.administration.domain.EndPoint> iterator = domainEndPoints.iterator();
+			while(iterator.hasNext())
+			{
+				eu.europa.ec.mare.usm.administration.domain.EndPoint domainEndPointElement = iterator.next();
+				eu.europa.ec.fisheries.wsdl.user.types.EndPoint typesEndPointElement = EndPointConverter.convertAdministrationModelToUserModel(domainEndPointElement);
+				typesEndPoints.add(typesEndPointElement);
+			}
+		}
+
+		return typesOrganisation;
+	}
+
 }

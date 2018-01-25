@@ -22,6 +22,8 @@ public class MessageConstants {
     public static final String USER_MESSAGE_IN_QUEUE = "java:/jms/queue/UVMSUserEvent";
     public static final String USER_MESSAGE_IN_QUEUE_NAME = "UVMSUserEvent";
     public static final String USER_RESPONSE_QUEUE = "java:/jms/queue/UVMSUser";
+    public static final String QUEUE_SUBSCRIPTION = "jms/queue/UVMSSubscription";
+    public static final String QUEUE_NAME_SUBSCRIPTION = "UVMSSubscription";
     //public static final String QUEUE_DATASOURCE_INTERNAL = "java:/jms/queue/UVMSComponentModel"; //Internal db source 
     //public static final String QUEUE_DATASOURCE_INTEGRATION = "java:/jms/queue/UVMSIntegration"; //Integration source
 

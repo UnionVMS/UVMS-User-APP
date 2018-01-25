@@ -129,6 +129,7 @@
 			<xsd:element name="name" type="Name" />
 			<xsd:element name="description" type="Description"
 				minOccurs="0" />
+			<xsd:element name="id" type="Id" minOccurs="1" maxOccurs="1" />
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -137,6 +138,10 @@
 		<xsd:restriction base="xsd:string">
 			<xsd:maxLength value="512" />
 		</xsd:restriction>
+	</xsd:simpleType>
+
+	<xsd:simpleType name="Id">
+		<xsd:restriction base="xsd:long"/>
 	</xsd:simpleType>
 
 	<xsd:simpleType name="Name">
@@ -197,6 +202,7 @@
 			<xsd:element name="dataFlow" type="xsd:string" minOccurs="1" maxOccurs="1" />
 			<xsd:element name="service" type="xsd:string" minOccurs="1" maxOccurs="1" />
 			<xsd:element name="priority" type="xsd:integer" minOccurs="1" maxOccurs="1" />
+			<xsd:element name="id" type="xsd:long" minOccurs="1" maxOccurs="1" />
 		</xsd:sequence>
 	</xsd:complexType>
 
@@ -214,9 +220,7 @@
 				</xsd:extension>
 			</xsd:complexContent>
 		</xsd:complexType>
-		
-	
-	
+
 	<xsd:complexType name="UserPreference">
 		<xsd:sequence>
 			<xsd:element name="userName" type="xsd:string" minOccurs="1" maxOccurs="1"/>

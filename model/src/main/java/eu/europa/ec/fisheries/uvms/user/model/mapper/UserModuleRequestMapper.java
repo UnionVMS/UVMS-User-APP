@@ -25,6 +25,7 @@ import eu.europa.ec.fisheries.wsdl.user.module.FindOrganisationsRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetContactDetailsRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetDeploymentDescriptorRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetOrganisationRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.GetAllOrganisationRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetUserContextRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.PutPreferenceRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.PutUserPreferencesRequest;
@@ -90,7 +91,13 @@ public class UserModuleRequestMapper {
         getOrganisationRequest.setOrganizationName(organizationName);        
         return JAXBMarshaller.marshallJaxBObjectToString(getOrganisationRequest);
     }
-    
+
+    public static String mapToGetAllOrganisationRequest() throws ModelMarshallException {
+        GetAllOrganisationRequest getAllOrganisationRequest = new GetAllOrganisationRequest();
+        getAllOrganisationRequest.setMethod(UserModuleMethod.GET_ALLORGANISATIONS);
+        return JAXBMarshaller.marshallJaxBObjectToString(getAllOrganisationRequest);
+    }
+
     public static String mapToFindOrganisationsRequest(String nationIsoName) throws ModelMarshallException {
         FindOrganisationsRequest findOrganisationsRequest = new FindOrganisationsRequest();
         findOrganisationsRequest.setMethod(UserModuleMethod.FIND_ORGANISATIONS);        

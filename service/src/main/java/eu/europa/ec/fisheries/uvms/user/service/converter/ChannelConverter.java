@@ -16,8 +16,6 @@ package eu.europa.ec.fisheries.uvms.user.service.converter;
 
 import java.math.BigInteger;
 
-import javax.xml.bind.annotation.XmlElement;
-
 public class ChannelConverter {
 
 	/*
@@ -38,17 +36,49 @@ public class ChannelConverter {
 	*/
 	
 	public static eu.europa.ec.fisheries.wsdl.user.types.Channel
-	       convertInformationModelToUserModel(eu.europa.ec.mare.usm.information.domain.Channel domainChannel)
-	       {
-		eu.europa.ec.fisheries.wsdl.user.types.Channel typesChannel = 
+	convertInformationModelToUserModel(eu.europa.ec.mare.usm.information.domain.Channel domainChannel)
+	{
+		eu.europa.ec.fisheries.wsdl.user.types.Channel typesChannel =
 				new eu.europa.ec.fisheries.wsdl.user.types.Channel();
-		
+
 		typesChannel.setDataFlow(domainChannel.getDataFlow());
 		typesChannel.setService(domainChannel.getService());
 		BigInteger bigIntegerPriority = BigInteger.valueOf(domainChannel.getPriority().intValue());
 		typesChannel.setPriority(bigIntegerPriority);
-		
+
 		return typesChannel;
-		
-	       }
+
+	}
+
+	/*
+
+	Administration-Model
+	package eu.europa.ec.mare.usm.administration.domain;
+		private String dataflow;
+		private String service;
+		private Integer priority;
+
+	user-model
+	package eu.europa.ec.fisheries.wsdl.user.types;
+		protected String dataFlow;
+	    protected String service;
+	    protected BigInteger priority;
+
+
+	*/
+
+	public static eu.europa.ec.fisheries.wsdl.user.types.Channel
+	convertAdministraionModelToUserModel(eu.europa.ec.mare.usm.administration.domain.Channel domainChannel)
+	{
+		eu.europa.ec.fisheries.wsdl.user.types.Channel typesChannel =
+				new eu.europa.ec.fisheries.wsdl.user.types.Channel();
+		typesChannel.setId( domainChannel.getChannelId() );
+		typesChannel.setDataFlow(domainChannel.getDataflow());
+		typesChannel.setService(domainChannel.getService());
+		BigInteger bigIntegerPriority = BigInteger.valueOf(domainChannel.getPriority().intValue());
+		typesChannel.setPriority(bigIntegerPriority);
+
+		return typesChannel;
+
+	}
 }

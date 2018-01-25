@@ -231,14 +231,23 @@ public class WsdlRequestTest {
      }
      
      @Test
-     public void generateGetOrganisationRequest() throws ModelMarshallException {
-         String organizationName = "FRA";
-         String getOrganisationRequest = UserModuleRequestMapper.mapToGetOrganisationRequest(organizationName);
-         
-         System.out.println("======");
-         System.out.println(getOrganisationRequest);
-         System.out.println("======");
-     }
+    public void generateGetOrganisationRequest() throws ModelMarshallException {
+        String organizationName = "FRA";
+        String getOrganisationRequest = UserModuleRequestMapper.mapToGetOrganisationRequest(organizationName);
+
+        System.out.println("======");
+        System.out.println(getOrganisationRequest);
+        System.out.println("======");
+    }
+
+    @Test
+    public void generateGetAllOrganisationRequest() throws ModelMarshallException {
+        String getAllOrganisationRequest = UserModuleRequestMapper.mapToGetAllOrganisationRequest();
+
+        System.out.println("======");
+        System.out.println(getAllOrganisationRequest);
+        System.out.println("======");
+    }
      
      @Test
      public void generateCreateUserPreference() throws ModelMarshallException {

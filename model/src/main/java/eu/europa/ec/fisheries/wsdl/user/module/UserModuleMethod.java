@@ -17,6 +17,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="PUT_USER_PREFERENCES"/>
  *     &lt;enumeration value="GET_CONTACT_DETAILS"/>
  *     &lt;enumeration value="GET_ORGANISATIONS"/>
+ *     &lt;enumeration value="GET_ALLORGANISATIONS"/>
  *     &lt;enumeration value="FIND_ORGANISATIONS"/>
  *     &lt;enumeration value="GET_DEPLOYMENT_DESCRIPTOR"/>
  *     &lt;enumeration value="DEPLOY_APPLICATION"/>
@@ -45,6 +46,7 @@ public enum UserModuleMethod {
     PUT_USER_PREFERENCES,
     GET_CONTACT_DETAILS,
     GET_ORGANISATIONS,
+    GET_ALLORGANISATIONS,
     FIND_ORGANISATIONS,
     GET_DEPLOYMENT_DESCRIPTOR,
     DEPLOY_APPLICATION,

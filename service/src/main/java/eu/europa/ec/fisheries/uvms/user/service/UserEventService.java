@@ -14,28 +14,11 @@
  */
 package eu.europa.ec.fisheries.uvms.user.service;
 
+import eu.europa.ec.fisheries.uvms.user.message.event.*;
+import eu.europa.ec.fisheries.uvms.user.message.event.carrier.EventMessage;
+
 import javax.ejb.Local;
 import javax.enterprise.event.Observes;
-
-import eu.europa.ec.fisheries.uvms.user.message.event.CreateDatasetEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.CreatePreferenceEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.DeleteDatasetEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.DeletePreferenceEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.DeployApplicationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.FindDatasetsEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.FindOrganizationsEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.GetApplicationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.GetContactDetailsEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.GetOrganizationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.GetUserContexEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.PingEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.PutPreferenceEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.RedeployApplicationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.UndeployApplicationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.UpdateDatasetEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.UpdatePreferenceEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.UpdateUserContexEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.carrier.EventMessage;
 
 @Local
 public interface UserEventService {
@@ -54,7 +37,9 @@ public interface UserEventService {
     public void getApplication(@Observes @GetApplicationEvent EventMessage message);
     
     public void getOrganisation(@Observes @GetOrganizationEvent EventMessage message);
-    
+
+    public void getAllOrganisation(@Observes @GetAllOrganizationEvent EventMessage message);
+
     public void findOrganisations(@Observes @FindOrganizationsEvent EventMessage message);
     
     public void getContactDetails(@Observes @GetContactDetailsEvent EventMessage message);

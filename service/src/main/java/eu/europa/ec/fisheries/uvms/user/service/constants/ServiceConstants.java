@@ -18,4 +18,18 @@ public class ServiceConstants {
 
     public static final String FIND_BY_NAME = "Parameter.findByName";
 
+    public static final int OFFSET = 0;
+
+    public static final int LIMIT = 100;
+
+    public static final String SORT_BY_COLUMN = "name";
+
+    public static final String ORDER_BY_DIRECTION = "DESC";
+
+    public static final String REQUESTOR = "LM";
+
+    public static final String ROLE_NAME = "LM";
+
+    public static final String SCOPE_NAME = "LM";
+
 }

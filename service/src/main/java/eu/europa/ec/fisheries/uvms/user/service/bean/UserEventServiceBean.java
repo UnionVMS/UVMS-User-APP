@@ -14,38 +14,7 @@
  */
 package eu.europa.ec.fisheries.uvms.user.service.bean;
 
-import java.util.List;
-
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
-import javax.enterprise.event.Event;
-import javax.enterprise.event.Observes;
-import javax.inject.Inject;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import eu.europa.ec.fisheries.uvms.user.message.event.CreateDatasetEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.CreatePreferenceEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.DeleteDatasetEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.DeletePreferenceEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.DeployApplicationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.ErrorEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.FindDatasetsEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.FindOrganizationsEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.GetApplicationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.GetContactDetailsEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.GetOrganizationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.GetUserContexEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.PingEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.PutPreferenceEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.RedeployApplicationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.UndeployApplicationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.UpdateDatasetEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.UpdatePreferenceEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.UpdateUserContexEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.*;
 import eu.europa.ec.fisheries.uvms.user.message.event.carrier.EventMessage;
 import eu.europa.ec.fisheries.uvms.user.message.exception.UserMessageException;
 import eu.europa.ec.fisheries.uvms.user.message.producer.UserMessageProducer;
@@ -55,31 +24,19 @@ import eu.europa.ec.fisheries.uvms.user.model.mapper.UserModuleResponseMapper;
 import eu.europa.ec.fisheries.uvms.user.service.UserEventService;
 import eu.europa.ec.fisheries.uvms.user.service.UserService;
 import eu.europa.ec.fisheries.uvms.user.service.exception.UserServiceException;
-import eu.europa.ec.fisheries.wsdl.user.module.CreateDatasetRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.CreatePreferenceRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.DeleteDatasetRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.DeletePreferenceRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.DeployApplicationRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.FilterDatasetRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.FindOrganisationsRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.GetContactDetailsRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.GetDeploymentDescriptorRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.GetOrganisationRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.GetUserContextRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.PingResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.PutPreferenceRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.PutUserPreferencesRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.RedeployApplicationRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.UndeployApplicationRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.UpdateDatasetRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.UpdatePreferenceRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.UserBaseRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.UserModuleMethod;
-import eu.europa.ec.fisheries.wsdl.user.types.Application;
-import eu.europa.ec.fisheries.wsdl.user.types.ContactDetails;
-import eu.europa.ec.fisheries.wsdl.user.types.DatasetList;
-import eu.europa.ec.fisheries.wsdl.user.types.Organisation;
-import eu.europa.ec.fisheries.wsdl.user.types.UserContext;
+import eu.europa.ec.fisheries.wsdl.user.module.*;
+import eu.europa.ec.fisheries.wsdl.user.types.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import javax.ejb.TransactionAttribute;
+import javax.ejb.TransactionAttributeType;
+import javax.enterprise.event.Event;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
+import java.util.List;
 
 @Stateless
 public class UserEventServiceBean implements UserEventService {
@@ -755,6 +712,43 @@ public class UserEventServiceBean implements UserEventService {
 
 		
 	}
-	
-	
+
+    @Override
+    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
+    public void getAllOrganisation(@Observes @GetAllOrganizationEvent EventMessage message) {
+
+        LOG.info( "getAllOrganization Received.. processing request in UserEventServiceBean" );
+        try {
+
+            UserBaseRequest baseRequest = JAXBMarshaller.unmarshallTextMessage( message.getJmsMessage(), UserBaseRequest.class );
+
+            if (baseRequest.getMethod() != UserModuleMethod.GET_ALLORGANISATIONS) {
+                message.setErrorMessage( " [ Error, Get all organisation invoked but it is not the intended method, caller is trying: " + baseRequest.getMethod().name() + " ]" );
+                errorEvent.fire( message );
+            }
+
+//            GetOrganisationRequest request = JAXBMarshaller.unmarshallTextMessage(message.getJmsMessage(), GetOrganisationRequest.class);
+
+            String responseString;
+            try {
+                List<Organisation> organizationList = userService.getAllOrganisations();
+                responseString = UserModuleResponseMapper.mapToFindOrganisationsResponse( organizationList );
+            } catch (Exception e) {
+                if (e.getCause() != null && e.getCause() instanceof IllegalArgumentException) {
+                    IllegalArgumentException cause = (IllegalArgumentException) e.getCause();
+
+                    LOG.debug( "Invalid get all organisation: ", cause.getMessage() );
+                    responseString = UserModuleResponseMapper.mapToUserFault( cause, UserModuleMethod.GET_ALLORGANISATIONS );
+                } else {
+                    throw e;
+                }
+            }
+
+            messageProducer.sendMessageBackToRecipient( message.getJmsMessage(), responseString );
+
+        } catch (ModelMarshallException | UserMessageException | UserServiceException ex) {
+            LOG.error( "[ Error when get all organisations ] ", ex );
+            errorEvent.fire( message );
+        }
+    }
 }

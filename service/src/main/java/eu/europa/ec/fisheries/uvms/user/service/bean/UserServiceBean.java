@@ -14,37 +14,28 @@
  */
 package eu.europa.ec.fisheries.uvms.user.service.bean;
 
-import java.util.List;
-
-import javax.ejb.EJB;
-import javax.ejb.Stateless;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import eu.europa.ec.fisheries.uvms.user.message.consumer.UserMessageConsumer;
 import eu.europa.ec.fisheries.uvms.user.message.producer.UserMessageProducer;
 import eu.europa.ec.fisheries.uvms.user.service.ParameterService;
 import eu.europa.ec.fisheries.uvms.user.service.UserService;
-import eu.europa.ec.fisheries.uvms.user.service.converter.ApplicationConverter;
-import eu.europa.ec.fisheries.uvms.user.service.converter.ContactDetailsConverter;
-import eu.europa.ec.fisheries.uvms.user.service.converter.DatasetConverter;
-import eu.europa.ec.fisheries.uvms.user.service.converter.OrganisationConverter;
-import eu.europa.ec.fisheries.uvms.user.service.converter.UserContextConverter;
-import eu.europa.ec.fisheries.uvms.user.service.converter.UserPreferenceConverter;
+import eu.europa.ec.fisheries.uvms.user.service.converter.*;
 import eu.europa.ec.fisheries.uvms.user.service.exception.UserServiceException;
-import eu.europa.ec.fisheries.wsdl.user.types.Application;
-import eu.europa.ec.fisheries.wsdl.user.types.ContactDetails;
-import eu.europa.ec.fisheries.wsdl.user.types.DatasetExtension;
-import eu.europa.ec.fisheries.wsdl.user.types.DatasetFilter;
-import eu.europa.ec.fisheries.wsdl.user.types.DatasetList;
-import eu.europa.ec.fisheries.wsdl.user.types.Organisation;
-import eu.europa.ec.fisheries.wsdl.user.types.UserContext;
-import eu.europa.ec.fisheries.wsdl.user.types.UserContextId;
-import eu.europa.ec.fisheries.wsdl.user.types.UserPreference;
+import eu.europa.ec.fisheries.wsdl.user.types.*;
+import eu.europa.ec.mare.usm.administration.domain.FindOrganisationsQuery;
+import eu.europa.ec.mare.usm.administration.domain.Paginator;
+import eu.europa.ec.mare.usm.administration.domain.ServiceRequest;
 import eu.europa.ec.mare.usm.information.domain.UserContextQuery;
 import eu.europa.ec.mare.usm.information.service.DeploymentService;
 import eu.europa.ec.mare.usm.information.service.InformationService;
+import eu.europa.ec.mare.usm.administration.service.organisation.OrganisationService;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
+import java.util.List;
 
 @Stateless
 public class UserServiceBean implements UserService {
@@ -62,6 +53,9 @@ public class UserServiceBean implements UserService {
 
     @EJB
     private InformationService informationService;
+
+    @EJB
+    private OrganisationService organisationService;
     
     @EJB
     private DeploymentService deploymentService;
@@ -111,7 +105,17 @@ public class UserServiceBean implements UserService {
     public Organisation getOrganisation(String organisationName) throws UserServiceException {
         return OrganisationConverter.convertInformationModelToUserModel(informationService.getOrganisation(organisationName));
     }
-    
+
+    @Override
+    public List<Organisation> getAllOrganisations() throws UserServiceException {
+        return OrganisationConverter.convertAdministrationModelToUserModel(organisationService.findOrganisations(USMServiceBuilder.buildAdministrationServieRequest()).getResults());
+    }
+
+//    @Override
+//    public Organisation getOrganisationDetailsById(String organisationId) throws UserServiceException {
+//        return OrganisationConverter.convertInformationModelToUserModel(informationService.getOrganisation(organisationId));
+//    }
+
     @Override
     public List<Organisation> findOrganisations(String nationIsoName) throws UserServiceException {
         return OrganisationConverter.convertInformationModelToUserModel(

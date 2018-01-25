@@ -17,6 +17,8 @@
 					<xsd:enumeration value="PUT_USER_PREFERENCES" />
 					<xsd:enumeration value="GET_CONTACT_DETAILS" />
 					<xsd:enumeration value="GET_ORGANISATIONS" />
+					<xsd:enumeration value="GET_ALLORGANISATIONS" />
+                    <!--<xsd:enumeration value="GET_ORGANISATION_DETAILS_BY_ID" />-->
 					<xsd:enumeration value="FIND_ORGANISATIONS" />
 					<xsd:enumeration value="GET_DEPLOYMENT_DESCRIPTOR" />
 					<xsd:enumeration value="DEPLOY_APPLICATION" />
@@ -159,28 +161,36 @@
 	</xsd:element>
 	
 	<xsd:element name="getOrganisationRequest">
+			<xsd:complexType>
+				<xsd:complexContent>
+					<xsd:extension base="module:UserBaseRequest">
+						<xsd:sequence>
+							<xsd:element name="organizationName" type="xsd:string" minOccurs="1"/>
+						</xsd:sequence>
+					</xsd:extension>
+				</xsd:complexContent>
+			</xsd:complexType>
+		</xsd:element>
+
+	<xsd:element name="getAllOrganisationRequest">
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:extension base="module:UserBaseRequest">
-					<xsd:sequence>
-						<xsd:element name="organizationName" type="xsd:string" minOccurs="1"/>
-					</xsd:sequence>
-				</xsd:extension>
+				<xsd:extension base="module:UserBaseRequest"/>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	
-	 <xsd:element name="findOrganisationsRequest">
-    <xsd:complexType>
-      <xsd:complexContent>
-        <xsd:extension base="module:UserBaseRequest">
-          <xsd:sequence>
-            <xsd:element name="nationIsoName" type="xsd:string" minOccurs="1"/>
-          </xsd:sequence>
-        </xsd:extension>
-      </xsd:complexContent>
-    </xsd:complexType>
-  </xsd:element>
+
+	<xsd:element name="findOrganisationsRequest">
+    	<xsd:complexType>
+		  <xsd:complexContent>
+			<xsd:extension base="module:UserBaseRequest">
+			  <xsd:sequence>
+				<xsd:element name="nationIsoName" type="xsd:string" minOccurs="1"/>
+			  </xsd:sequence>
+			</xsd:extension>
+		  </xsd:complexContent>
+		</xsd:complexType>
+	  </xsd:element>
 	
 	<xsd:element name="getContactDetailsRequest">
 		<xsd:complexType>
@@ -219,8 +229,20 @@
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
-	
-	 <xsd:element name="findOrganisationsResponse">
+
+	<xsd:element name="getAllOrganisationResponse">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="organisation" type="tv:Organisation" minOccurs="1"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+ <xsd:element name="findOrganisationsResponse">
     <xsd:complexType>
       <xsd:complexContent>
         <xsd:extension base="module:UserBaseRequest">
@@ -479,7 +501,15 @@
 	<message name="GetOrganisationRequest">
 		<part name="body" element="module:getOrganisationRequest"/>
 	</message>
-	
+
+	<message name="GetAllOrganisationRequest">
+		<part name="body" element="module:getAllOrganisationRequest"/>
+	</message>
+
+	<message name="GetAllOrganisationResponse">
+		<part name="body" element="module:getAllOrganisationResponse"/>
+	</message>
+
 	<message name="GetContactDetailsRequest">
 		<part name="body" element="module:getContactDetailsRequest"/>
 	</message>
@@ -641,7 +671,13 @@
 			<output message="module:GetOrganisationResponse"/>
 			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
 		</operation>
-		
+
+	  	<operation name="GetAllOrganisation">
+		 	<input message="module:GetAllOrganisationRequest" />
+		  	<output message="module:GetAllOrganisationResponse"/>
+		  	<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
+	  	</operation>
+
 		<operation name="GetDeploymentDescriptor">
 			<input message="module:GetDeploymentDescriptorRequest" />
 			<output message="module:GetDeploymentDescriptorResponse"/>
@@ -793,6 +829,30 @@
 				<soap:fault name="UserModuleFaultException" use="literal" />
 			</fault>
 		</operation>
+
+		<operation name="GetAllOrganisation">
+			<input>
+				<soap:body use="literal" />
+			</input>
+			<output>
+				<soap:body use="literal" />
+			</output>
+			<fault name="UserModuleFaultException">
+				<soap:fault name="UserModuleFaultException" use="literal" />
+			</fault>
+		</operation>
+
+        <!--<operation name="GetOrganisationDetailsById">-->
+            <!--<input>-->
+                <!--<soap:body use="literal" />-->
+            <!--</input>-->
+            <!--<output>-->
+                <!--<soap:body use="literal" />-->
+            <!--</output>-->
+            <!--<fault name="UserModuleFaultException">-->
+                <!--<soap:fault name="UserModuleFaultException" use="literal" />-->
+            <!--</fault>-->
+        <!--</operation>-->
 		
 		<operation name="GetDeploymentDescriptor">
 			<input>
