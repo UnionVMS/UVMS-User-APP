@@ -14,8 +14,6 @@
  */
 package eu.europa.ec.fisheries.uvms.user.service.converter;
 
-import javax.xml.bind.annotation.XmlElement;
-
 public class ContactDetailsConverter {
     /*
 	Information-Model
@@ -62,4 +60,50 @@ public class ContactDetailsConverter {
 		
 		return typesContactDetails;
 	    }
+
+	       /*
+	Administration-Model
+	package eu.europa.ec.mare.usm.administration.domain;
+		private String firstName;
+		private String lastName;
+		private String phoneNumber;
+		private String mobileNumber;
+		private String faxNumber;
+		private String email;
+
+	 user-model
+	 package eu.europa.ec.fisheries.wsdl.user.types;
+	    protected String firstName;
+	    protected String lastName;
+	    protected String phoneNumber;
+	    protected String mobileNumber;
+	    protected String faxNumber;
+	    protected String eMail;
+	    protected String organisationName;
+
+
+
+	*/
+
+	public static eu.europa.ec.fisheries.wsdl.user.types.ContactDetails
+	convertAdministrationModelToUserModel(eu.europa.ec.mare.usm.administration.domain.EndPointContact domainContactDetails)
+	{
+		if (domainContactDetails == null) {
+			return null;
+		}
+
+		eu.europa.ec.fisheries.wsdl.user.types.ContactDetails typesContactDetails =
+				new eu.europa.ec.fisheries.wsdl.user.types.ContactDetails();
+
+		typesContactDetails.setFirstName(domainContactDetails.getFirstName());
+		typesContactDetails.setLastName(domainContactDetails.getLastName());
+		typesContactDetails.setPhoneNumber(domainContactDetails.getPhoneNumber());
+		typesContactDetails.setMobileNumber(domainContactDetails.getMobileNumber());
+		typesContactDetails.setFaxNumber(domainContactDetails.getFaxNumber());
+		typesContactDetails.setEMail(domainContactDetails.getEmail());
+		typesContactDetails.setOrganisationName("LM: NOT Available");
+
+		return typesContactDetails;
+	}
+
 }

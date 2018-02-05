@@ -16,6 +16,9 @@ package eu.europa.ec.fisheries.uvms.user.service.mockdata;
 
 import eu.europa.ec.mare.usm.information.domain.deployment.Application;
 import eu.europa.ec.mare.usm.information.domain.deployment.Dataset;
+import eu.europa.ec.fisheries.wsdl.user.types.Organisation;
+import eu.europa.ec.fisheries.wsdl.user.types.Channel;
+import eu.europa.ec.fisheries.wsdl.user.types.EndPoint;
 
 public class USMMockData {
 
@@ -38,6 +41,7 @@ public class USMMockData {
         
         return application;
     }
+
 
     
 }

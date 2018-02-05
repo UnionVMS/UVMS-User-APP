@@ -14,6 +14,15 @@
  */
 package eu.europa.ec.fisheries.uvms.user.message.consumer.bean;
 
+import eu.europa.ec.fisheries.uvms.user.message.constants.MessageConstants;
+import eu.europa.ec.fisheries.uvms.user.message.event.*;
+import eu.europa.ec.fisheries.uvms.user.message.event.carrier.EventMessage;
+import eu.europa.ec.fisheries.uvms.user.model.exception.ModelMapperException;
+import eu.europa.ec.fisheries.uvms.user.model.mapper.JAXBMarshaller;
+import eu.europa.ec.fisheries.wsdl.user.module.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
@@ -24,51 +33,6 @@ import javax.inject.Inject;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import eu.europa.ec.fisheries.uvms.user.message.constants.MessageConstants;
-import eu.europa.ec.fisheries.uvms.user.message.event.CreateDatasetEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.CreatePreferenceEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.DeleteDatasetEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.DeletePreferenceEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.DeployApplicationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.ErrorEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.FindDatasetsEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.FindOrganizationsEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.GetApplicationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.GetContactDetailsEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.GetOrganizationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.GetUserContexEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.PingEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.PutPreferenceEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.RedeployApplicationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.UndeployApplicationEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.UpdateDatasetEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.UpdatePreferenceEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.UpdateUserContexEvent;
-import eu.europa.ec.fisheries.uvms.user.message.event.carrier.EventMessage;
-import eu.europa.ec.fisheries.uvms.user.model.exception.ModelMapperException;
-import eu.europa.ec.fisheries.uvms.user.model.mapper.JAXBMarshaller;
-import eu.europa.ec.fisheries.wsdl.user.module.CreateDatasetRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.CreatePreferenceRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.DeleteDatasetRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.DeletePreferenceRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.DeployApplicationRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.FilterDatasetRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.FindOrganisationsRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.GetContactDetailsRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.GetDeploymentDescriptorRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.GetOrganisationRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.GetUserContextRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.PutPreferenceRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.PutUserPreferencesRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.RedeployApplicationRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.UndeployApplicationRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.UpdateDatasetRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.UpdatePreferenceRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.UserBaseRequest;
 
 @MessageDriven(mappedName = MessageConstants.USER_MESSAGE_IN_QUEUE, activationConfig = {
     @ActivationConfigProperty(propertyName = "messagingType", propertyValue = MessageConstants.CONNECTION_TYPE),
@@ -87,81 +51,85 @@ public class MessageConsumerBean implements MessageListener {
 	
     @Inject
     @GetUserContexEvent
-    Event<EventMessage> getUserContextEvent;
+    private Event<EventMessage> getUserContextEvent;
 
     @Inject
     @UpdateUserContexEvent
-    Event<EventMessage> updateUserContextEvent;    
+    private Event<EventMessage> updateUserContextEvent;
     
 
     @Inject
     @DeployApplicationEvent
-    Event<EventMessage> deployApplicationEvent;
+    private Event<EventMessage> deployApplicationEvent;
 
     @Inject
     @RedeployApplicationEvent
-    Event<EventMessage> redeployApplicationEvent;    
+    private Event<EventMessage> redeployApplicationEvent;
 
     @Inject
     @UndeployApplicationEvent
-    Event<EventMessage> undeployApplicationEvent;
+    private Event<EventMessage> undeployApplicationEvent;
 
     @Inject
     @GetApplicationEvent
-    Event<EventMessage> getApplicationEvent;    
+    private Event<EventMessage> getApplicationEvent;
 
     @Inject
     @GetOrganizationEvent
-    Event<EventMessage> getOrganizationEvent;    
-    
+    private Event<EventMessage> getOrganizationEvent;
+
+    @Inject
+    @GetAllOrganizationEvent
+    private Event<EventMessage> getAllOrganizationEvent;
+
     @Inject
     @FindOrganizationsEvent
-    Event<EventMessage> findOrganizationsEvent;    
+    private Event<EventMessage> findOrganizationsEvent;
     
     @Inject
     @GetContactDetailsEvent
-    Event<EventMessage> getContactDetailsEvent;    
+    private Event<EventMessage> getContactDetailsEvent;
     
     @Inject
     @PutPreferenceEvent
-    Event<EventMessage> putPreferenceEvent; 
+    private Event<EventMessage> putPreferenceEvent;
     
     @Inject
     @CreatePreferenceEvent
-    Event<EventMessage> createPreferenceEvent; 
+    private Event<EventMessage> createPreferenceEvent;
     
     @Inject
     @UpdatePreferenceEvent
-    Event<EventMessage> updatePreferenceEvent; 
+    private Event<EventMessage> updatePreferenceEvent;
     
     @Inject
     @DeletePreferenceEvent
-    Event<EventMessage> deletePreferenceEvent; 
+    private Event<EventMessage> deletePreferenceEvent;
     
     @Inject
     @CreateDatasetEvent
-    Event<EventMessage> createDatasetEvent; 
+    private Event<EventMessage> createDatasetEvent;
     
     @Inject
     @UpdateDatasetEvent
-    Event<EventMessage> updateDatasetEvent; 
+    private Event<EventMessage> updateDatasetEvent;
     
     @Inject
     @DeleteDatasetEvent
-    Event<EventMessage> deleteDatasetEvent; 
+    private Event<EventMessage> deleteDatasetEvent;
     
     @Inject
     @FindDatasetsEvent
-    Event<EventMessage> findDatasetEvent; 
+    private Event<EventMessage> findDatasetEvent;
     
     
     @Inject
     @PingEvent
-    Event<EventMessage> pingEvent;
+    private Event<EventMessage> pingEvent;
     
     @Inject
     @ErrorEvent
-    Event<EventMessage> errorEvent;
+    private Event<EventMessage> errorEvent;
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -199,6 +167,10 @@ public class MessageConsumerBean implements MessageListener {
                 case GET_ORGANISATIONS:
                     GetOrganisationRequest getOrganisationRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, GetOrganisationRequest.class);
                     getOrganizationEvent.fire(new EventMessage(textMessage, getOrganisationRequest.getOrganizationName()));
+                    break;
+                case GET_ALLORGANISATIONS:
+//                    GetAllOrganisationRequest getAllOrganisationRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, GetAllOrganisationRequest.class);
+                    getAllOrganizationEvent.fire(new EventMessage(textMessage));
                     break;
                 case GET_CONTACT_DETAILS:
                     GetContactDetailsRequest getContactDetailsRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, GetContactDetailsRequest.class);

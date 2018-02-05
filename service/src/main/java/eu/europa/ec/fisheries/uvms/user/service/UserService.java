@@ -14,20 +14,12 @@
  */
 package eu.europa.ec.fisheries.uvms.user.service;
 
-import java.util.List;
+import eu.europa.ec.fisheries.uvms.user.service.exception.UserServiceException;
+import eu.europa.ec.fisheries.wsdl.user.module.GetAllOrganisationRequest;
+import eu.europa.ec.fisheries.wsdl.user.types.*;
 
 import javax.ejb.Local;
-
-import eu.europa.ec.fisheries.uvms.user.service.exception.UserServiceException;
-import eu.europa.ec.fisheries.wsdl.user.types.Application;
-import eu.europa.ec.fisheries.wsdl.user.types.ContactDetails;
-import eu.europa.ec.fisheries.wsdl.user.types.DatasetExtension;
-import eu.europa.ec.fisheries.wsdl.user.types.DatasetFilter;
-import eu.europa.ec.fisheries.wsdl.user.types.DatasetList;
-import eu.europa.ec.fisheries.wsdl.user.types.Organisation;
-import eu.europa.ec.fisheries.wsdl.user.types.UserContext;
-import eu.europa.ec.fisheries.wsdl.user.types.UserContextId;
-import eu.europa.ec.fisheries.wsdl.user.types.UserPreference;
+import java.util.List;
 
 @Local
 public interface UserService {
@@ -52,7 +44,9 @@ public interface UserService {
     public Application getDeploymentDescriptor(String applicationName) throws UserServiceException;
     
     public Organisation getOrganisation(String organisationName) throws UserServiceException;
-    
+
+    public List<Organisation> getAllOrganisations(GetAllOrganisationRequest request) throws UserServiceException;
+
     public List<Organisation> findOrganisations(String nationIsoName) throws UserServiceException;
     
     public ContactDetails getContactDetails(String userName) throws UserServiceException;

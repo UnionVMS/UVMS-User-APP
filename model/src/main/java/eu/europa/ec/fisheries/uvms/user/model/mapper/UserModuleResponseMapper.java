@@ -22,24 +22,7 @@ import javax.jms.TextMessage;
 
 import eu.europa.ec.fisheries.uvms.user.model.exception.ModelMapperException;
 import eu.europa.ec.fisheries.uvms.user.model.exception.ModelMarshallException;
-import eu.europa.ec.fisheries.wsdl.user.module.CreateDatasetResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.CreatePreferenceResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.DeleteDatasetResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.DeletePreferenceResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.DeployApplicationResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.FilterDatasetResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.FindOrganisationsResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.GetContactDetailResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.GetDeploymentDescriptorResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.GetOrganisationResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.GetUserContextResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.PutPreferenceResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.PutUserPreferencesResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.RedeployApplicationResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.UndeployApplicationResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.UpdateDatasetResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.UpdatePreferenceResponse;
-import eu.europa.ec.fisheries.wsdl.user.module.UserModuleMethod;
+import eu.europa.ec.fisheries.wsdl.user.module.*;
 import eu.europa.ec.fisheries.wsdl.user.types.Application;
 import eu.europa.ec.fisheries.wsdl.user.types.ContactDetails;
 import eu.europa.ec.fisheries.wsdl.user.types.DatasetList;
@@ -114,7 +97,7 @@ public class UserModuleResponseMapper {
         
         return JAXBMarshaller.marshallJaxBObjectToString(getOrganisationResponse);
     }
-    
+
     public static String mapToFindOrganisationsResponse(List<Organisation> organizationList) throws ModelMarshallException {
         FindOrganisationsResponse findOrganisationsResponse = new FindOrganisationsResponse();
         if (organizationList != null && !organizationList.isEmpty()) {

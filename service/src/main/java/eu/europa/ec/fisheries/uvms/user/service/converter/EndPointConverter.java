@@ -17,11 +17,6 @@ package eu.europa.ec.fisheries.uvms.user.service.converter;
 import java.util.Iterator;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlElement;
-
-import eu.europa.ec.mare.usm.information.domain.Channel;
-import eu.europa.ec.mare.usm.information.domain.ContactDetails;
-
 public class EndPointConverter {
 	/*
 	Information-Model
@@ -84,4 +79,63 @@ public class EndPointConverter {
 				
 	    }
 
+	/*
+Information-Model
+eu.europa.ec.mare.usm.information.domain;
+private String name;
+private String description;
+private String uri;
+private String email;
+private boolean enabled;
+private List<Channel> channels;
+private List<ContactDetails> contactDetails;
+
+user-model
+package eu.europa.ec.fisheries.wsdl.user.types;
+protected String uri;
+protected String email;
+protected boolean enabled;
+protected List<Channel> channels;
+protected List<ContactDetails> contactDetails;
+
+
+
+*/
+	public static eu.europa.ec.fisheries.wsdl.user.types.EndPoint
+	convertAdministrationModelToUserModel(eu.europa.ec.mare.usm.administration.domain.EndPoint domainEndPoint)
+	{
+		eu.europa.ec.fisheries.wsdl.user.types.EndPoint typesEndPoint =
+				new eu.europa.ec.fisheries.wsdl.user.types.EndPoint();
+		typesEndPoint.setId( domainEndPoint.getEndpointId() );
+		typesEndPoint.setName(domainEndPoint.getName());
+		typesEndPoint.setDescription(domainEndPoint.getDescription());
+		typesEndPoint.setUri(domainEndPoint.getURI());
+		typesEndPoint.setEmail(domainEndPoint.getEmail());
+		typesEndPoint.setEnabled((domainEndPoint.getStatus() != null ? (domainEndPoint.getStatus().equalsIgnoreCase("E" ) ? true : false): false) );
+
+		List<eu.europa.ec.fisheries.wsdl.user.types.Channel> typesChannels = typesEndPoint.getChannels();
+		List<eu.europa.ec.mare.usm.administration.domain.Channel> domainChannels = domainEndPoint.getChannelList();
+
+		Iterator<eu.europa.ec.mare.usm.administration.domain.Channel> channelsIterator = domainChannels.iterator();
+		while(channelsIterator.hasNext())
+		{
+			eu.europa.ec.mare.usm.administration.domain.Channel domainChannelElement = channelsIterator.next();
+			eu.europa.ec.fisheries.wsdl.user.types.Channel typesChannelElement = ChannelConverter.convertAdministraionModelToUserModel(domainChannelElement);
+			typesChannels.add(typesChannelElement);
+		}
+
+		List<eu.europa.ec.fisheries.wsdl.user.types.ContactDetails> typesContactDetails = typesEndPoint.getContactDetails();
+		List<eu.europa.ec.mare.usm.administration.domain.EndPointContact> domainContactDetails = domainEndPoint.getPersons();
+
+		Iterator<eu.europa.ec.mare.usm.administration.domain.EndPointContact> contactDetailsIterator = domainContactDetails.iterator();
+		while(contactDetailsIterator.hasNext())
+		{
+			eu.europa.ec.mare.usm.administration.domain.EndPointContact domainContactDetailsElement = contactDetailsIterator.next();
+			eu.europa.ec.fisheries.wsdl.user.types.ContactDetails typesContactDetailsElement = ContactDetailsConverter.convertAdministrationModelToUserModel(domainContactDetailsElement);
+			typesContactDetails.add(typesContactDetailsElement);
+		}
+
+		return typesEndPoint;
+
+	}
 }

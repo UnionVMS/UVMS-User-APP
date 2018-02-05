@@ -80,6 +80,12 @@
       <groupId>eu.europa.ec.mare.oss.auditing</groupId>
       <artifactId>Uvms-Logger</artifactId>
       <version>${uvms.logger.version}</version>
+	  <exclusions>
+        <exclusion>
+          <groupId>eu.europa.ec.fisheries.uvms.audit</groupId>
+          <artifactId>audit-model</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <dependency>
       <groupId>eu.europa.ec.mare.oss.usm</groupId>
@@ -97,6 +103,19 @@
       <artifactId>Information-Model</artifactId>
       <version>${usm.information.version}</version>
     </dependency>
+
+    <dependency>
+      <groupId>eu.europa.ec.mare.oss.usm</groupId>
+      <artifactId>Administration-Service</artifactId>
+      <version>${usm.administration.version}</version>
+      <exclusions>
+        <exclusion>
+          <groupId>eu.europa.ec.fisheries.uvms.audit</groupId>
+          <artifactId>audit-model</artifactId>
+        </exclusion>
+      </exclusions>
+    </dependency>
+
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>

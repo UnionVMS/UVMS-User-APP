@@ -12,18 +12,17 @@
  * more details. You should have received a copy of the GNU General Public 
  * License along with the IFDM Suite. If not, see http://www.gnu.org/licenses/.
  */
-package eu.europa.ec.fisheries.uvms.user.service.constants;
+package eu.europa.ec.fisheries.uvms.user.message.event;
 
-public class ServiceConstants {
+import javax.inject.Qualifier;
+import java.lang.annotation.ElementType;
+import java.lang.annotation.Retention;
+import java.lang.annotation.RetentionPolicy;
+import java.lang.annotation.Target;
 
-    public static final String FIND_BY_NAME = "Parameter.findByName";
-
-    public static final int OFFSET = 0;
-
-    public static final int LIMIT = 100;
-
-    public static final String SORT_BY_COLUMN = "name";
-
-    public static final String ORDER_BY_DIRECTION = "DESC";
+@Qualifier
+@Retention(RetentionPolicy.RUNTIME)
+@Target({ ElementType.METHOD, ElementType.FIELD, ElementType.PARAMETER, ElementType.TYPE })
+public @interface GetAllOrganizationEvent {
 
 }

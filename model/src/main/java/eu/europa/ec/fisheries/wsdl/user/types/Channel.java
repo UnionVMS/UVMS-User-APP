@@ -22,6 +22,7 @@ import javax.xml.bind.annotation.XmlType;
  *         &lt;element name="dataFlow" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="service" type="{http://www.w3.org/2001/XMLSchema}string"/>
  *         &lt;element name="priority" type="{http://www.w3.org/2001/XMLSchema}integer"/>
+ *         &lt;element name="id" type="{http://www.w3.org/2001/XMLSchema}long"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -34,7 +35,8 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name = "Channel", propOrder = {
     "dataFlow",
     "service",
-    "priority"
+    "priority",
+    "id"
 })
 public class Channel
     implements Serializable
@@ -47,6 +49,7 @@ public class Channel
     protected String service;
     @XmlElement(required = true)
     protected BigInteger priority;
+    protected long id;
 
     /**
      * Gets the value of the dataFlow property.
@@ -118,6 +121,22 @@ public class Channel
      */
     public void setPriority(BigInteger value) {
         this.priority = value;
+    }
+
+    /**
+     * Gets the value of the id property.
+     * 
+     */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Sets the value of the id property.
+     * 
+     */
+    public void setId(long value) {
+        this.id = value;
     }
 
 }

@@ -8,6 +8,8 @@
 *.idea/
 *.factorypath
 *.pydevproject
+.idea/
+*.iml
 *arquillian.launch_file
 pom.xml.releaseBackup
 release.properties
