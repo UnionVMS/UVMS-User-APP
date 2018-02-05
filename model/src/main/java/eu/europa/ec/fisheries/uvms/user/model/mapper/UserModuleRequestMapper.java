@@ -41,6 +41,8 @@ import eu.europa.ec.fisheries.wsdl.user.types.UserContext;
 import eu.europa.ec.fisheries.wsdl.user.types.UserContextId;
 import eu.europa.ec.fisheries.wsdl.user.types.UserPreference;
 
+import javax.servlet.http.HttpServletRequest;
+
 public class UserModuleRequestMapper {
 
     public static String mapToGetUserContextRequest(UserContextId userContextId) throws ModelMarshallException {
@@ -92,9 +94,12 @@ public class UserModuleRequestMapper {
         return JAXBMarshaller.marshallJaxBObjectToString(getOrganisationRequest);
     }
 
-    public static String mapToGetAllOrganisationRequest() throws ModelMarshallException {
+    public static String mapToGetAllOrganisationRequest(String scopeName, String roleName, String requester) throws ModelMarshallException {
         GetAllOrganisationRequest getAllOrganisationRequest = new GetAllOrganisationRequest();
         getAllOrganisationRequest.setMethod(UserModuleMethod.GET_ALLORGANISATIONS);
+        getAllOrganisationRequest.setRequestorName( requester );
+        getAllOrganisationRequest.setRoleName( roleName );
+        getAllOrganisationRequest.setScopeName( scopeName );
         return JAXBMarshaller.marshallJaxBObjectToString(getAllOrganisationRequest);
     }
 

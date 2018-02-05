@@ -727,11 +727,11 @@ public class UserEventServiceBean implements UserEventService {
                 errorEvent.fire( message );
             }
 
-//            GetOrganisationRequest request = JAXBMarshaller.unmarshallTextMessage(message.getJmsMessage(), GetOrganisationRequest.class);
+            GetAllOrganisationRequest request = JAXBMarshaller.unmarshallTextMessage(message.getJmsMessage(), GetAllOrganisationRequest.class);
 
             String responseString;
             try {
-                List<Organisation> organizationList = userService.getAllOrganisations();
+                List<Organisation> organizationList = userService.getAllOrganisations(request);
                 responseString = UserModuleResponseMapper.mapToFindOrganisationsResponse( organizationList );
             } catch (Exception e) {
                 if (e.getCause() != null && e.getCause() instanceof IllegalArgumentException) {

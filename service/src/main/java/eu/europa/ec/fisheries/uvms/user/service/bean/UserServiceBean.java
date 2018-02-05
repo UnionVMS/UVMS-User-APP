@@ -20,6 +20,7 @@ import eu.europa.ec.fisheries.uvms.user.service.ParameterService;
 import eu.europa.ec.fisheries.uvms.user.service.UserService;
 import eu.europa.ec.fisheries.uvms.user.service.converter.*;
 import eu.europa.ec.fisheries.uvms.user.service.exception.UserServiceException;
+import eu.europa.ec.fisheries.wsdl.user.module.GetAllOrganisationRequest;
 import eu.europa.ec.fisheries.wsdl.user.types.*;
 import eu.europa.ec.mare.usm.administration.domain.FindOrganisationsQuery;
 import eu.europa.ec.mare.usm.administration.domain.Paginator;
@@ -35,6 +36,7 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import java.util.ArrayList;
 import java.util.List;
 
 @Stateless
@@ -107,14 +109,14 @@ public class UserServiceBean implements UserService {
     }
 
     @Override
-    public List<Organisation> getAllOrganisations() throws UserServiceException {
-        return OrganisationConverter.convertAdministrationModelToUserModel(organisationService.findOrganisations(USMServiceBuilder.buildAdministrationServieRequest()).getResults());
+    public List<Organisation> getAllOrganisations(GetAllOrganisationRequest request) throws UserServiceException {
+        List<eu.europa.ec.mare.usm.administration.domain.Organisation> organisationList= new ArrayList<eu.europa.ec.mare.usm.administration.domain.Organisation> ();
+            List<eu.europa.ec.mare.usm.administration.domain.Organisation> allOrganisationList= organisationService.findOrganisations(USMServiceBuilder.buildAdministrationServiceRequestForAll(request)).getResults();
+            for (eu.europa.ec.mare.usm.administration.domain.Organisation organisation :allOrganisationList ) {
+                organisationList.add( organisationService.getOrganisation( USMServiceBuilder.buildAdministrationServiceRequestForId(organisation.getOrganisationId(), request)));
+            }
+        return OrganisationConverter.convertAdministrationModelToUserModel(organisationList);
     }
-
-//    @Override
-//    public Organisation getOrganisationDetailsById(String organisationId) throws UserServiceException {
-//        return OrganisationConverter.convertInformationModelToUserModel(informationService.getOrganisation(organisationId));
-//    }
 
     @Override
     public List<Organisation> findOrganisations(String nationIsoName) throws UserServiceException {

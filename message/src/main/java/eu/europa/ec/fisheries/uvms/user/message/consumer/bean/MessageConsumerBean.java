@@ -51,85 +51,85 @@ public class MessageConsumerBean implements MessageListener {
 	
     @Inject
     @GetUserContexEvent
-    Event<EventMessage> getUserContextEvent;
+    private Event<EventMessage> getUserContextEvent;
 
     @Inject
     @UpdateUserContexEvent
-    Event<EventMessage> updateUserContextEvent;    
+    private Event<EventMessage> updateUserContextEvent;
     
 
     @Inject
     @DeployApplicationEvent
-    Event<EventMessage> deployApplicationEvent;
+    private Event<EventMessage> deployApplicationEvent;
 
     @Inject
     @RedeployApplicationEvent
-    Event<EventMessage> redeployApplicationEvent;    
+    private Event<EventMessage> redeployApplicationEvent;
 
     @Inject
     @UndeployApplicationEvent
-    Event<EventMessage> undeployApplicationEvent;
+    private Event<EventMessage> undeployApplicationEvent;
 
     @Inject
     @GetApplicationEvent
-    Event<EventMessage> getApplicationEvent;    
+    private Event<EventMessage> getApplicationEvent;
 
     @Inject
     @GetOrganizationEvent
-    Event<EventMessage> getOrganizationEvent;
+    private Event<EventMessage> getOrganizationEvent;
 
     @Inject
     @GetAllOrganizationEvent
-    Event<EventMessage> getAllOrganizationEvent;
+    private Event<EventMessage> getAllOrganizationEvent;
 
     @Inject
     @FindOrganizationsEvent
-    Event<EventMessage> findOrganizationsEvent;    
+    private Event<EventMessage> findOrganizationsEvent;
     
     @Inject
     @GetContactDetailsEvent
-    Event<EventMessage> getContactDetailsEvent;    
+    private Event<EventMessage> getContactDetailsEvent;
     
     @Inject
     @PutPreferenceEvent
-    Event<EventMessage> putPreferenceEvent; 
+    private Event<EventMessage> putPreferenceEvent;
     
     @Inject
     @CreatePreferenceEvent
-    Event<EventMessage> createPreferenceEvent; 
+    private Event<EventMessage> createPreferenceEvent;
     
     @Inject
     @UpdatePreferenceEvent
-    Event<EventMessage> updatePreferenceEvent; 
+    private Event<EventMessage> updatePreferenceEvent;
     
     @Inject
     @DeletePreferenceEvent
-    Event<EventMessage> deletePreferenceEvent; 
+    private Event<EventMessage> deletePreferenceEvent;
     
     @Inject
     @CreateDatasetEvent
-    Event<EventMessage> createDatasetEvent; 
+    private Event<EventMessage> createDatasetEvent;
     
     @Inject
     @UpdateDatasetEvent
-    Event<EventMessage> updateDatasetEvent; 
+    private Event<EventMessage> updateDatasetEvent;
     
     @Inject
     @DeleteDatasetEvent
-    Event<EventMessage> deleteDatasetEvent; 
+    private Event<EventMessage> deleteDatasetEvent;
     
     @Inject
     @FindDatasetsEvent
-    Event<EventMessage> findDatasetEvent; 
+    private Event<EventMessage> findDatasetEvent;
     
     
     @Inject
     @PingEvent
-    Event<EventMessage> pingEvent;
+    private Event<EventMessage> pingEvent;
     
     @Inject
     @ErrorEvent
-    Event<EventMessage> errorEvent;
+    private Event<EventMessage> errorEvent;
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -169,7 +169,7 @@ public class MessageConsumerBean implements MessageListener {
                     getOrganizationEvent.fire(new EventMessage(textMessage, getOrganisationRequest.getOrganizationName()));
                     break;
                 case GET_ALLORGANISATIONS:
-                    GetAllOrganisationRequest getAllOrganisationRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, GetAllOrganisationRequest.class);
+//                    GetAllOrganisationRequest getAllOrganisationRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, GetAllOrganisationRequest.class);
                     getAllOrganizationEvent.fire(new EventMessage(textMessage));
                     break;
                 case GET_CONTACT_DETAILS:

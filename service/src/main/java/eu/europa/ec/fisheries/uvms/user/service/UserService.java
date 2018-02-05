@@ -15,6 +15,7 @@
 package eu.europa.ec.fisheries.uvms.user.service;
 
 import eu.europa.ec.fisheries.uvms.user.service.exception.UserServiceException;
+import eu.europa.ec.fisheries.wsdl.user.module.GetAllOrganisationRequest;
 import eu.europa.ec.fisheries.wsdl.user.types.*;
 
 import javax.ejb.Local;
@@ -44,9 +45,7 @@ public interface UserService {
     
     public Organisation getOrganisation(String organisationName) throws UserServiceException;
 
-    public List<Organisation> getAllOrganisations() throws UserServiceException;
-
-//    public Organisation getOrganisationDetailsById(String organisationId) throws UserServiceException;
+    public List<Organisation> getAllOrganisations(GetAllOrganisationRequest request) throws UserServiceException;
 
     public List<Organisation> findOrganisations(String nationIsoName) throws UserServiceException;
     

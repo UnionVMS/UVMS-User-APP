@@ -17,6 +17,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="module" module-name="uvms-commons-message" />
     <orderEntry type="module" module-name="user-message" />
     <orderEntry type="module" module-name="uvms-commons-message" />
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:3.2.2" level="project" />
@@ -33,8 +34,8 @@
     <orderEntry type="library" name="Maven: eu.europa.ec.mare.oss.usm:Authentication-http-Rest-Service:war:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: eu.europa.ec.mare.oss.usm:Administration-http-Rest-Service:war:2.0.0" level="project" />
     <orderEntry type="library" name="Maven: eu.europa.ec.mare.oss.usm:Information-Service:2.0.0" level="project" />
-    <orderEntry type="library" name="Maven: eu.europa.ec.mare.oss.usm:jwt-handler-impl:2.0.0" level="project" />
-    <orderEntry type="library" name="Maven: eu.europa.ec.mare.oss.usm:jwt-handler-api:2.0.0" level="project" />
+    <orderEntry type="module" module-name="jwt-handler-impl" />
+    <orderEntry type="module" module-name="jwt-handler-api" />
     <orderEntry type="library" name="Maven: io.jsonwebtoken:jjwt:0.4" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-databind:2.4.2" level="project" />
     <orderEntry type="library" name="Maven: com.fasterxml.jackson.core:jackson-annotations:2.4.0" level="project" />

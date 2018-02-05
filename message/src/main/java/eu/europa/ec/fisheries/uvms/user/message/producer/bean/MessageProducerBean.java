@@ -46,8 +46,8 @@ public class MessageProducerBean implements UserMessageProducer {
 
     final static Logger LOG = LoggerFactory.getLogger(MessageProducerBean.class);
 
-    @Resource(mappedName = MessageConstants.USER_RESPONSE_QUEUE)
-    private Queue responseQueue;
+//    @Resource(mappedName = MessageConstants.USER_RESPONSE_QUEUE)
+//    private Queue responseQueue;
 
     @Resource(lookup = MessageConstants.CONNECTION_FACTORY)
     private ConnectionFactory connectionFactory;

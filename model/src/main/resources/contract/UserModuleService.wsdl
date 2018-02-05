@@ -18,7 +18,6 @@
 					<xsd:enumeration value="GET_CONTACT_DETAILS" />
 					<xsd:enumeration value="GET_ORGANISATIONS" />
 					<xsd:enumeration value="GET_ALLORGANISATIONS" />
-                    <!--<xsd:enumeration value="GET_ORGANISATION_DETAILS_BY_ID" />-->
 					<xsd:enumeration value="FIND_ORGANISATIONS" />
 					<xsd:enumeration value="GET_DEPLOYMENT_DESCRIPTOR" />
 					<xsd:enumeration value="DEPLOY_APPLICATION" />
@@ -175,7 +174,13 @@
 	<xsd:element name="getAllOrganisationRequest">
 		<xsd:complexType>
 			<xsd:complexContent>
-				<xsd:extension base="module:UserBaseRequest"/>
+				<xsd:extension base="module:UserBaseRequest">
+                    <xsd:sequence>
+                        <xsd:element name="requestorName" type="xsd:string" minOccurs="1"/>
+                        <xsd:element name="scopeName" type="xsd:string" minOccurs="1"/>
+                        <xsd:element name="roleName" type="xsd:string" minOccurs="1"/>
+                    </xsd:sequence>
+                </xsd:extension>
 			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>

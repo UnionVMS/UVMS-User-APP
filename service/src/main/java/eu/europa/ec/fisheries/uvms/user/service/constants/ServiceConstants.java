@@ -26,10 +26,4 @@ public class ServiceConstants {
 
     public static final String ORDER_BY_DIRECTION = "DESC";
 
-    public static final String REQUESTOR = "LM";
-
-    public static final String ROLE_NAME = "LM";
-
-    public static final String SCOPE_NAME = "LM";
-
 }
