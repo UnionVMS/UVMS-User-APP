@@ -50,15 +50,15 @@ public class ComponentMessageConsumerBean implements UserMessageConsumer {
     		LOG.error("[ No CorrelationID provided when listening to JMS message, aborting ]");
     		throw new UserMessageException("No CorrelationID provided!");
     	}
-    	
+
         Connection connection=null;
         try {
             connection = connectionFactory.createConnection();
             final Session session = JMSUtils.connectToQueue(connection);
+            try(javax.jms.MessageConsumer messageConsumer = session.createConsumer(responseQueue, "JMSCorrelationID='" + correlationId + "'")) {
 
-
-            return (T) session.createConsumer(responseQueue, "JMSCorrelationID='" + correlationId + "'").receive(ONE_MINUTE);
-
+                return (T) messageConsumer.receive( ONE_MINUTE );
+            }
         } catch (Exception e) {
             LOG.error("[ Error when getting medssage ] {}", e.getMessage());
             throw new UserMessageException("Error when retrieving message: ", e);

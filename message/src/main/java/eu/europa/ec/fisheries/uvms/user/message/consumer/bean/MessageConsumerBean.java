@@ -169,7 +169,6 @@ public class MessageConsumerBean implements MessageListener {
                     getOrganizationEvent.fire(new EventMessage(textMessage, getOrganisationRequest.getOrganizationName()));
                     break;
                 case GET_ALLORGANISATIONS:
-//                    GetAllOrganisationRequest getAllOrganisationRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, GetAllOrganisationRequest.class);
                     getAllOrganizationEvent.fire(new EventMessage(textMessage));
                     break;
                 case GET_CONTACT_DETAILS:
