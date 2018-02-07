@@ -67,7 +67,10 @@ public class MessageProducerBean implements UserMessageProducer {
             message.setJMSCorrelationID(requestMessage.getJMSMessageID());
             message.setText(returnMessage);
 
-            session.createProducer(message.getJMSDestination()).send(message);
+            try (javax.jms.MessageProducer messageProducer = session.createProducer( message.getJMSDestination())) {
+
+                messageProducer.send( message );
+            }
 
         } catch (Exception e) {
             LOG.error("[ Error when sending message. ] {}", e.getMessage());
@@ -99,8 +102,11 @@ public class MessageProducerBean implements UserMessageProducer {
             replyMessage.setText(text);
 
             LOG.info("[ Sending error message back to recipient on queue ] {}", requestMessage.getJMSReplyTo());
+            try (javax.jms.MessageProducer messageProducer = session.createProducer(replyMessage.getJMSDestination())) {
 
-            session.createProducer(replyMessage.getJMSDestination()).send(replyMessage);
+                messageProducer.send(replyMessage);
+            }
+
         } catch (JMSException | ModelMarshallException e) {
             LOG.error("[ Error when sending message. ] {}", e.getMessage());
             throw new UserMessageException("[ Error when sending message. ]", e);
