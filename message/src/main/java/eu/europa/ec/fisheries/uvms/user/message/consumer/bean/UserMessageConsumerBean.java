@@ -14,16 +14,48 @@
  */
 package eu.europa.ec.fisheries.uvms.user.message.consumer.bean;
 
-import eu.europa.ec.fisheries.uvms.user.message.constants.MessageConstants;
-import eu.europa.ec.fisheries.uvms.user.message.event.*;
+import eu.europa.ec.fisheries.uvms.commons.message.api.MessageConstants;
+import eu.europa.ec.fisheries.uvms.user.message.event.CreateDatasetEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.CreatePreferenceEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.DeleteDatasetEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.DeletePreferenceEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.DeployApplicationEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.ErrorEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.FindDatasetsEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.FindOrganizationsEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.GetAllOrganizationEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.GetApplicationEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.GetContactDetailsEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.GetOrganizationEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.GetUserContexEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.PingEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.PutPreferenceEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.RedeployApplicationEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.UndeployApplicationEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.UpdateDatasetEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.UpdatePreferenceEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.UpdateUserContexEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.carrier.EventMessage;
 import eu.europa.ec.fisheries.uvms.user.model.exception.ModelMapperException;
 import eu.europa.ec.fisheries.uvms.user.model.mapper.JAXBMarshaller;
-import eu.europa.ec.fisheries.wsdl.user.module.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
-import javax.annotation.PostConstruct;
+import eu.europa.ec.fisheries.wsdl.user.module.CreateDatasetRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.CreatePreferenceRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.DeleteDatasetRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.DeletePreferenceRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.DeployApplicationRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.FilterDatasetRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.FindOrganisationsRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.GetContactDetailsRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.GetDeploymentDescriptorRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.GetOrganisationRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.GetUserContextRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.PutPreferenceRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.PutUserPreferencesRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.RedeployApplicationRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.UndeployApplicationRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.UpdateDatasetRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.UpdatePreferenceRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.UserBaseRequest;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
 import javax.ejb.TransactionAttribute;
@@ -33,22 +65,19 @@ import javax.inject.Inject;
 import javax.jms.Message;
 import javax.jms.MessageListener;
 import javax.jms.TextMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
-@MessageDriven(mappedName = MessageConstants.USER_MESSAGE_IN_QUEUE, activationConfig = {
-    @ActivationConfigProperty(propertyName = "messagingType", propertyValue = MessageConstants.CONNECTION_TYPE),
-    @ActivationConfigProperty(propertyName = "destinationType", propertyValue = MessageConstants.DESTINATION_TYPE_QUEUE),
-    @ActivationConfigProperty(propertyName = "destination", propertyValue = MessageConstants.USER_MESSAGE_IN_QUEUE_NAME)
+@MessageDriven(mappedName = MessageConstants.QUEUE_USER_IN, activationConfig = {
+    @ActivationConfigProperty(propertyName = MessageConstants.MESSAGING_TYPE_STR, propertyValue = MessageConstants.CONNECTION_TYPE),
+    @ActivationConfigProperty(propertyName = MessageConstants.DESTINATION_TYPE_STR, propertyValue = MessageConstants.DESTINATION_TYPE_QUEUE),
+    @ActivationConfigProperty(propertyName = MessageConstants.DESTINATION_STR, propertyValue = MessageConstants.QUEUE_USER_IN_NAME)
 })
-public class MessageConsumerBean implements MessageListener {
+public class UserMessageConsumerBean implements MessageListener {
 
-    
-	static Logger LOG = null;
-    
-	@PostConstruct
-	private void logInit() {
-		LOG = LoggerFactory.getLogger(MessageConsumerBean.class);
-	}
-	
+	private static Logger LOG = LOG = LoggerFactory.getLogger(UserMessageConsumerBean.class);
+
+
     @Inject
     @GetUserContexEvent
     private Event<EventMessage> getUserContextEvent;
@@ -138,15 +167,14 @@ public class MessageConsumerBean implements MessageListener {
         try {
             LOG.info("Message received in user");
             UserBaseRequest request = JAXBMarshaller.unmarshallTextMessage(textMessage, UserBaseRequest.class);
-            
             switch (request.getMethod()) {
                 case GET_USER_CONTEXT:
                     GetUserContextRequest getUserContextRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, GetUserContextRequest.class);
-                    getUserContextEvent.fire(new EventMessage(textMessage, getUserContextRequest.getContextId().toString()));                    
+                    getUserContextEvent.fire(new EventMessage(textMessage, getUserContextRequest.getContextId().toString()));
                     break;
                 case PUT_USER_PREFERENCES:
                     PutUserPreferencesRequest updateUserContextRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, PutUserPreferencesRequest.class);
-                    updateUserContextEvent.fire(new EventMessage(textMessage, updateUserContextRequest.getContext().getApplicationName()));                    
+                    updateUserContextEvent.fire(new EventMessage(textMessage, updateUserContextRequest.getContext().getApplicationName()));
                     break;
                 case GET_DEPLOYMENT_DESCRIPTOR:
                     GetDeploymentDescriptorRequest deploymentDescriptorRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, GetDeploymentDescriptorRequest.class);
@@ -154,7 +182,7 @@ public class MessageConsumerBean implements MessageListener {
                     break;
                 case DEPLOY_APPLICATION:
                     DeployApplicationRequest deployApplicationRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, DeployApplicationRequest.class);
-                    deployApplicationEvent.fire(new EventMessage(textMessage, deployApplicationRequest.getApplication().toString()));   
+                    deployApplicationEvent.fire(new EventMessage(textMessage, deployApplicationRequest.getApplication().toString()));
                     break;
                 case REDEPLOY_APPLICATION:
                     RedeployApplicationRequest redeployApplicationRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, RedeployApplicationRequest.class);
@@ -162,7 +190,7 @@ public class MessageConsumerBean implements MessageListener {
                     break;
                 case UNDEPLOY_APPLICATION:
                     UndeployApplicationRequest undeployApplicationRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, UndeployApplicationRequest.class);
-                    undeployApplicationEvent.fire(new EventMessage(textMessage, undeployApplicationRequest.getApplicationName()));     
+                    undeployApplicationEvent.fire(new EventMessage(textMessage, undeployApplicationRequest.getApplicationName()));
                     break;
                 case GET_ORGANISATIONS:
                     GetOrganisationRequest getOrganisationRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, GetOrganisationRequest.class);
@@ -176,36 +204,36 @@ public class MessageConsumerBean implements MessageListener {
                     getContactDetailsEvent.fire(new EventMessage(textMessage, getContactDetailsRequest.getUserName()));
                     break;
                 case PUT_PREFERENCE:
-                	PutPreferenceRequest putPreferenceRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, PutPreferenceRequest.class);
-                	putPreferenceEvent.fire(new EventMessage(textMessage, putPreferenceRequest.getUserPreference().toString()));   
+                    PutPreferenceRequest putPreferenceRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, PutPreferenceRequest.class);
+                    putPreferenceEvent.fire(new EventMessage(textMessage, putPreferenceRequest.getUserPreference().toString()));
                     break;
                 case CREATE_PREFERENCE:
-                	CreatePreferenceRequest createPreferenceRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, CreatePreferenceRequest.class);
-                    createPreferenceEvent.fire(new EventMessage(textMessage, createPreferenceRequest.getUserPreference().toString()));   
+                    CreatePreferenceRequest createPreferenceRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, CreatePreferenceRequest.class);
+                    createPreferenceEvent.fire(new EventMessage(textMessage, createPreferenceRequest.getUserPreference().toString()));
                     break;
                 case UPDATE_PREFERENCE:
-                	UpdatePreferenceRequest updatePreferenceRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, UpdatePreferenceRequest.class);
-                    updatePreferenceEvent.fire(new EventMessage(textMessage, updatePreferenceRequest.getUserPreference().toString()));   
+                    UpdatePreferenceRequest updatePreferenceRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, UpdatePreferenceRequest.class);
+                    updatePreferenceEvent.fire(new EventMessage(textMessage, updatePreferenceRequest.getUserPreference().toString()));
                     break;
-                case DELETE_PREFERENCE:	
-                	DeletePreferenceRequest deletePreferenceRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, DeletePreferenceRequest.class);
-                    deletePreferenceEvent.fire(new EventMessage(textMessage, deletePreferenceRequest.getUserPreference().toString()));   
+                case DELETE_PREFERENCE:
+                    DeletePreferenceRequest deletePreferenceRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, DeletePreferenceRequest.class);
+                    deletePreferenceEvent.fire(new EventMessage(textMessage, deletePreferenceRequest.getUserPreference().toString()));
                     break;
                 case CREATE_DATASET:
-                	CreateDatasetRequest createDatasetRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, CreateDatasetRequest.class);
-                    createDatasetEvent.fire(new EventMessage(textMessage, createDatasetRequest.getDataset().toString()));   
+                    CreateDatasetRequest createDatasetRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, CreateDatasetRequest.class);
+                    createDatasetEvent.fire(new EventMessage(textMessage, createDatasetRequest.getDataset().toString()));
                     break;
                 case UPDATE_DATASET:
-                	UpdateDatasetRequest updateDatasetRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, UpdateDatasetRequest.class);
-                   updateDatasetEvent.fire(new EventMessage(textMessage, updateDatasetRequest.getDataset().toString()));   
+                    UpdateDatasetRequest updateDatasetRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, UpdateDatasetRequest.class);
+                    updateDatasetEvent.fire(new EventMessage(textMessage, updateDatasetRequest.getDataset().toString()));
                     break;
                 case DELETE_DATASET:
-                	DeleteDatasetRequest deleteDatasetRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, DeleteDatasetRequest.class);
-                    deleteDatasetEvent.fire(new EventMessage(textMessage, deleteDatasetRequest.getDataset().toString()));   
+                    DeleteDatasetRequest deleteDatasetRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, DeleteDatasetRequest.class);
+                    deleteDatasetEvent.fire(new EventMessage(textMessage, deleteDatasetRequest.getDataset().toString()));
                     break;
                 case FIND_DATASETS:
-                	FilterDatasetRequest filterDatasetRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, FilterDatasetRequest.class);
-                    findDatasetEvent.fire(new EventMessage(textMessage, filterDatasetRequest.getDatasetFilter().toString()));   
+                    FilterDatasetRequest filterDatasetRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, FilterDatasetRequest.class);
+                    findDatasetEvent.fire(new EventMessage(textMessage, filterDatasetRequest.getDatasetFilter().toString()));
                     break;
                 case PING:
                     pingEvent.fire(new EventMessage(textMessage));
@@ -213,12 +241,10 @@ public class MessageConsumerBean implements MessageListener {
                 case FIND_ORGANISATIONS:
                     FindOrganisationsRequest findOrganisationsRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, FindOrganisationsRequest.class);
                     findOrganizationsEvent.fire(new EventMessage(textMessage, findOrganisationsRequest.getNationIsoName()));
-                    break;                    
+                    break;
                 default:
                     break;
             }
-            
-
         } catch (ModelMapperException | NullPointerException e) {
             LOG.error("[ Error when receiving message in user: ]", e);
             errorEvent.fire(new EventMessage(textMessage, "Error when receiving message in user: " + e.getMessage()));
