@@ -14,19 +14,29 @@
  */
 package eu.europa.ec.fisheries.uvms.user.service.entity;
 
-import eu.europa.ec.fisheries.uvms.user.service.constants.ServiceConstants;
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.NamedQuery;
 
 /**
  * The persistent class for the parameter database table.
  *
  */
 @Entity
-@NamedQuery(name = ServiceConstants.FIND_BY_NAME, query = "SELECT p FROM Parameter p WHERE p.paramName = :key")
+@NamedQuery(name = Parameter.FIND_BY_NAME, query = "SELECT p FROM Parameter p WHERE p.paramName = :key")
 public class Parameter implements Serializable {
 
+    public static final String FIND_BY_NAME = "Parameter.findByName";
+
     private static final long serialVersionUID = 1L;
+
+    public Parameter() {
+        super();
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -42,37 +52,27 @@ public class Parameter implements Serializable {
     @Column(name = "param_value")
     private String paramValue;
 
-    public Parameter() {
-    }
-
     public Integer getParamId() {
         return this.paramId;
     }
-
     public void setParamId(Integer paramId) {
         this.paramId = paramId;
     }
-
     public String getParamDescription() {
         return this.paramDescription;
     }
-
     public void setParamDescription(String paramDescription) {
         this.paramDescription = paramDescription;
     }
-
     public String getParamName() {
         return this.paramName;
     }
-
     public void setParamName(String paramName) {
         this.paramName = paramName;
     }
-
     public String getParamValue() {
         return this.paramValue;
     }
-
     public void setParamValue(String paramValue) {
         this.paramValue = paramValue;
     }

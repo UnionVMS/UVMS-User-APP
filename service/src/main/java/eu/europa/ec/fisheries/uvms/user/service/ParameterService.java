@@ -21,8 +21,8 @@ import javax.ejb.Local;
 @Local
 public interface ParameterService {
 
-    public String getStringValue(ParameterKey key) throws UserServiceException;
+    String getStringValue(ParameterKey key) throws UserServiceException;
 
-    public Boolean getBooleanValue(ParameterKey key) throws UserServiceException;
+    Boolean getBooleanValue(ParameterKey key) throws UserServiceException;
 
 }

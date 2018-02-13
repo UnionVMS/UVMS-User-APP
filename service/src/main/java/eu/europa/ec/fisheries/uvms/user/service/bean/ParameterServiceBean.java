@@ -17,7 +17,6 @@ package eu.europa.ec.fisheries.uvms.user.service.bean;
 import eu.europa.ec.fisheries.uvms.user.service.ParameterService;
 import eu.europa.ec.fisheries.uvms.user.service.config.ParameterKey;
 import eu.europa.ec.fisheries.uvms.user.service.entity.Parameter;
-import eu.europa.ec.fisheries.uvms.user.service.constants.ServiceConstants;
 import eu.europa.ec.fisheries.uvms.user.service.exception.InputArgumentException;
 import eu.europa.ec.fisheries.uvms.user.service.exception.UserServiceException;
 import javax.ejb.Stateless;
@@ -37,12 +36,12 @@ public class ParameterServiceBean implements ParameterService {
     final static Logger LOG = LoggerFactory.getLogger(ParameterServiceBean.class);
 
     @PersistenceContext(unitName = "internalPU")
-    EntityManager em;
+    private EntityManager em;
 
     @Override
     public String getStringValue(ParameterKey key) throws UserServiceException {
         try {
-            Query query = em.createNamedQuery(ServiceConstants.FIND_BY_NAME);
+            Query query = em.createNamedQuery(Parameter.FIND_BY_NAME);
             query.setParameter("key", key.getKey());
             Parameter entity = (Parameter) query.getSingleResult();
             return entity.getParamValue();
@@ -55,7 +54,7 @@ public class ParameterServiceBean implements ParameterService {
     @Override
     public Boolean getBooleanValue(ParameterKey key) throws UserServiceException {
         try {
-            Query query = em.createNamedQuery(ServiceConstants.FIND_BY_NAME);
+            Query query = em.createNamedQuery(Parameter.FIND_BY_NAME);
             query.setParameter("key", key.getKey());
             Parameter entity = (Parameter) query.getSingleResult();
             return parseBooleanValue(entity.getParamValue());
@@ -65,7 +64,7 @@ public class ParameterServiceBean implements ParameterService {
         }
     }
 
-    private Boolean parseBooleanValue(String value) throws InputArgumentException, UserServiceException {
+    private Boolean parseBooleanValue(String value) throws UserServiceException {
         try {
             if (value.equalsIgnoreCase("true")) {
                 return Boolean.TRUE;
