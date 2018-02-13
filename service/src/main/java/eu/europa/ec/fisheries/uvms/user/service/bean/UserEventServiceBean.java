@@ -113,7 +113,6 @@ public class UserEventServiceBean implements UserEventService {
             } catch (Exception e) {
                 if (e.getCause() != null && e.getCause() instanceof IllegalArgumentException) {
                     IllegalArgumentException cause = (IllegalArgumentException) e.getCause();
-
                     LOG.debug("Invalid get user context: ", cause.getMessage());
                     responseString = UserModuleResponseMapper.mapToUserFault(cause, UserModuleMethod.GET_USER_CONTEXT);
                 } else {
