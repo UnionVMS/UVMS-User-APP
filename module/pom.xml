@@ -166,28 +166,28 @@
             </ejbModule>
             <webModule>
               <groupId>${project.groupId}</groupId>
-              <context-root>${project.parent.artifactId}</context-root>
+              <context-root>${context.root}${project.parent.artifactId}</context-root>
               <artifactId>user-rest</artifactId>
               <unpack>true</unpack>
             </webModule>
             <webModule>
               <groupId>eu.europa.ec.mare.oss.usm</groupId>
               <artifactId>Information-http-Rest-Service</artifactId>
-              <contextRoot>/usm-information</contextRoot>
+              <contextRoot>${context.root}usm-information</contextRoot>
               <bundleFileName>Information-Rest-Service.war</bundleFileName>
               <unpack>true</unpack>
             </webModule>
             <webModule>
               <groupId>eu.europa.ec.mare.oss.usm</groupId>
               <artifactId>Administration-http-Rest-Service</artifactId>
-              <contextRoot>/usm-administration</contextRoot>
+              <contextRoot>${context.root}usm-administration</contextRoot>
               <bundleFileName>Administration-Rest-Service.war</bundleFileName>
               <unpack>true</unpack>
             </webModule>
             <webModule>
               <groupId>eu.europa.ec.mare.oss.usm</groupId>
               <artifactId>Authentication-http-Rest-Service</artifactId>
-              <contextRoot>/usm-authentication</contextRoot>
+              <contextRoot>${context.root}usm-authentication</contextRoot>
               <bundleFileName>Authentication-Rest-Service.war</bundleFileName>
               <unpack>true</unpack>
             </webModule>
