@@ -14,16 +14,33 @@
  */
 package eu.europa.ec.fisheries.uvms.user.message.consumer.bean;
 
+import eu.europa.ec.fisheries.uvms.commons.message.api.MessageException;
 import eu.europa.ec.fisheries.uvms.commons.message.impl.AbstractConsumer;
+import eu.europa.ec.fisheries.uvms.config.exception.ConfigMessageException;
+import eu.europa.ec.fisheries.uvms.config.message.ConfigMessageConsumer;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 @Stateless
 @LocalBean
-public class ComponentMessageConsumerBean extends AbstractConsumer {
+public class ComponentMessageConsumerBean extends AbstractConsumer implements ConfigMessageConsumer {
+
+    private static final long TIMEOUT = 30000;
 
     @Override
     public String getDestinationName() {
         return eu.europa.ec.fisheries.uvms.commons.message.api.MessageConstants.QUEUE_USER_RESPONSE;
+    }
+
+
+    @Override
+    public <T> T getConfigMessage(String correlationId, Class type) throws ConfigMessageException {
+        try {
+            return getMessage(correlationId, type, TIMEOUT);
+        } catch (MessageException e) {
+            //LOG.error("[ Error when getting message ] {}", e.getMessage());
+            throw new ConfigMessageException("Error when retrieving message: ");
+        }
     }
 }

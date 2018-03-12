@@ -18,9 +18,5 @@
 			<ejb-name>UserEventServiceBean</ejb-name>
 			<interceptor-class>net.bull.javamelody.MonitoringInterceptor</interceptor-class>
 		</interceptor-binding>
-		<interceptor-binding>
-			<ejb-name>ParameterServiceBean</ejb-name>
-			<interceptor-class>net.bull.javamelody.MonitoringInterceptor</interceptor-class>
-		</interceptor-binding>		
 	</assembly-descriptor>
 </ejb-jar>
