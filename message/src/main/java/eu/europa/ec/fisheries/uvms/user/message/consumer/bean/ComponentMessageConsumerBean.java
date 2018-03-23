@@ -14,19 +14,14 @@
  */
 package eu.europa.ec.fisheries.uvms.user.message.consumer.bean;
 
-import eu.europa.ec.fisheries.uvms.commons.message.api.MessageException;
 import eu.europa.ec.fisheries.uvms.commons.message.impl.AbstractConsumer;
-import eu.europa.ec.fisheries.uvms.config.exception.ConfigMessageException;
-import eu.europa.ec.fisheries.uvms.config.message.ConfigMessageConsumer;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
 @Stateless
 @LocalBean
-public class ComponentMessageConsumerBean extends AbstractConsumer implements ConfigMessageConsumer {
-
-    private static final long TIMEOUT = 30000;
+public class ComponentMessageConsumerBean extends AbstractConsumer {
 
     @Override
     public String getDestinationName() {
@@ -34,13 +29,4 @@ public class ComponentMessageConsumerBean extends AbstractConsumer implements Co
     }
 
 
-    @Override
-    public <T> T getConfigMessage(String correlationId, Class type) throws ConfigMessageException {
-        try {
-            return getMessage(correlationId, type, TIMEOUT);
-        } catch (MessageException e) {
-            //LOG.error("[ Error when getting message ] {}", e.getMessage());
-            throw new ConfigMessageException("Error when retrieving message: ");
-        }
-    }
 }

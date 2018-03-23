@@ -16,44 +16,32 @@ package eu.europa.ec.fisheries.uvms.user.message.producer.bean;
 
 import eu.europa.ec.fisheries.uvms.commons.message.api.MessageException;
 import eu.europa.ec.fisheries.uvms.commons.message.impl.AbstractProducer;
-import eu.europa.ec.fisheries.uvms.commons.message.impl.JMSUtils;
-import eu.europa.ec.fisheries.uvms.config.constants.ConfigConstants;
-import eu.europa.ec.fisheries.uvms.config.exception.ConfigMessageException;
-import eu.europa.ec.fisheries.uvms.config.message.ConfigMessageProducer;
 import eu.europa.ec.fisheries.uvms.user.message.event.ErrorEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.carrier.EventMessage;
 import eu.europa.ec.fisheries.uvms.user.model.exception.ModelMarshallException;
 import eu.europa.ec.fisheries.uvms.user.model.mapper.JAXBMarshaller;
 import eu.europa.ec.fisheries.wsdl.user.types.UserFault;
 import java.math.BigInteger;
-import javax.annotation.PostConstruct;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.enterprise.event.Observes;
-import javax.jms.Queue;
 import javax.jms.TextMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Stateless
 @LocalBean
-public class UserMessageProducerBean extends AbstractProducer implements ConfigMessageProducer {
+public class UserMessageProducerBean extends AbstractProducer {
 
     final static Logger LOG = LoggerFactory.getLogger(UserMessageProducerBean.class);
 
-    private Queue configQueue;
 
-
-    @PostConstruct
-    public void init() {
-        configQueue = JMSUtils.lookupQueue(ConfigConstants.CONFIG_MESSAGE_IN_QUEUE);
-    }
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void sendMessageBackToRecipient(TextMessage requestMessage, String returnMessage) throws MessageException {
         sendResponseMessageToSender(requestMessage, returnMessage);
-    }    
+    }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void sendErrorMessageBackToRecipient(@Observes @ErrorEvent EventMessage message) throws MessageException {
@@ -76,13 +64,4 @@ public class UserMessageProducerBean extends AbstractProducer implements ConfigM
         return eu.europa.ec.fisheries.uvms.commons.message.api.MessageConstants.QUEUE_USER_RESPONSE;
     }
 
-    @Override
-    public String sendConfigMessage(String text) throws ConfigMessageException {
-        try {
-            return sendModuleMessage(text, configQueue);
-        } catch (MessageException e) {
-            LOG.error("[ Error when sending config message. ] {}", e.getMessage());
-            throw new ConfigMessageException("[ Error when sending config message. ]");
-        }
-    }
 }
