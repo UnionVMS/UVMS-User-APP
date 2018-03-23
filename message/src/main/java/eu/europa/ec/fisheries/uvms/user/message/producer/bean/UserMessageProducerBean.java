@@ -37,10 +37,11 @@ public class UserMessageProducerBean extends AbstractProducer {
 
     final static Logger LOG = LoggerFactory.getLogger(UserMessageProducerBean.class);
 
+
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void sendMessageBackToRecipient(TextMessage requestMessage, String returnMessage) throws MessageException {
         sendResponseMessageToSender(requestMessage, returnMessage);
-    }    
+    }
 
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void sendErrorMessageBackToRecipient(@Observes @ErrorEvent EventMessage message) throws MessageException {
@@ -62,4 +63,5 @@ public class UserMessageProducerBean extends AbstractProducer {
     public String getDestinationName() {
         return eu.europa.ec.fisheries.uvms.commons.message.api.MessageConstants.QUEUE_USER_RESPONSE;
     }
+
 }

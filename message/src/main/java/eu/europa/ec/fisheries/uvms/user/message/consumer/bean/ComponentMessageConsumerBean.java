@@ -15,6 +15,7 @@
 package eu.europa.ec.fisheries.uvms.user.message.consumer.bean;
 
 import eu.europa.ec.fisheries.uvms.commons.message.impl.AbstractConsumer;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 
@@ -26,4 +27,6 @@ public class ComponentMessageConsumerBean extends AbstractConsumer {
     public String getDestinationName() {
         return eu.europa.ec.fisheries.uvms.commons.message.api.MessageConstants.QUEUE_USER_RESPONSE;
     }
+
+
 }
