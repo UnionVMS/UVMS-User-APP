@@ -79,5 +79,10 @@
   <changeSet author="james" id="tag-1.10">
     <tagDatabase tag="version_1.10"/>
   </changeSet>
+
+  <include file="changelog/v2.0.11/add-indexes-for-foreign-keys.xml"/>
+  <changeSet author="stihft" id="tag-2.0.11">
+    <tagDatabase tag="version_2.0.11"/>
+  </changeSet>
     
 </databaseChangeLog>

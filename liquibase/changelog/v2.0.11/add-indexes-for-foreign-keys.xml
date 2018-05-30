@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+    <changeSet author="stihft" id="addIndexOnTableApplication_tAndColumnParent_id">
+        <createIndex
+                indexName="application_t_i_1"
+                tableName="application_t">
+            <column name="parent_id" type="integer"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex
+                    indexName="application_t_i_1"
+                    tableName="application_t"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet author="stihft" id="addIndexOnTablePassword_hist_tAndColumnUser_id">
+        <createIndex
+                indexName="password_hist_t_i_1"
+                tableName="password_hist_t">
+            <column name="user_id" type="integer"/>
+        </createIndex>
+
+        <rollback>
+            <dropIndex
+                    indexName="password_hist_t_i_1"
+                    tableName="password_hist_t"/>
+        </rollback>
+    </changeSet>
+
+</databaseChangeLog>
