@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+
+
+  <changeSet id="create_vms_admin_uvms_all_features" author="andreas" context="test" runInTransaction="true" failOnError="true">
+    	<loadData tableName="PERSON_T" file="/test/uvms_csv/PERSON_T.csv"></loadData>
+    	<loadData tableName="USER_T" file="/test/uvms_csv/USER_T.csv"></loadData>
+    	<loadData tableName="ROLE_T" file="/test/uvms_csv/ROLE_T.csv"></loadData>
+    	<loadData tableName="USER_CONTEXT_T" file="/test/uvms_csv/USER_CONTEXT_T.csv"></loadData>
+		<loadData tableName="PERMISSION_T" file="/test/uvms_csv/PERMISSION_T.csv"></loadData>
+  </changeSet>
+
+</databaseChangeLog>
