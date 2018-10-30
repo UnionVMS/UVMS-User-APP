@@ -161,7 +161,6 @@ public class UserMessageConsumerBean implements MessageListener {
     private Event<EventMessage> errorEvent;
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void onMessage(Message message) {
         TextMessage textMessage = (TextMessage) message;
         try {

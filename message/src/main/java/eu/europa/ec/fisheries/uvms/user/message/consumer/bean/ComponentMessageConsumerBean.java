@@ -28,5 +28,4 @@ public class ComponentMessageConsumerBean extends AbstractConsumer {
         return eu.europa.ec.fisheries.uvms.commons.message.api.MessageConstants.QUEUE_USER_RESPONSE;
     }
 
-
 }
