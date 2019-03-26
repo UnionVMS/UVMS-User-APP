@@ -21,15 +21,16 @@ import eu.europa.ec.fisheries.uvms.user.message.event.carrier.EventMessage;
 import eu.europa.ec.fisheries.uvms.user.model.exception.ModelMarshallException;
 import eu.europa.ec.fisheries.uvms.user.model.mapper.JAXBMarshaller;
 import eu.europa.ec.fisheries.wsdl.user.types.UserFault;
-import java.math.BigInteger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.ejb.TransactionAttribute;
 import javax.ejb.TransactionAttributeType;
 import javax.enterprise.event.Observes;
 import javax.jms.TextMessage;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.math.BigInteger;
 
 @Stateless
 @LocalBean
