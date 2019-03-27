@@ -14,19 +14,17 @@
  */
 package eu.europa.ec.fisheries.uvms.user.rest;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import javax.ws.rs.ApplicationPath;
-import javax.ws.rs.core.Application;
-
-import eu.europa.ec.fisheries.uvms.user.service.UserService;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import eu.europa.ec.fisheries.uvms.user.rest.constants.RestConstants;
 import eu.europa.ec.fisheries.uvms.user.rest.service.ApplicationResource;
 import eu.europa.ec.fisheries.uvms.user.rest.service.InformationResource;
+import eu.europa.ec.fisheries.uvms.user.rest.service.UserResource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.ws.rs.ApplicationPath;
+import javax.ws.rs.core.Application;
+import java.util.HashSet;
+import java.util.Set;
 
 @ApplicationPath(RestConstants.MODULE_REST)
 public class RestActivator extends Application {
@@ -39,7 +37,7 @@ public class RestActivator extends Application {
     public RestActivator() {
         set.add(InformationResource.class);
         set.add(ApplicationResource.class);
-        set.add(UserService.class);
+        set.add(UserResource.class);
         LOG.info(RestConstants.MODULE_NAME + " module starting up");
     }
 
