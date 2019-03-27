@@ -20,6 +20,7 @@ import java.util.Set;
 import javax.ws.rs.ApplicationPath;
 import javax.ws.rs.core.Application;
 
+import eu.europa.ec.fisheries.uvms.user.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -38,6 +39,7 @@ public class RestActivator extends Application {
     public RestActivator() {
         set.add(InformationResource.class);
         set.add(ApplicationResource.class);
+        set.add(UserService.class);
         LOG.info(RestConstants.MODULE_NAME + " module starting up");
     }
 
