@@ -119,7 +119,7 @@
 					<groupId>org.liquibase</groupId>
 					<artifactId>liquibase-maven-plugin</artifactId>
 					<version>3.5.3</version>
-					<configuration>
+					<configuration combine.self="override">
 						<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
 						<changeLogFile>changelog/db-changelog-master.xml</changeLogFile>
 						<driver>${db.driver}</driver>
