@@ -51,18 +51,18 @@
 			<scope>test</scope>
 		</dependency>
 		<dependency>
-	      	<groupId>eu.europa.ec.mare.oss.usm</groupId>
+	      	<groupId>eu.europa.ec.mare.usm</groupId>
 	      	<artifactId>Information-Model</artifactId>
 	      	<version>${usm.information.version}</version>
 	    </dependency>
 		<dependency>
-	      	<groupId>eu.europa.ec.mare.oss.usm</groupId>
+	      	<groupId>eu.europa.ec.mare.usm</groupId>
 	      	<artifactId>Information-Service</artifactId>
 	      	<version>${usm.information.version}</version>
           <scope>provided</scope>
 	    </dependency>
         <dependency>
-            <groupId>eu.europa.ec.mare.oss.usm</groupId>
+            <groupId>eu.europa.ec.mare.usm</groupId>
             <artifactId>Administration-Service</artifactId>
             <version>${usm.administration.version}</version>
             <scope>provided</scope>
