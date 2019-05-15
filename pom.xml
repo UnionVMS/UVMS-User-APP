@@ -16,10 +16,10 @@
   <properties>
     <javaee.version>8.0</javaee.version>
     <swagger.version>1.3.1</swagger.version>
-    <usm.information.version>2.1.5</usm.information.version>
-    <usm.jwt-handler.version>2.1.5</usm.jwt-handler.version>
-    <usm.authentication.version>2.1.5</usm.authentication.version>
-    <usm.administration.version>2.1.5</usm.administration.version>
+    <usm.information.version>2.1.6</usm.information.version>
+    <usm.jwt-handler.version>2.1.6</usm.jwt-handler.version>
+    <usm.authentication.version>2.1.6</usm.authentication.version>
+    <usm.administration.version>2.1.6</usm.administration.version>
     <uvms.logger.version>1.2.0</uvms.logger.version>
     <uvms.commons.version>3.0.29</uvms.commons.version>
   </properties>
