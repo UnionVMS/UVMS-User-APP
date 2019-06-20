@@ -41,7 +41,7 @@ public class UserMessageProducerBean extends AbstractProducer {
         sendResponseMessageToSender(requestMessage, returnMessage);
     }
 
-    public void sendErrorMessageBackToRecipient(@Observes @ErrorEvent EventMessage message) throws JMSException {
+    public void sendErrorMessageBackToRecipient(@Observes @ErrorEvent EventMessage message) {
         try {
             TextMessage requestMessage = message.getJmsMessage();
             UserFault userFault = new UserFault();
@@ -50,9 +50,8 @@ public class UserMessageProducerBean extends AbstractProducer {
             String text = JAXBMarshaller.marshallJaxBObjectToString(userFault);
             sendResponseMessageToSender(requestMessage, text);
 
-        } catch (ModelMarshallException e) {
-            LOG.error("[ Error when sending message. ] {}", e.getMessage());
-            throw new JMSException("Error when sending message. " + e.getMessage());
+        } catch (ModelMarshallException | JMSException e) {
+            LOG.error("Error when sending error message.", e);
         }
     }
 
