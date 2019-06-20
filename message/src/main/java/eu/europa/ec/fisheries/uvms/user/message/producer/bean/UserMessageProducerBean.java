@@ -14,7 +14,6 @@
  */
 package eu.europa.ec.fisheries.uvms.user.message.producer.bean;
 
-import eu.europa.ec.fisheries.uvms.commons.message.api.MessageException;
 import eu.europa.ec.fisheries.uvms.commons.message.impl.AbstractProducer;
 import eu.europa.ec.fisheries.uvms.user.message.event.ErrorEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.carrier.EventMessage;
@@ -26,9 +25,9 @@ import org.slf4j.LoggerFactory;
 
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.enterprise.event.Observes;
+import javax.jms.Destination;
+import javax.jms.JMSException;
 import javax.jms.TextMessage;
 import java.math.BigInteger;
 
@@ -36,16 +35,13 @@ import java.math.BigInteger;
 @LocalBean
 public class UserMessageProducerBean extends AbstractProducer {
 
-    final static Logger LOG = LoggerFactory.getLogger(UserMessageProducerBean.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserMessageProducerBean.class);
 
-
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void sendMessageBackToRecipient(TextMessage requestMessage, String returnMessage) throws MessageException {
+    public void sendMessageBackToRecipient(TextMessage requestMessage, String returnMessage) throws JMSException {
         sendResponseMessageToSender(requestMessage, returnMessage);
     }
 
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
-    public void sendErrorMessageBackToRecipient(@Observes @ErrorEvent EventMessage message) throws MessageException {
+    public void sendErrorMessageBackToRecipient(@Observes @ErrorEvent EventMessage message) throws JMSException {
         try {
             TextMessage requestMessage = message.getJmsMessage();
             UserFault userFault = new UserFault();
@@ -56,13 +52,13 @@ public class UserMessageProducerBean extends AbstractProducer {
 
         } catch (ModelMarshallException e) {
             LOG.error("[ Error when sending message. ] {}", e.getMessage());
-            throw new MessageException("[ Error when sending message. ]", e);
+            throw new JMSException("Error when sending message. " + e.getMessage());
         }
     }
 
     @Override
-    public String getDestinationName() {
-        return eu.europa.ec.fisheries.uvms.commons.message.api.MessageConstants.QUEUE_USER_RESPONSE;
+    public Destination getDestination() {
+        return null;
     }
 
 }
