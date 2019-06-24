@@ -38,7 +38,7 @@ import javax.jms.TextMessage;
 })
 public class UserMessageConsumerBean implements MessageListener {
 
-	private static Logger LOG = LOG = LoggerFactory.getLogger(UserMessageConsumerBean.class);
+	private static final Logger LOG = LoggerFactory.getLogger(UserMessageConsumerBean.class);
 
 
     @Inject

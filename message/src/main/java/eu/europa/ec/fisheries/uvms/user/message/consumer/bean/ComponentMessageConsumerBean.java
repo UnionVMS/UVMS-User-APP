@@ -14,19 +14,23 @@
  */
 package eu.europa.ec.fisheries.uvms.user.message.consumer.bean;
 
+import eu.europa.ec.fisheries.uvms.commons.message.api.MessageConstants;
 import eu.europa.ec.fisheries.uvms.commons.message.impl.AbstractConsumer;
-
+import javax.annotation.Resource;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.jms.Destination;
+import javax.jms.Queue;
 
 @Stateless
 @LocalBean
 public class ComponentMessageConsumerBean extends AbstractConsumer {
 
+    @Resource(mappedName = "java:/" + MessageConstants.QUEUE_USER_RESPONSE)
+    private Queue destination;
+
     @Override
-    public String getDestinationName() {
-        return eu.europa.ec.fisheries.uvms.commons.message.api.MessageConstants.QUEUE_USER_RESPONSE;
+    public Destination getDestination() {
+        return destination;
     }
-
-
 }

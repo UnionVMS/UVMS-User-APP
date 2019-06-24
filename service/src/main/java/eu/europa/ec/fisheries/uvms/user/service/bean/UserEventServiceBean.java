@@ -14,7 +14,6 @@
  */
 package eu.europa.ec.fisheries.uvms.user.service.bean;
 
-import eu.europa.ec.fisheries.uvms.commons.message.api.MessageException;
 import eu.europa.ec.fisheries.uvms.user.message.event.CreateDatasetEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.CreatePreferenceEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.DeleteDatasetEvent;
@@ -72,18 +71,17 @@ import eu.europa.ec.fisheries.wsdl.user.types.UserContext;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.enterprise.event.Event;
 import javax.enterprise.event.Observes;
 import javax.inject.Inject;
+import javax.jms.JMSException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 @Stateless
 public class UserEventServiceBean implements UserEventService {
 
-    final static Logger LOG = LoggerFactory.getLogger(UserEventServiceBean.class);
+    private static final Logger LOG = LoggerFactory.getLogger(UserEventServiceBean.class);
 
     @Inject
     @ErrorEvent
@@ -96,7 +94,6 @@ public class UserEventServiceBean implements UserEventService {
     private UserMessageProducerBean messageProducer;
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void getUserContext(@Observes @GetUserContexEvent EventMessage message) {
         LOG.info("GetUserContexEvent Received.. processing request in UserEventServiceBean");
         try {
@@ -120,7 +117,7 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when get user context ] ", ex);
             errorEvent.fire(message);
         }
@@ -128,7 +125,6 @@ public class UserEventServiceBean implements UserEventService {
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void updateUserPreferences(@Observes @UpdateUserContexEvent EventMessage message) {
         LOG.info("GetUserContexEvent Received.. processing request in UserEventServiceBean");
         try {
@@ -153,7 +149,7 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when put user preferences ] ", ex);
             errorEvent.fire(message);
         }
@@ -161,7 +157,6 @@ public class UserEventServiceBean implements UserEventService {
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void deployApplication(@Observes @DeployApplicationEvent EventMessage message) {
         LOG.info("deployApplication Received.. processing request in UserEventServiceBean");
         try {
@@ -186,14 +181,13 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when deploy application ] ", ex);
             errorEvent.fire(message);
         }
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void redeployApplication(@Observes @RedeployApplicationEvent EventMessage message) {
         LOG.info("redeployApplication Received.. processing request in UserEventServiceBean");
         try {
@@ -218,14 +212,13 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when redeploy application ] ", ex);
             errorEvent.fire(message);
         }
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void undeployApplication(@Observes @UndeployApplicationEvent EventMessage message) {
         LOG.info("undeployApplication Received.. processing request in UserEventServiceBean");
         try {
@@ -250,14 +243,13 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when undeploy application ] ", ex);
             errorEvent.fire(message);
         }
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void getApplication(@Observes @GetApplicationEvent EventMessage message) {
         LOG.info("getApplication Received.. processing request in UserEventServiceBean");
         try {
@@ -282,14 +274,13 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when get deployment descriptor ] ", ex);
             errorEvent.fire(message);
         }
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void getOrganisation(@Observes @GetOrganizationEvent EventMessage message) {
         LOG.info("getOrganization Received.. processing request in UserEventServiceBean");
         try {
@@ -314,14 +305,13 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when get organisations ] ", ex);
             errorEvent.fire(message);
         }
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void findOrganisations(@Observes @FindOrganizationsEvent EventMessage message) {
         LOG.info("finsOrganizations Received.. processing request in UserEventServiceBean");
         try {
@@ -348,14 +338,13 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when get organisations ] ", ex);
             errorEvent.fire(message);
         }
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void getContactDetails(@Observes @GetContactDetailsEvent EventMessage message) {
         LOG.info("getContactDetails Received.. processing request in UserEventServiceBean");
         try {
@@ -380,7 +369,7 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when getting contact details ] ", ex);
             errorEvent.fire(message);
         }
@@ -392,7 +381,7 @@ public class UserEventServiceBean implements UserEventService {
             PingResponse pingResponse = new PingResponse();
             pingResponse.setResponse("pong");
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), JAXBMarshaller.marshallJaxBObjectToString(pingResponse));
-        } catch (MessageException | ModelMarshallException ex) {
+        } catch (JMSException | ModelMarshallException ex) {
             LOG.error("[ Error when marshalling ping response ]", ex);
             errorEvent.fire(message);
         }
@@ -428,7 +417,7 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when put preference ] ", ex);
             errorEvent.fire(message);
         }
@@ -459,7 +448,7 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when create preference ] ", ex);
             errorEvent.fire(message);
         }
@@ -490,7 +479,7 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when delete preference ] ", ex);
             errorEvent.fire(message);
         }
@@ -521,7 +510,7 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when Update preference ] ", ex);
             errorEvent.fire(message);
         }
@@ -552,7 +541,7 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when create dataset ] ", ex);
             errorEvent.fire(message);
         }
@@ -583,7 +572,7 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when delete dataset ] ", ex);
             errorEvent.fire(message);
         }
@@ -614,7 +603,7 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when update dataset ] ", ex);
             errorEvent.fire(message);
         }
@@ -645,14 +634,13 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when find datasets ] ", ex);
             errorEvent.fire(message);
         }
     }
 
     @Override
-    @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
     public void getAllOrganisation(@Observes @GetAllOrganizationEvent EventMessage message) {
         LOG.info("getAllOrganization Received.. processing request in UserEventServiceBean");
         try {
@@ -677,7 +665,7 @@ public class UserEventServiceBean implements UserEventService {
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (MessageException | ModelMarshallException | UserServiceException ex) {
+        } catch (JMSException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when get all organisations ] ", ex);
             errorEvent.fire(message);
         }
