@@ -89,5 +89,10 @@
   <changeSet author="andreas" id="tag-2.0.12">
     <tagDatabase tag="version_2.0.12"/>
   </changeSet>
+
+  <include file="changelog/v2.0.20/db-changelog-application_2.0.20.xml"/>
+  <changeSet author="peerik" id="tag-2.0.20">
+    <tagDatabase tag="version_2.0.20"/>
+  </changeSet>
     
 </databaseChangeLog>
