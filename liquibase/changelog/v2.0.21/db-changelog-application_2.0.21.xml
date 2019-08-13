@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd
+           http://www.liquibase.org/xml/ns/dbchangelog-ext 
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <changeSet author="joemat" id="add_more_frontend_applications" context="test" runInTransaction="true"
+    failOnError="true">
+        <insert tableName="application_t">
+            <column name="application_id" valueNumeric="14"/>
+            <column name="name" value="VMSMapSettings"/>
+            <column name="description" value="VMS Map Settings"/>
+            <column name="created_by" value="USM"/>
+            <column name="created_on" valueDate="now()"/>
+            <column name="modified_by" value="USM"/>
+            <column name="modified_on" valueDate="now()"/>
+            <column name="parent_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="option_t">
+            <column name="option_id" valueNumeric="7"/>
+            <column name="name" value="settings"/>
+            <column name="description" value="VMS Map Settings"/>
+            <column name="data_type" value="String"/>
+            <column name="default_value" value="SYSTEM_DEFAULT_VALUE" type="BLOB"/>
+            <column name="application_id" valueNumeric="14"/>
+            <column name="group_name" value="VMS Map Settings"/>
+        </insert>
+
+
+        <insert tableName="application_t">
+            <column name="application_id" valueNumeric="15"/>
+            <column name="name" value="VMSUserSettings"/>
+            <column name="description" value="VMS User Settings"/>
+            <column name="created_by" value="USM"/>
+            <column name="created_on" valueDate="now()"/>
+            <column name="modified_by" value="USM"/>
+            <column name="modified_on" valueDate="now()"/>
+            <column name="parent_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="option_t">
+            <column name="option_id" valueNumeric="8"/>
+            <column name="name" value="settings"/>
+            <column name="description" value="VMS User Settings"/>
+            <column name="data_type" value="String"/>
+            <column name="default_value" value="SYSTEM_DEFAULT_VALUE" type="BLOB"/>
+            <column name="application_id" valueNumeric="15"/>
+            <column name="group_name" value="VMSUserSettings"/>
+        </insert>
+
+
+        <insert tableName="application_t">
+            <column name="application_id" valueNumeric="16"/>
+            <column name="name" value="VMSSearchBookmarks"/>
+            <column name="description" value="VMS Search Bookmarks"/>
+            <column name="created_by" value="USM"/>
+            <column name="created_on" valueDate="now()"/>
+            <column name="modified_by" value="USM"/>
+            <column name="modified_on" valueDate="now()"/>
+            <column name="parent_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="option_t">
+            <column name="option_id" valueNumeric="9"/>
+            <column name="name" value="settings"/>
+            <column name="description" value="VMS Search Bookmarks"/>
+            <column name="data_type" value="String"/>
+            <column name="default_value" value="SYSTEM_DEFAULT_VALUE" type="BLOB"/>
+            <column name="application_id" valueNumeric="16"/>
+            <column name="group_name" value="VMSSearchBookmarks"/>
+        </insert>
+
+
+        <insert tableName="application_t">
+            <column name="application_id" valueNumeric="17"/>
+            <column name="name" value="VMSMapFilters"/>
+            <column name="description" value="VMS Map Filters"/>
+            <column name="created_by" value="USM"/>
+            <column name="created_on" valueDate="now()"/>
+            <column name="modified_by" value="USM"/>
+            <column name="modified_on" valueDate="now()"/>
+            <column name="parent_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="option_t">
+            <column name="option_id" valueNumeric="10"/>
+            <column name="name" value="settings"/>
+            <column name="description" value="VMSMapFilters"/>
+            <column name="data_type" value="String"/>
+            <column name="default_value" value="SYSTEM_DEFAULT_VALUE" type="BLOB"/>
+            <column name="application_id" valueNumeric="17"/>
+            <column name="group_name" value="VMS Map Filters"/>
+        </insert>
+    
+    <rollback>
+      <sql><![CDATA[delete from APPLICATION_T where APPLICATION_ID = 14]]></sql>
+      <sql><![CDATA[Delete from option_t where option_id = 7]]></sql>
+
+        <sql><![CDATA[delete from APPLICATION_T where APPLICATION_ID = 15]]></sql>
+        <sql><![CDATA[Delete from option_t where option_id = 8]]></sql>
+
+        <sql><![CDATA[delete from APPLICATION_T where APPLICATION_ID = 16]]></sql>
+        <sql><![CDATA[Delete from option_t where option_id = 9]]></sql>
+
+        <sql><![CDATA[delete from APPLICATION_T where APPLICATION_ID = 17]]></sql>
+        <sql><![CDATA[Delete from option_t where option_id = 10]]></sql>
+    </rollback>
+    </changeSet>
+</databaseChangeLog>
