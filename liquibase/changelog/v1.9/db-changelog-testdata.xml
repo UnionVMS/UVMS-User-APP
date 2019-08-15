@@ -3,7 +3,8 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"
+         logicalFilePath="changelog/v1.9/db-changelog-testdata.xml">
   
   <changeSet id="policies_authentication_ldap_query_attributes_description" author="emdouniat" runInTransaction="true" failOnError="true">
     <update tableName="policy_t">

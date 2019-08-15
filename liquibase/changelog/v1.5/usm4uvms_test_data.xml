@@ -6,7 +6,8 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd
            http://www.liquibase.org/xml/ns/dbchangelog-ext 
-           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd"
+           logicalFilePath="changelog/v1.5/usm4uvms_test_data.xml">
            
     <changeSet author="georgige (generated)" id="1443537166505-1" context="test">
         <insert tableName="application_t">

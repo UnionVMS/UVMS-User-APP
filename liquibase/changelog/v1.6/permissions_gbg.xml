@@ -6,7 +6,8 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd
            http://www.liquibase.org/xml/ns/dbchangelog-ext 
-           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd"
+           logicalFilePath="changelog/v1.6/permissions_gbg.xml">
 
     <!-- note that these are simply defining string properties that we will use with the valueComputed attribute -->
     <property name="usm_admin_role_id" value="(select r.ROLE_ID from ROLE_T r where r.NAME='USM Administrator')" />
