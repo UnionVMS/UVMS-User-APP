@@ -3,7 +3,8 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
-         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
+         http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd"
+         logicalFilePath="changelog/v1.8/db-changelog-testdata.xml">
   
   <changeSet id="why_do_users_need_viewConfig_to_read_globalSettings" author="emkrogean" context="test" runInTransaction="true" failOnError="true">
 

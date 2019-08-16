@@ -6,20 +6,20 @@
          http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.1.xsd">
 
          	
-    <include file="/schema/triggers/application_triggers.xml"/>
-		<include file="/schema/triggers/person_triggers.xml"/>      
-		<include file="/schema/triggers/scope_triggers.xml"/>
-        <include file="/schema/triggers/organisation_triggers.xml"/>        
-        <include file="/schema/triggers/end_point_triggers.xml"/>
-        <include file="/schema/triggers/feature_triggers.xml"/>
-        <include file="/schema/triggers/option_triggers.xml"/>
-        <include file="/schema/triggers/dataset_triggers.xml"/>
-        <include file="/schema/triggers/policy_triggers.xml"/>
-        <include file="/schema/triggers/role_triggers.xml"/>
-        <include file="/schema/triggers/user_triggers.xml"/>
-        <include file="/schema/triggers/user_role_triggers.xml"/>
-        <include file="/schema/triggers/preference_triggers.xml"/>
-        <include file="/schema/triggers/challenge_triggers.xml"/>
-        <include file="/schema/triggers/password_hist_triggers.xml"/>
+    <include file="../../schema/triggers/application_triggers.xml" relativeToChangelogFile="true"/>
+		<include file="../../schema/triggers/person_triggers.xml" relativeToChangelogFile="true"/>      
+		<include file="../../schema/triggers/scope_triggers.xml" relativeToChangelogFile="true"/>
+        <include file="../../schema/triggers/organisation_triggers.xml" relativeToChangelogFile="true"/>        
+        <include file="../../schema/triggers/end_point_triggers.xml" relativeToChangelogFile="true"/>
+        <include file="../../schema/triggers/feature_triggers.xml" relativeToChangelogFile="true"/>
+        <include file="../../schema/triggers/option_triggers.xml" relativeToChangelogFile="true"/>
+        <include file="../../schema/triggers/dataset_triggers.xml" relativeToChangelogFile="true"/>
+        <include file="../../schema/triggers/policy_triggers.xml" relativeToChangelogFile="true"/>
+        <include file="../../schema/triggers/role_triggers.xml" relativeToChangelogFile="true"/>
+        <include file="../../schema/triggers/user_triggers.xml" relativeToChangelogFile="true"/>
+        <include file="../../schema/triggers/user_role_triggers.xml" relativeToChangelogFile="true"/>
+        <include file="../../schema/triggers/preference_triggers.xml" relativeToChangelogFile="true"/>
+        <include file="../../schema/triggers/challenge_triggers.xml" relativeToChangelogFile="true"/>
+        <include file="../../schema/triggers/password_hist_triggers.xml" relativeToChangelogFile="true"/>
         
 </databaseChangeLog>

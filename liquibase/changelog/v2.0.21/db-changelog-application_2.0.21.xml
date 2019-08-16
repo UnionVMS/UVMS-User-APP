@@ -6,7 +6,8 @@
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
            http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd
            http://www.liquibase.org/xml/ns/dbchangelog-ext 
-           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd"
+           logicalFilePath="changelog/v2.0.21/db-changelog-application_2.0.21.xml">
 
     <changeSet author="joemat" id="add_more_frontend_applications" context="test" runInTransaction="true"
     failOnError="true">
