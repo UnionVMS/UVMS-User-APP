@@ -77,25 +77,6 @@
       <version>${usm.jwt-handler.version}</version>
     </dependency>
     <dependency>
-      <groupId>eu.europa.ec.mare.oss.auditing</groupId>
-      <artifactId>Uvms-Logger</artifactId>
-      <version>${uvms.logger.version}</version>
-      <exclusions>
-      	<exclusion>
-      		<groupId>org.slf4j</groupId>
-      		<artifactId>slf4j-api</artifactId>
-      	</exclusion>
-        <!-- exclusion>
-          <groupId>eu.europa.ec.fisheries.uvms.audit</groupId>
-          <artifactId>audit-model</artifactId>
-        </exclusion -->
-        <exclusion>
-        	<groupId>ch.qos.logback</groupId>
-        	<artifactId>logback-classic</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
       <groupId>eu.europa.ec.mare.usm</groupId>
       <artifactId>Authentication-Service</artifactId>
       <version>${usm.authentication.version}</version>
