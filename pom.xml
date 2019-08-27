@@ -19,8 +19,7 @@
     <usm.jwt-handler.version>2.1.10</usm.jwt-handler.version>
     <usm.authentication.version>2.1.10</usm.authentication.version>
     <usm.administration.version>2.1.10</usm.administration.version>
-    <uvms.logger.version>1.2.0</uvms.logger.version>
-    <uvms.commons.version>4.0.3</uvms.commons.version>
+    <uvms.commons.version>4.0.4</uvms.commons.version>
   </properties>
 
   <dependencies>
