@@ -15,6 +15,7 @@
 
   <properties>
     <javaee.version>8.0</javaee.version>
+    <docker.dev.version>3.39.4.w17</docker.dev.version>
     <usm.information.version>2.1.10</usm.information.version>
     <usm.jwt-handler.version>2.1.10</usm.jwt-handler.version>
     <usm.authentication.version>2.1.10</usm.authentication.version>
