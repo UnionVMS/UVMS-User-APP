@@ -97,12 +97,6 @@
       <groupId>eu.europa.ec.mare.usm</groupId>
       <artifactId>Administration-Service</artifactId>
       <version>${usm.administration.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>eu.europa.ec.fisheries.uvms.audit</groupId>
-          <artifactId>audit-model</artifactId>
-        </exclusion>
-      </exclusions>
     </dependency>
   </dependencies>
 
