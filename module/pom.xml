@@ -76,17 +76,17 @@
       <artifactId>jwt-handler-impl</artifactId>
       <version>${usm.jwt-handler.version}</version>
     </dependency>
-    <dependency>
+    <!--<dependency>
       <groupId>eu.europa.ec.mare.oss.auditing</groupId>
       <artifactId>Uvms-Logger</artifactId>
       <version>${uvms.logger.version}</version>
-	  <!--<exclusions>
+	  <exclusions>
         <exclusion>
           <groupId>eu.europa.ec.fisheries.uvms.audit</groupId>
           <artifactId>audit-model</artifactId>
         </exclusion>
-      </exclusions>-->
-    </dependency>
+      </exclusions>
+    </dependency>-->
     <dependency>
       <groupId>eu.europa.ec.mare.oss.usm</groupId>
       <artifactId>Authentication-Service</artifactId>

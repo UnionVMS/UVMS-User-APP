@@ -66,6 +66,12 @@
             <artifactId>Administration-Service</artifactId>
             <version>${usm.administration.version}</version>
             <scope>provided</scope>
+            <exclusions>
+            	<exclusion>
+            		<groupId>eu.europa.ec.fisheries.uvms.audit</groupId>
+            		<artifactId>audit-model</artifactId>
+            	</exclusion>
+            </exclusions>
         </dependency>
 	    <dependency>
             <groupId>fish.focus.uvms.maven</groupId>
