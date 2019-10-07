@@ -12,7 +12,7 @@
     </parent>
     
     <properties>
-    <!-- PROPERTIES USED FOR LOGBACK -->
+        <!-- PROPERTIES USED FOR LOGBACK -->
         <application.name>${project.parent.artifactId}</application.name> 
         <application.version>${project.parent.version}</application.version>
         <application.logfile>/app/logs/${project.parent.artifactId}/${project.parent.artifactId}.log</application.logfile>
@@ -32,48 +32,48 @@
             <version>${project.parent.version}</version>
             <scope>provided</scope>
         </dependency>
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-client</artifactId>
-			<version>1.16</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey</groupId>
-			<artifactId>jersey-json</artifactId>
-			<version>1.16</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-			<groupId>com.sun.jersey.contribs</groupId>
-			<artifactId>jersey-multipart</artifactId>
-			<version>1.16</version>
-			<scope>test</scope>
-		</dependency>
-		<dependency>
-	      	<groupId>eu.europa.ec.mare.oss.usm</groupId>
-	      	<artifactId>Information-Model</artifactId>
-	      	<version>${usm.information.version}</version>
-	    </dependency>
-		<dependency>
-	      	<groupId>eu.europa.ec.mare.oss.usm</groupId>
-	      	<artifactId>Information-Service</artifactId>
-	      	<version>${usm.information.version}</version>
-          <scope>provided</scope>
-	    </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-client</artifactId>
+            <version>1.16</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey</groupId>
+            <artifactId>jersey-json</artifactId>
+            <version>1.16</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.sun.jersey.contribs</groupId>
+            <artifactId>jersey-multipart</artifactId>
+            <version>1.16</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>eu.europa.ec.mare.oss.usm</groupId>
+            <artifactId>Information-Model</artifactId>
+            <version>${usm.information.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>eu.europa.ec.mare.oss.usm</groupId>
+            <artifactId>Information-Service</artifactId>
+            <version>${usm.information.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>eu.europa.ec.mare.oss.usm</groupId>
             <artifactId>Administration-Service</artifactId>
             <version>${usm.administration.version}</version>
             <scope>provided</scope>
             <exclusions>
-            	<exclusion>
-            		<groupId>eu.europa.ec.fisheries.uvms.audit</groupId>
-            		<artifactId>audit-model</artifactId>
-            	</exclusion>
+                <exclusion>
+                    <groupId>eu.europa.ec.fisheries.uvms.audit</groupId>
+                    <artifactId>audit-model</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
-	    <dependency>
+        <dependency>
             <groupId>fish.focus.uvms.maven</groupId>
             <artifactId>uvms-pom-monitoring-deps</artifactId>
             <type>pom</type>
@@ -98,10 +98,10 @@
             </plugin>
         </plugins>
         <resources>
-          <resource>
-            <directory>src/main/resources</directory>
-            <filtering>true</filtering>
-          </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
         </resources>
     </build>
 
