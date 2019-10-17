@@ -7,7 +7,7 @@
 		<version>${uvms.user.module.version}</version>
 	</parent>
 
-	<artifactId>liquibase</artifactId>
+	<artifactId>user-liquibase</artifactId>
 	<name>liquibase</name>
 	<packaging>jar</packaging>
 	<properties>
