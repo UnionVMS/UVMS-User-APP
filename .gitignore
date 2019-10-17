@@ -13,3 +13,4 @@
 *arquillian.launch_file
 pom.xml.releaseBackup
 release.properties
+.flattened-pom.xml
