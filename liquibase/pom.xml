@@ -50,9 +50,19 @@
 				<db.passwd>usm</db.passwd>
 				<db.defaultSchema>usm</db.defaultSchema>
 				<db.changeLogFile>changelog/db-changelog-master.xml</db.changeLogFile>
-				<db.outputFile>changelog/generatedChangelog.xml</db.outputFile>
+                <db.outputFile>changelog/generatedChangelog.xml</db.outputFile>
+                <driver.groupId>org.postgresql</driver.groupId>
+                <driver.artifactId>postgresql</driver.artifactId>
+                <driver.version>9.4-1201-jdbc41</driver.version>
 			</properties>
-		</profile>
+            <dependencies>
+		        <dependency>
+		            <groupId>${driver.groupId}</groupId>
+		            <artifactId>${driver.artifactId}</artifactId>
+		            <version>${driver.version}</version>
+		        </dependency>
+		    </dependencies>            
+        </profile>
 		<profile>
 			<id>publish-sql</id>
 			<build>
@@ -99,6 +109,7 @@
 				</plugins>
 			</build>
 			<properties>
+                <db.changeLogFile>changelog/db-changelog-master.xml</db.changeLogFile>
 				<db.docker.url>offline:postgresql?changeLogFile=target/databasechangelog.csv&amp;outputLiquibaseSql=true</db.docker.url>
 			</properties>
 		</profile>
@@ -118,12 +129,13 @@
 					<artifactId>liquibase-maven-plugin</artifactId>
 					<configuration>
 						<promptOnNonLocalDatabase>false</promptOnNonLocalDatabase>
-						<changeLogFile>changelog/db-changelog-master.xml</changeLogFile>
+                        <changeLogFile>${db.changeLogFile}</changeLogFile>
 						<driver>${db.driver}</driver>
 						<url>${db.url}</url>
 						<username>${db.user}</username>
 						<password>${db.passwd}</password>
-						<contexts>${liquibase.contexts}</contexts>
+                        <defaultSchemaName>${db.defaultSchema}</defaultSchemaName>
+                        <outputChangeLogFile>${db.outputFile}</outputChangeLogFile>
 					</configuration>
 				</plugin>
 			</plugins>
