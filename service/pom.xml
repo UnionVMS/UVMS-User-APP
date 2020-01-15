@@ -17,6 +17,7 @@
         <application.version>${project.parent.version}</application.version>
         <application.logfile>/app/logs/${project.parent.artifactId}/${project.parent.artifactId}.log</application.logfile>
         <application.error.logfile>/app/logs/${project.parent.artifactId}/${project.parent.artifactId}-error.log</application.error.logfile>
+        <sun.jersey.version>1.19.4</sun.jersey.version>
     </properties>
 
     <dependencies>
@@ -35,19 +36,19 @@
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-client</artifactId>
-			<version>1.19.4</version>
+            <version>${sun.jersey.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.jersey</groupId>
 			<artifactId>jersey-json</artifactId>
-			<version>1.19.4</version>
+            <version>${sun.jersey.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.sun.jersey.contribs</groupId>
 			<artifactId>jersey-multipart</artifactId>
-			<version>1.19.4</version>
+			<version>${sun.jersey.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>

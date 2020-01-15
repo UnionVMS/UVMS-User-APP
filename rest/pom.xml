@@ -66,7 +66,7 @@
                     <plugin>
                         <groupId>org.apache.maven.plugins</groupId>
                         <artifactId>maven-javadoc-plugin</artifactId>
-                        <version>2.9.1</version>
+                        <version>3.1.1</version>
                         <executions>
                             <execution>
                                 <id>generate-service-docs</id>
@@ -77,14 +77,14 @@
                                         <groupId>com.carma</groupId>
                                         <artifactId>swagger-doclet</artifactId>
                                         <version>1.1.2</version>
+                                        <additionalparam>
+                                            -apiVersion ${project.version}
+                                            -docBasePath /${project.parent.artifactId}/apidocs
+                                            -apiBasePath /${project.parent.artifactId}/rest
+                                        </additionalparam>
                                     </docletArtifact>
                                     <reportOutputDirectory>src/main/webapp</reportOutputDirectory>
                                     <useStandardDocletOptions>false</useStandardDocletOptions>
-                                    <additionalparam>
-                                        -apiVersion ${project.version}
-                                        -docBasePath /${project.parent.artifactId}/apidocs
-                                        -apiBasePath /${project.parent.artifactId}/rest
-                                    </additionalparam>
                                 </configuration>
                                 <goals>
                                     <goal>javadoc</goal>
