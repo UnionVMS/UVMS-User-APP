@@ -15,7 +15,6 @@
     <packaging>pom</packaging>
 
     <properties>
-        <javaee.version>8.0</javaee.version>
         <docker.dev.version>3.40.18.w18</docker.dev.version>
         <usm.information.version>2.1.11</usm.information.version>
         <usm.jwt-handler.version>2.1.11</usm.jwt-handler.version>
@@ -27,9 +26,9 @@
 
     <dependencies>
         <dependency>
-            <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
-            <version>8.0.1</version>
+            <groupId>jakarta.platform</groupId>
+            <artifactId>jakarta.jakartaee-api</artifactId>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>fish.focus.uvms.maven</groupId>
