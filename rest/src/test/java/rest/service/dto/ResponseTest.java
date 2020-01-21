@@ -16,13 +16,13 @@ package rest.service.dto;
 
 import eu.europa.ec.fisheries.uvms.user.rest.dto.ResponseCode;
 import eu.europa.ec.fisheries.uvms.user.rest.dto.ResponseDto;
-import junit.framework.Assert;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
+
+import static org.junit.Assert.assertEquals;
 
 public class ResponseTest {
 
@@ -50,12 +50,12 @@ public class ResponseTest {
 
         String VALUE = "HELLO_DTO";
         ResponseDto dto = new ResponseDto(VALUE, ResponseCode.OK);
-        Assert.assertEquals(dto.getCode(), ResponseCode.OK.getCode());
-        Assert.assertEquals(dto.getData(), VALUE);
+        assertEquals(dto.getCode(), ResponseCode.OK.getCode());
+        assertEquals(dto.getData(), VALUE);
 
         dto = new ResponseDto(ResponseCode.ERROR);
-        Assert.assertEquals(dto.getCode(), ResponseCode.ERROR.getCode());
-        Assert.assertEquals(dto.getData(), null);
+        assertEquals(ResponseCode.ERROR.getCode(), dto.getCode());
+        assertEquals(null, dto.getData());
 
     }
 }
