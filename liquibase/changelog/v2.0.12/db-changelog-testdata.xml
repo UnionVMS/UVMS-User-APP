@@ -8,11 +8,47 @@
 
 
   <changeSet id="create_vms_admin_uvms_all_features" author="andreas" context="test" runInTransaction="true" failOnError="true">
-    	<loadData tableName="PERSON_T" file="../../test/uvms_csv/PERSON_T.csv" relativeToChangelogFile="true"></loadData>
-    	<loadData tableName="USER_T" file="../../test/uvms_csv/USER_T.csv" relativeToChangelogFile="true"></loadData>
-    	<loadData tableName="ROLE_T" file="../../test/uvms_csv/ROLE_T.csv" relativeToChangelogFile="true"></loadData>
-    	<loadData tableName="USER_CONTEXT_T" file="../../test/uvms_csv/USER_CONTEXT_T.csv" relativeToChangelogFile="true"></loadData>
-		<loadData tableName="PERMISSION_T" file="../../test/uvms_csv/PERMISSION_T.csv" relativeToChangelogFile="true"></loadData>
+    	<loadData tableName="PERSON_T" file="../../test/uvms_csv/PERSON_T.csv" relativeToChangelogFile="true">
+			<column name="person_id" type="NUMERIC"/>
+			<column name="first_name" type="STRING"/>
+			<column name="last_name" type="STRING"/>
+			<column name="phone_number" type="STRING"/>
+			<column name="mobile_number" type="STRING"/>
+			<column name="fax_number" type="STRING"/>
+			<column name="e_mail" type="STRING"/>
+		</loadData>
+    	<loadData tableName="USER_T" file="../../test/uvms_csv/USER_T.csv" relativeToChangelogFile="true">
+			<column name="USER_ID" type="NUMERIC" />
+			<column name="USER_NAME" type="STRING" />
+			<column name="STATUS" type="STRING" />
+			<column name="ORGANISATION_ID" type="NUMERIC" />
+			<column name="PERSON_ID" type="NUMERIC" />
+			<column name="ACTIVE_FROM" type="DATETIME"/>
+			<column name="ACTIVE_TO" type="DATETIME" />
+			<column name="LAST_LOGON" type="DATETIME" />
+			<column name="LOCKOUT_TO" type="DATETIME" />
+			<column name="PASSWORD_EXPIRY" type="DATETIME" />
+			<column name="PASSWORD" type="STRING" />
+			<column name="LOCKOUT_REASON" type="STRING" />
+			<column name="LOGON_FAILURE" type="NUMERIC" />
+			<column name="NOTES" type="STRING" />
+		</loadData>
+    	<loadData tableName="ROLE_T" file="../../test/uvms_csv/ROLE_T.csv" relativeToChangelogFile="true">
+			<column name="role_id" type="NUMERIC"/>
+			<column name="name" type="STRING"/>
+			<column name="description" type="STRING"/>
+			<column name="status" type="STRING"/>
+		</loadData>
+    	<loadData tableName="USER_CONTEXT_T" file="../../test/uvms_csv/USER_CONTEXT_T.csv" relativeToChangelogFile="true">
+			<column name="user_context_id" type="NUMERIC"/>
+			<column name="user_id" type="NUMERIC"/>
+			<column name="role_id" type="NUMERIC"/>
+			<column name="scope_id" type="NUMERIC"/>
+		</loadData>
+		<loadData tableName="PERMISSION_T" file="../../test/uvms_csv/PERMISSION_T.csv" relativeToChangelogFile="true">
+			<column name="role_id" type="NUMERIC"/>
+			<column name="feature_id" type="NUMERIC"/>
+		</loadData>
   </changeSet>
 
 </databaseChangeLog>

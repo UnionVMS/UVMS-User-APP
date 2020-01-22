@@ -9,7 +9,7 @@
 
 	<artifactId>liquibase</artifactId>
 	<name>liquibase</name>
-	<packaging>jar</packaging>
+	<packaging>pom</packaging>
 	<properties>
 		<liquibase.contexts>default</liquibase.contexts>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>

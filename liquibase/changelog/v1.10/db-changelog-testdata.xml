@@ -16,7 +16,10 @@
             <column name="scope_id" valueNumeric="1"/>
         </insert>
 
-		<loadData tableName="PERMISSION_T" file="../../test/csv/PERMISSION_T_AFTER.csv" relativeToChangelogFile="true"></loadData>
+		<loadData tableName="PERMISSION_T" file="../../test/csv/PERMISSION_T_AFTER.csv" relativeToChangelogFile="true">
+			<column name="role_id" type="NUMERIC"/>
+			<column name="feature_id" type="NUMERIC"/>
+		</loadData>
 
 	    <rollback>
 	      <sql><![CDATA[delete from user_context_t c where c.user_context_id=27;]]></sql>
@@ -32,14 +35,36 @@
   </changeSet>
 
   <changeSet id="update_vms_admin_com_all_features" author="james" context="test" runInTransaction="true" failOnError="true">
-    	<loadData tableName="APPLICATION_T" file="../../test/csv/APPLICATION_T_AFTER.csv" relativeToChangelogFile="true"></loadData>
-    	<loadData tableName="FEATURE_T" file="../../test/csv/FEATURE_T_AFTER.csv" relativeToChangelogFile="true"></loadData>
-		<loadData tableName="PERMISSION_T" file="../../test/csv/PERMISSION_T_AFTER_2.csv" relativeToChangelogFile="true"></loadData>
+    	<loadData tableName="APPLICATION_T" file="../../test/csv/APPLICATION_T_AFTER.csv" relativeToChangelogFile="true">
+			<column name="application_id" type="NUMERIC"/>
+			<column name="name" type="STRING"/>
+			<column name="description" type="STRING"/>
+		</loadData>
+    	<loadData tableName="FEATURE_T" file="../../test/csv/FEATURE_T_AFTER.csv" relativeToChangelogFile="true">
+			<column name="feature_id" type="NUMERIC"/>
+			<column name="name" type="STRING"/>
+			<column name="description" type="STRING"/>
+			<column name="application_id" type="NUMERIC"/>
+		</loadData>
+		<loadData tableName="PERMISSION_T" file="../../test/csv/PERMISSION_T_AFTER_2.csv" relativeToChangelogFile="true">
+			<column name="role_id" type="NUMERIC"/>
+			<column name="feature_id" type="NUMERIC"/>
+		</loadData>
   </changeSet>
 
   <changeSet id="add_dataset_to_all_reports_scope" author="james" context="test" runInTransaction="true" failOnError="true">
-    	<loadData tableName="DATASET_T" file="../../test/csv/DATASET_T_AFTER.csv" relativeToChangelogFile="true"></loadData>
-    	<loadData tableName="SCOPE_DATASET_T" file="../../test/csv/SCOPE_DATASET_T_AFTER.csv" relativeToChangelogFile="true"></loadData>
+    	<loadData tableName="DATASET_T" file="../../test/csv/DATASET_T_AFTER.csv" relativeToChangelogFile="true">
+			<column name="dataset_id" type="NUMERIC"/>
+			<column name="name" type="STRING"/>
+			<column name="description" type="STRING"/>
+			<column name="category" type="STRING"/>
+			<column name="discriminator" type="STRING"/>
+			<column name="application_id" type="NUMERIC"/>
+		</loadData>
+    	<loadData tableName="SCOPE_DATASET_T" file="../../test/csv/SCOPE_DATASET_T_AFTER.csv" relativeToChangelogFile="true">
+			<column name="scope_id" type="NUMERIC"/>
+			<column name="dataset_id" type="NUMERIC"/>
+		</loadData>
   </changeSet>
 
   <changeSet id="update_sq_for_imported_dataset" author="james" context="test" runInTransaction="true" failOnError="true"> 	   	
