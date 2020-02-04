@@ -19,7 +19,7 @@
         <usm.information.version>2.1.11</usm.information.version>
         <usm.jwt-handler.version>2.2.0</usm.jwt-handler.version>
         <usm.authentication.version>2.1.11</usm.authentication.version>
-        <usm.administration.version>2.1.11</usm.administration.version>
+        <usm.administration.version>2.2.0</usm.administration.version>
         <uvms.commons.version>4.0.13</uvms.commons.version>
         <parent.pom.version>3.0</parent.pom.version>
     </properties>
