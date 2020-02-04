@@ -48,7 +48,7 @@ public class ApplicationConverter {
         eu.europa.ec.fisheries.wsdl.user.types.Application typesApplication =
                 new eu.europa.ec.fisheries.wsdl.user.types.Application();
         typesApplication.setParent(deploymentApplication.getParent());
-        typesApplication.setDatasetRetain(deploymentApplication.getRetainDatasets());
+        typesApplication.setDatasetRetain(deploymentApplication.isRetainDatasets());
         typesApplication.setDescription(deploymentApplication.getDescription());
         typesApplication.setName(deploymentApplication.getName());
         List<eu.europa.ec.fisheries.wsdl.user.types.Dataset> typesDataset = typesApplication.getDataset();
