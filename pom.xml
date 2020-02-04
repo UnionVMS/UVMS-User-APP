@@ -16,7 +16,7 @@
 
     <properties>
         <docker.dev.version>3.40.18.w18</docker.dev.version>
-        <usm.information.version>2.1.11</usm.information.version>
+        <usm.information.version>2.2.0</usm.information.version>
         <usm.jwt-handler.version>2.1.11</usm.jwt-handler.version>
         <usm.authentication.version>2.1.11</usm.authentication.version>
         <usm.administration.version>2.1.11</usm.administration.version>
