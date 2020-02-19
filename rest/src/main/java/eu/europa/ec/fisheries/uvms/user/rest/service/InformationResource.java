@@ -14,41 +14,56 @@
  */
 package eu.europa.ec.fisheries.uvms.user.rest.service;
 
+import eu.europa.ec.fisheries.uvms.commons.date.JsonBConfigurator;
 import eu.europa.ec.fisheries.uvms.user.rest.dto.ResponseCode;
 import eu.europa.ec.fisheries.uvms.user.rest.dto.ResponseDto;
 import eu.europa.ec.fisheries.uvms.user.service.UserService;
 import eu.europa.ec.fisheries.uvms.user.service.exception.UserServiceException;
+import eu.europa.ec.fisheries.wsdl.user.types.UserContext;
 import eu.europa.ec.fisheries.wsdl.user.types.UserContextId;
 import eu.europa.ec.fisheries.wsdl.user.types.UserPreference;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.json.bind.Jsonb;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 
 @Path("/user")
 @Stateless
+@Consumes(value = {MediaType.APPLICATION_XML})
+@Produces(value = {MediaType.APPLICATION_XML})
 public class InformationResource {
     private static final Logger LOG = LoggerFactory.getLogger(InformationResource.class);
 
     @EJB
     private UserService userService;
 
+    private Jsonb jsonb;
+
+    @PostConstruct
+    public void init() {
+        jsonb = new JsonBConfigurator().getContext(null);
+    }
+
     @GET
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     @Path("/userContext")
     public ResponseDto<?> getUserContext(@QueryParam(value = "applicationName") final String applicationName,
-                                      @QueryParam(value = "userName") final String userName) {
+                                         @QueryParam(value = "userName") final String userName) {
 
         LOG.info("getUserContext invoked in rest layer");
         try {
             UserContextId userContextId = new UserContextId();
             userContextId.setApplicationName(applicationName);
             userContextId.setUserName(userName);
-            return new ResponseDto<>(userService.getUserContext(userContextId), ResponseCode.OK);
+            UserContext userContext = userService.getUserContext(userContextId);
+            String returnString = jsonb.toJson(userContext);
+            return new ResponseDto<>(returnString, ResponseCode.OK);
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when getUserContext. ]", ex);
             return new ResponseDto<>(ex.getMessage(), ResponseCode.ERROR);
@@ -56,8 +71,6 @@ public class InformationResource {
     }
 
     @POST
-    @Consumes(value = {MediaType.APPLICATION_XML})
-    @Produces(value = {MediaType.APPLICATION_XML})
     @Path("/preference")
     public ResponseDto<?> createPeference(UserPreference userPreference) {
         LOG.info("createPreference invoked in rest layer");
@@ -71,8 +84,6 @@ public class InformationResource {
     }
 
     @PUT
-    @Consumes(value = {MediaType.APPLICATION_XML})
-    @Produces(value = {MediaType.APPLICATION_XML})
     @Path("/preference")
     public ResponseDto<?> updatePreference(UserPreference userPreference) {
         LOG.info("updatePreference invoked in rest layer");
@@ -86,7 +97,6 @@ public class InformationResource {
     }
 
     @DELETE
-    @Produces(value = {MediaType.APPLICATION_XML})
     @Path("/preference")
     public ResponseDto<?> deletePreference(UserPreference userPreference) {
         LOG.info("deployApplication invoked in rest layer");

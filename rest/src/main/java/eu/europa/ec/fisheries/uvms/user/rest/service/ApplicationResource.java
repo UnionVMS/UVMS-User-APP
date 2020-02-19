@@ -29,6 +29,8 @@ import javax.ws.rs.core.MediaType;
 
 @Path("/user")
 @Stateless
+@Consumes(value = {MediaType.APPLICATION_XML})
+@Produces(value = {MediaType.APPLICATION_XML})
 public class ApplicationResource {
     private static final Logger LOG = LoggerFactory.getLogger(ApplicationResource.class);
 
@@ -36,7 +38,6 @@ public class ApplicationResource {
     private UserService userService;
 
     @GET
-    @Produces(value = {MediaType.APPLICATION_XML})
     @Path("/application/{applicationName}")
     public ResponseDto<?> getApplication(@PathParam("applicationName") String applicationName) {
         LOG.info("deployApplication invoked in rest layer");
@@ -50,8 +51,6 @@ public class ApplicationResource {
     }
 
     @POST
-    @Consumes(value = {MediaType.APPLICATION_XML})
-    @Produces(value = {MediaType.APPLICATION_XML})
     @Path("/application")
     public ResponseDto<?> deployApplication(Application application) {
         LOG.info("deployApplication invoked in rest layer");
@@ -65,8 +64,6 @@ public class ApplicationResource {
     }
 
     @PUT
-    @Consumes(value = {MediaType.APPLICATION_XML})
-    @Produces(value = {MediaType.APPLICATION_XML})
     @Path("/application")
     public ResponseDto<?> redeployApplication(Application application) {
         LOG.info("deployApplication invoked in rest layer");
@@ -80,7 +77,6 @@ public class ApplicationResource {
     }
 
     @DELETE
-    @Produces(value = {MediaType.APPLICATION_XML})
     @Path("/application/{applicationName}")
     public ResponseDto<?> undeployApplication(@PathParam("applicationName") String applicationName) {
         LOG.info("deployApplication invoked in rest layer");
