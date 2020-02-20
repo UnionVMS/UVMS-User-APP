@@ -1,5 +1,6 @@
 package eu.europa.ec.fisheries.uvms.user.rest.service;
 
+import eu.europa.ec.fisheries.uvms.commons.date.JsonBConfigurator;
 import eu.europa.ec.fisheries.uvms.user.service.UserService;
 import eu.europa.ec.fisheries.uvms.user.service.exception.UserServiceException;
 import eu.europa.ec.fisheries.wsdl.user.module.GetAllOrganisationRequest;
@@ -7,8 +8,10 @@ import eu.europa.ec.fisheries.wsdl.user.types.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.json.bind.Jsonb;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
@@ -30,6 +33,13 @@ public class UserResource {
     @Context
     private HttpServletRequest httpServletRequest;
 
+    private Jsonb jsonb;
+
+    @PostConstruct
+    public void init() {
+        jsonb = new JsonBConfigurator().getContext(null);
+    }
+
     @PUT
     @Path("/updateUserPreferences")
     public Response updateUserPreferences(UserContext userContext) {
@@ -48,7 +58,8 @@ public class UserResource {
     public Response getOrganisation(@QueryParam("organisationName") String organisationName) {
         try {
             Organisation organisation = userService.getOrganisation(organisationName);
-            return Response.ok(organisation).build();
+            String returnString = jsonb.toJson(organisation);
+            return Response.ok(returnString).build();
         } catch (UserServiceException ex) {
             LOG.error("[ Error when fetching Organisation. ]", ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
@@ -60,7 +71,8 @@ public class UserResource {
     public Response getAllOrganisations(GetAllOrganisationRequest request) {
         try {
             List<Organisation> allOrganisations = userService.getAllOrganisations(request);
-            return Response.ok(allOrganisations).build();
+            String returnString = jsonb.toJson(allOrganisations);
+            return Response.ok(returnString).build();
         } catch (UserServiceException ex) {
             LOG.error("[ Error when fetching all Organisations. ]", ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
@@ -72,7 +84,8 @@ public class UserResource {
     public Response findOrganisations(@QueryParam("nationIsoName") String nationIsoName) {
         try {
             List<Organisation> organisations = userService.findOrganisations(nationIsoName);
-            return Response.ok(organisations).build();
+            String returnString = jsonb.toJson(organisations);
+            return Response.ok(returnString).build();
         } catch (UserServiceException ex) {
             LOG.error("[ Error when finding Organisations. ]", ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
@@ -84,7 +97,8 @@ public class UserResource {
     public Response getContactDetails() {
         try {
             ContactDetails contactDetails = userService.getContactDetails(httpServletRequest.getRemoteUser());
-            return Response.ok(contactDetails).build();
+            String returnString = jsonb.toJson(contactDetails);
+            return Response.ok(returnString).build();
         } catch (UserServiceException ex) {
             LOG.error("[ Error when fetching ContactDetails. ]", ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
@@ -148,7 +162,8 @@ public class UserResource {
     public Response findDataset(DatasetFilter datasetFilter) {
         try {
             DatasetList datasetList = userService.findDataset(datasetFilter);
-            return Response.ok(datasetList).build();
+            String returnString = jsonb.toJson(datasetList);
+            return Response.ok(returnString).build();
         } catch (UserServiceException ex) {
             LOG.error("[ Error when finding DataSet. ]", ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();

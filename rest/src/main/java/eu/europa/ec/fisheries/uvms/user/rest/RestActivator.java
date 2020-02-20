@@ -14,6 +14,7 @@
  */
 package eu.europa.ec.fisheries.uvms.user.rest;
 
+import eu.europa.ec.fisheries.uvms.commons.date.JsonBConfigurator;
 import eu.europa.ec.fisheries.uvms.user.rest.constants.RestConstants;
 import eu.europa.ec.fisheries.uvms.user.rest.service.ApplicationResource;
 import eu.europa.ec.fisheries.uvms.user.rest.service.InformationResource;
@@ -37,6 +38,7 @@ public class RestActivator extends Application {
     public RestActivator() {
         set.add(InformationResource.class);
         set.add(ApplicationResource.class);
+        set.add(JsonBConfigurator.class);
         set.add(UserResource.class);
         LOG.info(RestConstants.MODULE_NAME + " module starting up");
     }

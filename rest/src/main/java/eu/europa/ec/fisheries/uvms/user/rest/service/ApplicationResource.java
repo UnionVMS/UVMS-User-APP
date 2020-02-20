@@ -14,8 +14,6 @@
  */
 package eu.europa.ec.fisheries.uvms.user.rest.service;
 
-import eu.europa.ec.fisheries.uvms.user.rest.dto.ResponseCode;
-import eu.europa.ec.fisheries.uvms.user.rest.dto.ResponseDto;
 import eu.europa.ec.fisheries.uvms.user.service.UserService;
 import eu.europa.ec.fisheries.uvms.user.service.exception.UserServiceException;
 import eu.europa.ec.fisheries.wsdl.user.types.Application;
@@ -26,9 +24,12 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path("/user")
 @Stateless
+@Consumes(value = {MediaType.APPLICATION_JSON})
+@Produces(value = {MediaType.APPLICATION_JSON})
 public class ApplicationResource {
     private static final Logger LOG = LoggerFactory.getLogger(ApplicationResource.class);
 
@@ -36,60 +37,54 @@ public class ApplicationResource {
     private UserService userService;
 
     @GET
-    @Produces(value = {MediaType.APPLICATION_XML})
     @Path("/application/{applicationName}")
-    public ResponseDto<?> getApplication(@PathParam("applicationName") String applicationName) {
+    public Response getApplication(@PathParam("applicationName") String applicationName) {
         LOG.info("deployApplication invoked in rest layer");
         try {
             userService.getDeploymentDescriptor(applicationName);
-            return new ResponseDto<>(null, ResponseCode.OK);
+            return Response.ok().type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when deployApplication. ]", ex);
-            return new ResponseDto<>(ex.getMessage(), ResponseCode.ERROR);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
         }
     }
 
     @POST
-    @Consumes(value = {MediaType.APPLICATION_XML})
-    @Produces(value = {MediaType.APPLICATION_XML})
     @Path("/application")
-    public ResponseDto<?> deployApplication(Application application) {
+    public Response deployApplication(Application application) {
         LOG.info("deployApplication invoked in rest layer");
         try {
             userService.deployApplication(application);
-            return new ResponseDto<>(null, ResponseCode.OK);
+            return Response.ok().type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when deployApplication. ]", ex);
-            return new ResponseDto<>(ex.getMessage(), ResponseCode.ERROR);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
         }
     }
 
     @PUT
-    @Consumes(value = {MediaType.APPLICATION_XML})
-    @Produces(value = {MediaType.APPLICATION_XML})
     @Path("/application")
-    public ResponseDto<?> redeployApplication(Application application) {
+    public Response redeployApplication(Application application) {
         LOG.info("deployApplication invoked in rest layer");
         try {
             userService.redeployApplication(application);
-            return new ResponseDto<>(null, ResponseCode.OK);
+            return Response.ok().type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when deployApplication. ]", ex);
-            return new ResponseDto<>(ex.getMessage(), ResponseCode.ERROR);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
         }
     }
 
     @DELETE
-    @Produces(value = {MediaType.APPLICATION_XML})
     @Path("/application/{applicationName}")
-    public ResponseDto<?> undeployApplication(@PathParam("applicationName") String applicationName) {
+    public Response undeployApplication(@PathParam("applicationName") String applicationName) {
         LOG.info("deployApplication invoked in rest layer");
         try {
             userService.undeployApplication(applicationName);
-            return new ResponseDto<>(null, ResponseCode.OK);
+            return Response.ok().type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when deployApplication. ]", ex);
-            return new ResponseDto<>(ex.getMessage(), ResponseCode.ERROR);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
         }
     }
 }
