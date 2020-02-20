@@ -33,8 +33,8 @@ import javax.ws.rs.core.Response;
 
 @Path("/user")
 @Stateless
-@Consumes(value = {MediaType.APPLICATION_XML})
-@Produces(value = {MediaType.APPLICATION_XML})
+@Consumes(value = {MediaType.APPLICATION_JSON})
+@Produces(value = {MediaType.APPLICATION_JSON})
 public class InformationResource {
     private static final Logger LOG = LoggerFactory.getLogger(InformationResource.class);
 
@@ -49,8 +49,6 @@ public class InformationResource {
     }
 
     @GET
-    @Consumes(value = {MediaType.APPLICATION_JSON})
-    @Produces(value = {MediaType.APPLICATION_JSON})
     @Path("/userContext")
     public Response getUserContext(@QueryParam(value = "applicationName") final String applicationName,
                                    @QueryParam(value = "userName") final String userName) {
@@ -75,7 +73,7 @@ public class InformationResource {
         LOG.info("createPreference invoked in rest layer");
         try {
             userService.createPreference(userPreference);
-            return Response.ok().type(MediaType.APPLICATION_XML).build();
+            return Response.ok().type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when createPreference. ]", ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
@@ -88,7 +86,7 @@ public class InformationResource {
         LOG.info("updatePreference invoked in rest layer");
         try {
             userService.updatePreference(userPreference);
-            return Response.ok().type(MediaType.APPLICATION_XML).build();
+            return Response.ok().type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when updatePreference. ]", ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
@@ -101,7 +99,7 @@ public class InformationResource {
         LOG.info("deployApplication invoked in rest layer");
         try {
             userService.deletePreference(userPreference);
-            return Response.ok().type(MediaType.APPLICATION_XML).build();
+            return Response.ok().type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when deletePreference. ]", ex);
             return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
