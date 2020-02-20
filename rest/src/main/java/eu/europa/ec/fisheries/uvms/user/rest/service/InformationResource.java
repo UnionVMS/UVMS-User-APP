@@ -15,8 +15,6 @@
 package eu.europa.ec.fisheries.uvms.user.rest.service;
 
 import eu.europa.ec.fisheries.uvms.commons.date.JsonBConfigurator;
-import eu.europa.ec.fisheries.uvms.user.rest.dto.ResponseCode;
-import eu.europa.ec.fisheries.uvms.user.rest.dto.ResponseDto;
 import eu.europa.ec.fisheries.uvms.user.service.UserService;
 import eu.europa.ec.fisheries.uvms.user.service.exception.UserServiceException;
 import eu.europa.ec.fisheries.wsdl.user.types.UserContext;
@@ -31,6 +29,7 @@ import javax.ejb.Stateless;
 import javax.json.bind.Jsonb;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 
 @Path("/user")
 @Stateless
@@ -53,8 +52,8 @@ public class InformationResource {
     @Consumes(value = {MediaType.APPLICATION_JSON})
     @Produces(value = {MediaType.APPLICATION_JSON})
     @Path("/userContext")
-    public ResponseDto<?> getUserContext(@QueryParam(value = "applicationName") final String applicationName,
-                                         @QueryParam(value = "userName") final String userName) {
+    public Response getUserContext(@QueryParam(value = "applicationName") final String applicationName,
+                                   @QueryParam(value = "userName") final String userName) {
 
         LOG.info("getUserContext invoked in rest layer");
         try {
@@ -63,49 +62,49 @@ public class InformationResource {
             userContextId.setUserName(userName);
             UserContext userContext = userService.getUserContext(userContextId);
             String returnString = jsonb.toJson(userContext);
-            return new ResponseDto<>(returnString, ResponseCode.OK);
+            return Response.ok(returnString).type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when getUserContext. ]", ex);
-            return new ResponseDto<>(ex.getMessage(), ResponseCode.ERROR);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
         }
     }
 
     @POST
     @Path("/preference")
-    public ResponseDto<?> createPeference(UserPreference userPreference) {
+    public Response createPreference(UserPreference userPreference) {
         LOG.info("createPreference invoked in rest layer");
         try {
             userService.createPreference(userPreference);
-            return new ResponseDto<>(null, ResponseCode.OK);
+            return Response.ok().type(MediaType.APPLICATION_XML).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when createPreference. ]", ex);
-            return new ResponseDto<>(ex.getMessage(), ResponseCode.ERROR);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
         }
     }
 
     @PUT
     @Path("/preference")
-    public ResponseDto<?> updatePreference(UserPreference userPreference) {
+    public Response updatePreference(UserPreference userPreference) {
         LOG.info("updatePreference invoked in rest layer");
         try {
             userService.updatePreference(userPreference);
-            return new ResponseDto<>(null, ResponseCode.OK);
+            return Response.ok().type(MediaType.APPLICATION_XML).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when updatePreference. ]", ex);
-            return new ResponseDto<>(ex.getMessage(), ResponseCode.ERROR);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
         }
     }
 
     @DELETE
     @Path("/preference")
-    public ResponseDto<?> deletePreference(UserPreference userPreference) {
+    public Response deletePreference(UserPreference userPreference) {
         LOG.info("deployApplication invoked in rest layer");
         try {
             userService.deletePreference(userPreference);
-            return new ResponseDto<>(null, ResponseCode.OK);
+            return Response.ok().type(MediaType.APPLICATION_XML).build();
         } catch (UserServiceException | NullPointerException ex) {
-            LOG.error("[ Error when deletePeference. ]", ex);
-            return new ResponseDto<>(ex.getMessage(), ResponseCode.ERROR);
+            LOG.error("[ Error when deletePreference. ]", ex);
+            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
         }
     }
 }
