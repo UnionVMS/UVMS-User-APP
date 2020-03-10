@@ -45,58 +45,58 @@
     <dependency>
       <groupId>eu.europa.ec.mare.usm</groupId>
       <artifactId>Information-http-Rest-Service</artifactId>
-      <version>${usm.information.version}</version>
+      <version>${usm.version}</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>eu.europa.ec.mare.usm</groupId>
       <artifactId>Authentication-http-Rest-Service</artifactId>
-      <version>${usm.authentication.version}</version>
+      <version>${usm.version}</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>eu.europa.ec.mare.usm</groupId>
       <artifactId>Administration-http-Rest-Service</artifactId>
-      <version>${usm.administration.version}</version>
+      <version>${usm.version}</version>
       <type>war</type>
     </dependency>
     <dependency>
       <groupId>eu.europa.ec.mare.usm</groupId>
       <artifactId>Administration-https-Rest-Service</artifactId>
-      <version>${usm.administration.version}</version>
+      <version>${usm.version}</version>
       <type>pom</type>
     </dependency>
     <dependency>
       <groupId>eu.europa.ec.mare.usm</groupId>
       <artifactId>Information-Service</artifactId>
-      <version>${usm.information.version}</version>
+      <version>${usm.version}</version>
     </dependency>
     <dependency>
       <groupId>eu.europa.ec.mare.usm</groupId>
       <artifactId>jwt-handler-impl</artifactId>
-      <version>${usm.jwt-handler.version}</version>
+      <version>${usm.version}</version>
     </dependency>
     <dependency>
       <groupId>eu.europa.ec.mare.usm</groupId>
       <artifactId>Authentication-Service</artifactId>
-      <version>${usm.authentication.version}</version>
+      <version>${usm.version}</version>
     </dependency>
     <dependency>
       <groupId>eu.europa.ec.mare.usm</groupId>
       <artifactId>Authentication-Model</artifactId>
-      <version>${usm.authentication.version}</version>
+      <version>${usm.version}</version>
     </dependency>
 
     <dependency>
       <groupId>eu.europa.ec.mare.usm</groupId>
       <artifactId>Information-Model</artifactId>
-      <version>${usm.information.version}</version>
+      <version>${usm.version}</version>
     </dependency>
 
     <dependency>
       <groupId>eu.europa.ec.mare.usm</groupId>
       <artifactId>Administration-Service</artifactId>
-      <version>${usm.administration.version}</version>
+      <version>${usm.version}</version>
     </dependency>
   </dependencies>
 

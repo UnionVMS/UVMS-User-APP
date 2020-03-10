@@ -89,7 +89,7 @@ public class EndPointConverter {
         typesEndPoint.setId(domainEndPoint.getEndpointId());
         typesEndPoint.setName(domainEndPoint.getName());
         typesEndPoint.setDescription(domainEndPoint.getDescription());
-        typesEndPoint.setUri(domainEndPoint.getURI());
+        typesEndPoint.setUri(domainEndPoint.getUri());
         typesEndPoint.setEmail(domainEndPoint.getEmail());
         typesEndPoint.setEnabled((domainEndPoint.getStatus() != null ? (domainEndPoint.getStatus().equalsIgnoreCase("E") ? true : false) : false));
         List<eu.europa.ec.fisheries.wsdl.user.types.Channel> typesChannels = typesEndPoint.getChannels();
