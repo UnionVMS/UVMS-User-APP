@@ -33,7 +33,7 @@ import javax.jms.TextMessage;
 
 @MessageDriven(activationConfig = {
     @ActivationConfigProperty(propertyName = MessageConstants.DESTINATION_TYPE_STR, propertyValue = MessageConstants.DESTINATION_TYPE_QUEUE),
-    @ActivationConfigProperty(propertyName = MessageConstants.DESTINATION_STR, propertyValue = MessageConstants.QUEUE_USER_IN)
+    @ActivationConfigProperty(propertyName = MessageConstants.DESTINATION_LOOKUP_STR, propertyValue = MessageConstants.QUEUE_USER_IN)
 })
 public class UserMessageConsumerBean implements MessageListener {
 
