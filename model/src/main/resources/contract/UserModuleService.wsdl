@@ -33,6 +33,7 @@
 					<xsd:enumeration value="DELETE_DATASET" />
 					<xsd:enumeration value="UPDATE_DATASET" />
 					<xsd:enumeration value="FIND_DATASETS" />
+					<xsd:enumeration value="FIND_ENDPOINT" />
 				</xsd:restriction>
 			</xsd:simpleType>
 
@@ -203,6 +204,32 @@
 				<xsd:extension base="module:UserBaseRequest">
 					<xsd:sequence>
 						<xsd:element name="userName" type="xsd:string" minOccurs="1"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- find endpoint by id request -->
+	<xsd:element name="findEndpointRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="id" type="xsd:long"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- find endpoint by id response -->
+	<xsd:element name="findEndpointResponse">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="endpoint" type="tv:EndPoint"/>
 					</xsd:sequence>
 				</xsd:extension>
 			</xsd:complexContent>

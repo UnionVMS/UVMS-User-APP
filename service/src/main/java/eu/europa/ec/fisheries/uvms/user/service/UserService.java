@@ -66,6 +66,8 @@ public interface UserService {
     public void updateDataset(DatasetExtension dataset) throws UserServiceException;
     
     public DatasetList findDataset(DatasetFilter datasetFilter) throws UserServiceException;
-    
+
+    public EndPoint findEndpoint(Long id) throws UserServiceException;
+
 
 }

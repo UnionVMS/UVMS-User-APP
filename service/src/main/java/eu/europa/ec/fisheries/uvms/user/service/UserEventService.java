@@ -61,4 +61,6 @@ public interface UserEventService {
 	public void updateDataset(@Observes @UpdateDatasetEvent EventMessage message);
 
 	public void findDatasets(@Observes @FindDatasetsEvent EventMessage message);
+
+	public void findEndpoint(@Observes @FindEndpointEvent EventMessage message);
 }

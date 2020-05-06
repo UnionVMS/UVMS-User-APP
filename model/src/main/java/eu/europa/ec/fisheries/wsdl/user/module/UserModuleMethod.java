@@ -33,6 +33,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="DELETE_DATASET"/>
  *     &lt;enumeration value="UPDATE_DATASET"/>
  *     &lt;enumeration value="FIND_DATASETS"/>
+ *     &lt;enumeration value="FIND_ENDPOINT"/>
  *   &lt;/restriction>
  * &lt;/simpleType>
  * </pre>
@@ -61,7 +62,8 @@ public enum UserModuleMethod {
     CREATE_DATASET,
     DELETE_DATASET,
     UPDATE_DATASET,
-    FIND_DATASETS;
+    FIND_DATASETS,
+    FIND_ENDPOINT;
 
     public String value() {
         return name();

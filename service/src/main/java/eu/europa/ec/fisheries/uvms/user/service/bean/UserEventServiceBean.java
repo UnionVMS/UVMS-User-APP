@@ -22,6 +22,7 @@ import eu.europa.ec.fisheries.uvms.user.message.event.DeletePreferenceEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.DeployApplicationEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.ErrorEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.FindDatasetsEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.FindEndpointEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.FindOrganizationsEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.GetAllOrganizationEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.GetApplicationEvent;
@@ -49,6 +50,8 @@ import eu.europa.ec.fisheries.wsdl.user.module.DeleteDatasetRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.DeletePreferenceRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.DeployApplicationRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.FilterDatasetRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.FindEndpointRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.FindEndpointResponse;
 import eu.europa.ec.fisheries.wsdl.user.module.FindOrganisationsRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetAllOrganisationRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetContactDetailsRequest;
@@ -67,6 +70,7 @@ import eu.europa.ec.fisheries.wsdl.user.module.UserModuleMethod;
 import eu.europa.ec.fisheries.wsdl.user.types.Application;
 import eu.europa.ec.fisheries.wsdl.user.types.ContactDetails;
 import eu.europa.ec.fisheries.wsdl.user.types.DatasetList;
+import eu.europa.ec.fisheries.wsdl.user.types.EndPoint;
 import eu.europa.ec.fisheries.wsdl.user.types.Organisation;
 import eu.europa.ec.fisheries.wsdl.user.types.UserContext;
 import java.util.List;
@@ -649,6 +653,32 @@ public class UserEventServiceBean implements UserEventService {
             LOG.error("[ Error when find datasets ] ", ex);
             errorEvent.fire(message);
         }
+    }
+
+    @Override
+    public void findEndpoint(@Observes @FindEndpointEvent EventMessage message) {
+        LOG.info("findEndpointRequest Received.. processing request in UserEventServiceBean");
+        try {
+            FindEndpointRequest request = JAXBMarshaller.unmarshallTextMessage(message.getJmsMessage(), FindEndpointRequest.class);
+            String responseString;
+            try{
+                EndPoint endpoint = userService.findEndpoint(request.getId());
+                responseString = UserModuleResponseMapper.mapToFindEndpointResponse(endpoint);
+            } catch (Exception e) {
+                if (e.getCause() != null && e.getCause() instanceof IllegalArgumentException) {
+                    IllegalArgumentException cause = (IllegalArgumentException) e.getCause();
+                    LOG.debug("Invalid find endpoint : ", cause.getMessage());
+                    responseString = UserModuleResponseMapper.mapToUserFault(cause, UserModuleMethod.FIND_ENDPOINT);
+                } else {
+                    throw e;
+                }
+            }
+            messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
+        } catch (ModelMarshallException | UserServiceException | MessageException e) {
+            LOG.error("[ Error wile finding endpoint] ", e);
+            errorEvent.fire(message);
+        }
+
     }
 
     @Override

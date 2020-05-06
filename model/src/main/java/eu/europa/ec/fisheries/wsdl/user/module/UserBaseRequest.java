@@ -52,10 +52,12 @@ import javax.xml.bind.annotation.XmlType;
     GetAllOrganisationRequest.class,
     GetDeploymentDescriptorRequest.class,
     UpdateDatasetRequest.class,
+    FindEndpointResponse.class,
     GetContactDetailsRequest.class,
     GetUserContextRequest.class,
     GetOrganisationResponse.class,
     PutPreferenceRequest.class,
+    FindEndpointRequest.class,
     DeleteDatasetRequest.class
 })
 public abstract class UserBaseRequest

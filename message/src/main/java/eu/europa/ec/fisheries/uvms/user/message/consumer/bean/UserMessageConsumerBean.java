@@ -22,6 +22,7 @@ import eu.europa.ec.fisheries.uvms.user.message.event.DeletePreferenceEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.DeployApplicationEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.ErrorEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.FindDatasetsEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.FindEndpointEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.FindOrganizationsEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.GetAllOrganizationEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.GetApplicationEvent;
@@ -150,7 +151,10 @@ public class UserMessageConsumerBean implements MessageListener {
     @Inject
     @FindDatasetsEvent
     private Event<EventMessage> findDatasetEvent;
-    
+
+    @Inject
+    @FindEndpointEvent
+    private Event<EventMessage> findEndpointEvent;
     
     @Inject
     @PingEvent
@@ -240,6 +244,9 @@ public class UserMessageConsumerBean implements MessageListener {
                 case FIND_ORGANISATIONS:
                     FindOrganisationsRequest findOrganisationsRequest = JAXBMarshaller.unmarshallTextMessage(textMessage, FindOrganisationsRequest.class);
                     findOrganizationsEvent.fire(new EventMessage(textMessage, findOrganisationsRequest.getNationIsoName()));
+                    break;
+                case FIND_ENDPOINT:
+                    findEndpointEvent.fire(new EventMessage(textMessage));
                     break;
                 default:
                     break;
