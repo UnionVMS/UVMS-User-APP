@@ -26,6 +26,7 @@ import eu.europa.ec.fisheries.wsdl.user.module.*;
 import eu.europa.ec.fisheries.wsdl.user.types.Application;
 import eu.europa.ec.fisheries.wsdl.user.types.ContactDetails;
 import eu.europa.ec.fisheries.wsdl.user.types.DatasetList;
+import eu.europa.ec.fisheries.wsdl.user.types.EndPoint;
 import eu.europa.ec.fisheries.wsdl.user.types.Organisation;
 import eu.europa.ec.fisheries.wsdl.user.types.UserContext;
 import eu.europa.ec.fisheries.wsdl.user.types.UserFault;
@@ -162,5 +163,11 @@ public class UserModuleResponseMapper {
        FilterDatasetResponse filterDatasetResponse = new FilterDatasetResponse();
        filterDatasetResponse.setDatasetList(datasetList);        
        return JAXBMarshaller.marshallJaxBObjectToString(filterDatasetResponse);
+    }
+
+    public static String mapToFindEndpointResponse(EndPoint endpoint) throws ModelMarshallException {
+        FindEndpointResponse findEndpointResponse = new FindEndpointResponse();
+        findEndpointResponse.setEndpoint(endpoint);
+        return JAXBMarshaller.marshallJaxBObjectToString(findEndpointResponse);
     }
 }

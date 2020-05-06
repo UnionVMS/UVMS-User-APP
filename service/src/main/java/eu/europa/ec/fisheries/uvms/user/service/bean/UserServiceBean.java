@@ -18,6 +18,7 @@ import eu.europa.ec.fisheries.uvms.user.service.UserService;
 import eu.europa.ec.fisheries.uvms.user.service.converter.ApplicationConverter;
 import eu.europa.ec.fisheries.uvms.user.service.converter.ContactDetailsConverter;
 import eu.europa.ec.fisheries.uvms.user.service.converter.DatasetConverter;
+import eu.europa.ec.fisheries.uvms.user.service.converter.EndPointConverter;
 import eu.europa.ec.fisheries.uvms.user.service.converter.OrganisationConverter;
 import eu.europa.ec.fisheries.uvms.user.service.converter.USMServiceBuilder;
 import eu.europa.ec.fisheries.uvms.user.service.converter.UserContextConverter;
@@ -29,10 +30,12 @@ import eu.europa.ec.fisheries.wsdl.user.types.ContactDetails;
 import eu.europa.ec.fisheries.wsdl.user.types.DatasetExtension;
 import eu.europa.ec.fisheries.wsdl.user.types.DatasetFilter;
 import eu.europa.ec.fisheries.wsdl.user.types.DatasetList;
+import eu.europa.ec.fisheries.wsdl.user.types.EndPoint;
 import eu.europa.ec.fisheries.wsdl.user.types.Organisation;
 import eu.europa.ec.fisheries.wsdl.user.types.UserContext;
 import eu.europa.ec.fisheries.wsdl.user.types.UserContextId;
 import eu.europa.ec.fisheries.wsdl.user.types.UserPreference;
+import eu.europa.ec.mare.usm.administration.domain.ServiceRequest;
 import eu.europa.ec.mare.usm.administration.service.organisation.OrganisationService;
 import eu.europa.ec.mare.usm.information.domain.UserContextQuery;
 import eu.europa.ec.mare.usm.information.service.DeploymentService;
@@ -163,5 +166,15 @@ public class UserServiceBean implements UserService {
         return DatasetConverter.convertInformationModelToUserModel(informationService.getDataSets(DatasetConverter.convertUserModelToDomainInformationModel(datasetFilter)));
     }
 
-
+    @Override
+    public EndPoint findEndpoint(Long id) {
+        ServiceRequest<Long> request = new ServiceRequest<>();
+        request.setBody(id);
+        request.setRequester("usm_admin");
+        request.setRoleName("USM-UserManager");
+        request.setPassword("");
+        request.setScopeName("");
+        eu.europa.ec.mare.usm.administration.domain.EndPoint endpoint = organisationService.getEndPoint(request);
+        return EndPointConverter.convertAdministrationModelToUserModel(endpoint);
+    }
 }
