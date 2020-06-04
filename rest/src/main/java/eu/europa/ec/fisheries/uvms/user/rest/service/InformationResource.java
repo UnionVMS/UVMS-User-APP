@@ -51,7 +51,7 @@ public class InformationResource {
     @GET
     @Path("/userContext")
     public Response getUserContext(@QueryParam(value = "applicationName") final String applicationName,
-                                   @QueryParam(value = "userName") final String userName) {
+                                   @QueryParam(value = "userName") final String userName) throws UserServiceException {
 
         LOG.info("getUserContext invoked in rest layer");
         try {
@@ -63,46 +63,46 @@ public class InformationResource {
             return Response.ok(returnString).type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when getUserContext. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
+            throw ex;
         }
     }
 
     @POST
     @Path("/preference")
-    public Response createPreference(UserPreference userPreference) {
+    public Response createPreference(UserPreference userPreference) throws UserServiceException {
         LOG.info("createPreference invoked in rest layer");
         try {
             userService.createPreference(userPreference);
             return Response.ok().type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when createPreference. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
+            throw ex;
         }
     }
 
     @PUT
     @Path("/preference")
-    public Response updatePreference(UserPreference userPreference) {
+    public Response updatePreference(UserPreference userPreference) throws UserServiceException {
         LOG.info("updatePreference invoked in rest layer");
         try {
             userService.updatePreference(userPreference);
             return Response.ok().type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when updatePreference. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
+            throw ex;
         }
     }
 
     @DELETE
     @Path("/preference")
-    public Response deletePreference(UserPreference userPreference) {
+    public Response deletePreference(UserPreference userPreference) throws UserServiceException {
         LOG.info("deployApplication invoked in rest layer");
         try {
             userService.deletePreference(userPreference);
             return Response.ok().type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when deletePreference. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
+            throw ex;
         }
     }
 }
