@@ -38,53 +38,53 @@ public class ApplicationResource {
 
     @GET
     @Path("/application/{applicationName}")
-    public Response getApplication(@PathParam("applicationName") String applicationName) {
+    public Response getApplication(@PathParam("applicationName") String applicationName) throws UserServiceException {
         LOG.info("deployApplication invoked in rest layer");
         try {
             userService.getDeploymentDescriptor(applicationName);
             return Response.ok().type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when deployApplication. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
+            throw ex;
         }
     }
 
     @POST
     @Path("/application")
-    public Response deployApplication(Application application) {
+    public Response deployApplication(Application application) throws UserServiceException {
         LOG.info("deployApplication invoked in rest layer");
         try {
             userService.deployApplication(application);
             return Response.ok().type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when deployApplication. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
+            throw ex;
         }
     }
 
     @PUT
     @Path("/application")
-    public Response redeployApplication(Application application) {
+    public Response redeployApplication(Application application) throws UserServiceException {
         LOG.info("deployApplication invoked in rest layer");
         try {
             userService.redeployApplication(application);
             return Response.ok().type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when deployApplication. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
+            throw ex;
         }
     }
 
     @DELETE
     @Path("/application/{applicationName}")
-    public Response undeployApplication(@PathParam("applicationName") String applicationName) {
+    public Response undeployApplication(@PathParam("applicationName") String applicationName) throws UserServiceException {
         LOG.info("deployApplication invoked in rest layer");
         try {
             userService.undeployApplication(applicationName);
             return Response.ok().type(MediaType.APPLICATION_JSON).build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when deployApplication. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex.getMessage()).build();
+            throw ex;
         }
     }
 }

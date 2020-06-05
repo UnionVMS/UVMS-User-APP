@@ -42,97 +42,97 @@ public class UserResource {
 
     @PUT
     @Path("/updateUserPreferences")
-    public Response updateUserPreferences(UserContext userContext) {
+    public Response updateUserPreferences(UserContext userContext) throws UserServiceException {
         LOG.info("getUserContext invoked in rest layer");
         try {
             userService.updateUserPreferences(userContext);
             return Response.ok().build();
         } catch (UserServiceException | NullPointerException ex) {
             LOG.error("[ Error when updating User Preferences. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
+            throw ex;
         }
     }
 
     @GET
     @Path("/getOrganisation")
-    public Response getOrganisation(@QueryParam("organisationName") String organisationName) {
+    public Response getOrganisation(@QueryParam("organisationName") String organisationName) throws UserServiceException {
         try {
             Organisation organisation = userService.getOrganisation(organisationName);
             String returnString = jsonb.toJson(organisation);
             return Response.ok(returnString).build();
         } catch (UserServiceException ex) {
             LOG.error("[ Error when fetching Organisation. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
+            throw ex;
         }
     }
 
     @POST
     @Path("/getAllOrganisations")
-    public Response getAllOrganisations(GetAllOrganisationRequest request) {
+    public Response getAllOrganisations(GetAllOrganisationRequest request) throws UserServiceException {
         try {
             List<Organisation> allOrganisations = userService.getAllOrganisations(request);
             String returnString = jsonb.toJson(allOrganisations);
             return Response.ok(returnString).build();
         } catch (UserServiceException ex) {
             LOG.error("[ Error when fetching all Organisations. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
+            throw ex;
         }
     }
 
     @GET
     @Path("/findOrganisations")
-    public Response findOrganisations(@QueryParam("nationIsoName") String nationIsoName) {
+    public Response findOrganisations(@QueryParam("nationIsoName") String nationIsoName) throws UserServiceException {
         try {
             List<Organisation> organisations = userService.findOrganisations(nationIsoName);
             String returnString = jsonb.toJson(organisations);
             return Response.ok(returnString).build();
         } catch (UserServiceException ex) {
             LOG.error("[ Error when finding Organisations. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
+            throw ex;
         }
     }
 
     @GET
     @Path("/getContactDetails")
-    public Response getContactDetails() {
+    public Response getContactDetails() throws UserServiceException {
         try {
             ContactDetails contactDetails = userService.getContactDetails(httpServletRequest.getRemoteUser());
             String returnString = jsonb.toJson(contactDetails);
             return Response.ok(returnString).build();
         } catch (UserServiceException ex) {
             LOG.error("[ Error when fetching ContactDetails. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
+            throw ex;
         }
     }
 
     @PUT
     @Path("/putPreference")
-    public Response putPreference(UserPreference userPreference) {
+    public Response putPreference(UserPreference userPreference) throws UserServiceException {
         try {
             userService.putPreference(userPreference);
             return Response.ok().build();
         } catch (UserServiceException ex) {
             LOG.error("[ Error when updating Preferences. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
+            throw ex;
         }
     }
 
     @POST
     @Path("/createDataset")
-    public Response createDataset(DatasetExtension dataset) {
+    public Response createDataset(DatasetExtension dataset) throws UserServiceException {
         try {
             userService.createDataset(dataset);
             return Response.ok().build();
         } catch (UserServiceException ex) {
             LOG.error("[ Error when creating DataSet. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
+            throw ex;
         }
     }
 
     @DELETE
     @Path("/deleteDataset")
     public Response deleteDataset(@QueryParam("name") String name,
-                                  @QueryParam("applicationName") String applicationName) {
+                                  @QueryParam("applicationName") String applicationName) throws UserServiceException {
 
         DatasetExtension datasetExtension = createDatasetExtension(name, applicationName);
 
@@ -141,32 +141,32 @@ public class UserResource {
             return Response.ok().build();
         } catch (UserServiceException ex) {
             LOG.error("[ Error when deleting DataSet. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
+            throw ex;
         }
     }
 
     @PUT
     @Path("/updateDataset")
-    public Response updateDataset(DatasetExtension dataset) {
+    public Response updateDataset(DatasetExtension dataset) throws UserServiceException {
         try {
             userService.updateDataset(dataset);
             return Response.ok().build();
         } catch (UserServiceException ex) {
             LOG.error("[ Error when updating DataSet. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
+            throw ex;
         }
     }
 
     @POST
     @Path("/findDataset")
-    public Response findDataset(DatasetFilter datasetFilter) {
+    public Response findDataset(DatasetFilter datasetFilter) throws UserServiceException {
         try {
             DatasetList datasetList = userService.findDataset(datasetFilter);
             String returnString = jsonb.toJson(datasetList);
             return Response.ok(returnString).build();
         } catch (UserServiceException ex) {
             LOG.error("[ Error when finding DataSet. ]", ex);
-            return Response.status(Response.Status.INTERNAL_SERVER_ERROR).entity(ex).build();
+            throw ex;
         }
     }
 
