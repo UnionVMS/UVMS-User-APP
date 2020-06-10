@@ -12,16 +12,22 @@
  * more details. You should have received a copy of the GNU General Public
  * License along with the IFDM Suite. If not, see http://www.gnu.org/licenses/.
  */
-package eu.europa.ec.fisheries.uvms.user.service;
+package eu.europa.ec.fisheries.uvms.user.service.converter;
 
+import eu.europa.ec.fisheries.uvms.user.service.dto.ChannelDto;
+import eu.europa.ec.fisheries.uvms.user.service.dto.EndPointDto;
 import eu.europa.ec.fisheries.uvms.user.service.dto.OrganisationDto;
-import eu.europa.ec.fisheries.uvms.user.service.entity.OrganisationChannelEntityId;
+import eu.europa.ec.mare.usm.information.entity.ChannelEntity;
+import eu.europa.ec.mare.usm.information.entity.EndPointEntity;
+import eu.europa.ec.mare.usm.information.entity.OrganisationEntity;
+import org.mapstruct.Mapper;
 
-import java.util.List;
-import java.util.Optional;
+@Mapper(componentModel = "cdi")
+public interface OrganizationMapper {
 
-public interface OrganisationService {
-    Optional<OrganisationChannelEntityId> findOrganizationByEndpointAndChannel(String dataFlow, String endpointName);
+    OrganisationDto organisationEntityToOrganisationDto(OrganisationEntity source);
 
-    List<OrganisationDto> findOrganisationsWithEndPointsAndChannels();
+    EndPointDto endPointEntityToEndPointDto(EndPointEntity source);
+
+    ChannelDto channelEntityToChannelDto(ChannelEntity source);
 }

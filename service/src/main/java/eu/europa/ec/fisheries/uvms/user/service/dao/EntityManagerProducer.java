@@ -10,7 +10,6 @@ details. You should have received a copy of the GNU General Public License along
 */
 package eu.europa.ec.fisheries.uvms.user.service.dao;
 
-import javax.annotation.PostConstruct;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.inject.Produces;
@@ -20,15 +19,8 @@ import javax.persistence.PersistenceContext;
 @ApplicationScoped
 public class EntityManagerProducer {
 
-    protected EntityManager em;
-
     @PersistenceContext(unitName = "USM-Administration")
-    protected EntityManager postgres;
-
-    @PostConstruct
-    void initEntityManager() {
-        em = postgres;
-    }
+    protected EntityManager em;
 
     @Produces
     @RequestScoped
