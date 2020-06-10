@@ -15,33 +15,53 @@
 
 package eu.europa.ec.fisheries.uvms.user.service.bean;
 
-import eu.europa.ec.fisheries.uvms.user.service.OrganisationService;
-import eu.europa.ec.fisheries.uvms.user.service.dao.OrganisationDao;
-import eu.europa.ec.fisheries.uvms.user.service.entity.OrganisationChannelEntityId;
-
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
+import eu.europa.ec.fisheries.uvms.user.service.OrganisationService;
+import eu.europa.ec.fisheries.uvms.user.service.converter.OrganizationMapper;
+import eu.europa.ec.fisheries.uvms.user.service.dao.OrganisationDao;
+import eu.europa.ec.fisheries.uvms.user.service.dto.OrganisationDto;
+import eu.europa.ec.fisheries.uvms.user.service.entity.OrganisationChannelEntityId;
 
 @ApplicationScoped
 @Transactional
 public class OrganisationServiceBean implements OrganisationService {
 
     private OrganisationDao organisationDao;
+    private OrganizationMapper organizationMapper;
 
     @Inject
-    public OrganisationServiceBean(OrganisationDao organisationDao){
+    public OrganisationServiceBean(OrganisationDao organisationDao,OrganizationMapper organizationMapper){
         this.organisationDao = organisationDao;
+        this.organizationMapper = organizationMapper;
+    }
+
+    /**
+     * Default constructor for frameworks.
+     */
+    @SuppressWarnings("unused")
+    OrganisationServiceBean() {
+        // NOOP
     }
 
     @Override
     public Optional<OrganisationChannelEntityId> findOrganizationByEndpointAndChannel(String dataFlow, String endpointName) {
-        List<OrganisationChannelEntityId> result = organisationDao.findOrganizationByDataFlowAndEndpointName(dataFlow,endpointName);
-        if (result.size() > 1 ) {
+        List<OrganisationChannelEntityId> result = organisationDao.findOrganizationByDataFlowAndEndpointName(dataFlow, endpointName);
+        if (result.size() > 1) {
             throw new IllegalArgumentException("There are more than one results for the given argument. Cannot return a single Object.");
         }
         return result.stream().findFirst();
+    }
+
+    @Override
+    public List<OrganisationDto> findOrganisationsWithEndPointsAndChannels() {
+        return organisationDao.findOrganisations().stream()
+                .map(e -> organizationMapper.organisationEntityToOrganisationDto(e))
+                .collect(Collectors.toList());
     }
 }

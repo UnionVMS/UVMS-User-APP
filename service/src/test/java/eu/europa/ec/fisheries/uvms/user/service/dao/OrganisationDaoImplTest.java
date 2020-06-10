@@ -4,6 +4,7 @@ import com.ninja_squad.dbsetup.DbSetup;
 import com.ninja_squad.dbsetup.destination.DataSourceDestination;
 import com.ninja_squad.dbsetup.operation.Operation;
 import eu.europa.ec.fisheries.uvms.user.service.entity.OrganisationChannelEntityId;
+import eu.europa.ec.mare.usm.information.entity.OrganisationEntity;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,6 +13,7 @@ import java.util.List;
 import static com.ninja_squad.dbsetup.Operations.sequenceOf;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotNull;
 
 
 public class OrganisationDaoImplTest extends BaseUserInMemoryTest {
@@ -33,4 +35,11 @@ public class OrganisationDaoImplTest extends BaseUserInMemoryTest {
         assertEquals((long)organisationChannelEntityId.get(0).getEndpointId(),5);
     }
 
+
+    @Test
+    public void testFindOrganisations() {
+        List<OrganisationEntity> organisationEntities = new OrganisationDaoImpl(em).findOrganisations();
+        assertNotNull(organisationEntities);
+        assertFalse(organisationEntities.isEmpty());
+    }
 }

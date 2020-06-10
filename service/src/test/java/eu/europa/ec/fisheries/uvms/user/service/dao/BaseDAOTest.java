@@ -25,9 +25,7 @@ public abstract class BaseDAOTest {
 
 	@SneakyThrows
 	public BaseDAOTest() {
-
 		H2GISFunctions.load(ds.getConnection());
-
 		log.info("BuildingEntityManager for unit tests");
 		EntityManagerFactory emFactory = Persistence.createEntityManagerFactory(getPersistenceUnitName());
 		em = emFactory.createEntityManager();

@@ -29,6 +29,7 @@
 		<postgres.version>9.4-1201-jdbc41</postgres.version>
         <version.ninja.squad>2.1.0</version.ninja.squad>
         <lombok.version>1.16.18</lombok.version>
+        <mapstruct.version>1.3.1.Final</mapstruct.version>
     </properties>
 
     <dependencies>
@@ -135,18 +136,29 @@
                 <version>${slf4j.version}</version>
             </dependency>
             <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct</artifactId>
+                <version>${mapstruct.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.mapstruct</groupId>
+                <artifactId>mapstruct-processor</artifactId>
+                <version>${mapstruct.version}</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
                 <groupId>org.projectlombok</groupId>
                 <artifactId>lombok</artifactId>
                 <version>${lombok.version}</version>
             </dependency>
 
-            <!-- test -->
+            <!-- TEST -->
             <dependency>
                 <groupId>com.ninja-squad</groupId>
                 <artifactId>DbSetup</artifactId>
                 <version>${version.ninja.squad}</version>
                 <scope>test</scope>
-             </dependency>
+            </dependency>
             <dependency>
                 <groupId>org.orbisgis</groupId>
                 <artifactId>h2gis</artifactId>
@@ -155,7 +167,6 @@
             </dependency>
         </dependencies>
     </dependencyManagement>
-
 
     <distributionManagement>
         <repository>

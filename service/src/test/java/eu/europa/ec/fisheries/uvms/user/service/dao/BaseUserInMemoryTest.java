@@ -62,6 +62,4 @@ public abstract class BaseUserInMemoryTest extends BaseDAOTest {
             throw new IllegalArgumentException(e);
         }
     }
-
-
 }

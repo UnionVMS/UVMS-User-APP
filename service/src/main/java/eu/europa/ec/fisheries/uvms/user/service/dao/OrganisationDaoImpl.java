@@ -13,17 +13,18 @@
  * License along with the IFDM Suite. If not, see http://www.gnu.org/licenses/.
  */
 
-
 package eu.europa.ec.fisheries.uvms.user.service.dao;
 
 import eu.europa.ec.fisheries.uvms.user.service.entity.OrganisationChannelEntityId;
-import eu.europa.ec.mare.usm.information.entity.ChannelEntity;
-import eu.europa.ec.mare.usm.information.entity.EndPointEntity;
+import eu.europa.ec.mare.usm.information.entity.OrganisationEntity;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.TypedQuery;
+import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.JoinType;
+
 import java.util.List;
 
 @ApplicationScoped
@@ -39,22 +40,30 @@ public class OrganisationDaoImpl implements OrganisationDao{
     /**
      * Default constructor for frameworks.
      */
+    @SuppressWarnings("unused")
     OrganisationDaoImpl() {
         // NOOP
     }
 
     @Override
     public List<OrganisationChannelEntityId> findOrganizationByDataFlowAndEndpointName(String dataFlow, String endpointName) {
-
         TypedQuery<OrganisationChannelEntityId> query = em.createQuery(
              "SELECT new eu.europa.ec.fisheries.uvms.user.service.entity.OrganisationChannelEntityId(c.id, c.endPoint.id, c.endPoint.organisation.id) " +
                 "FROM ChannelEntity c " +
                 "WHERE c.dataflow = :dataflow " +
-                "AND c.endPoint.name = :name",OrganisationChannelEntityId.class);
+                "AND c.endPoint.name = :name", OrganisationChannelEntityId.class);
         query.setParameter("dataflow",dataFlow);
         query.setParameter("name",endpointName);
         return query.getResultList();
     }
 
+    @Override
+    public List<OrganisationEntity> findOrganisations() {
+        CriteriaQuery<OrganisationEntity> criteria = em.getCriteriaBuilder().createQuery(OrganisationEntity.class);
 
+        criteria.from(OrganisationEntity.class)
+                .fetch("endPointList", JoinType.LEFT);
+
+        return em.createQuery( criteria ).getResultList();
+    }
 }

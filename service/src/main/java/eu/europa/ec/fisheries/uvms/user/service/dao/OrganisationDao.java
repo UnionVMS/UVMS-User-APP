@@ -16,12 +16,13 @@
 package eu.europa.ec.fisheries.uvms.user.service.dao;
 
 import eu.europa.ec.fisheries.uvms.user.service.entity.OrganisationChannelEntityId;
-import eu.europa.ec.mare.usm.information.entity.ChannelEntity;
-import eu.europa.ec.mare.usm.information.entity.EndPointEntity;
+import eu.europa.ec.mare.usm.information.entity.OrganisationEntity;
 
 import java.util.List;
 
 public interface OrganisationDao {
 
     List<OrganisationChannelEntityId> findOrganizationByDataFlowAndEndpointName(String dataFlow, String endpointName);
+
+    List<OrganisationEntity> findOrganisations();
 }

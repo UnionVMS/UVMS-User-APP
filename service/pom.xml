@@ -82,16 +82,25 @@
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.mapstruct</groupId>
+			<artifactId>mapstruct-processor</artifactId>
+			<scope>provided</scope>
+		</dependency>
 
         <!-- TEST -->
         <dependency>
             <groupId>com.ninja-squad</groupId>
             <artifactId>DbSetup</artifactId>
         </dependency>
-        <dependency>
-            <groupId>org.orbisgis</groupId>
-            <artifactId>h2gis</artifactId>
-        </dependency>
+		<dependency>
+			<groupId>org.orbisgis</groupId>
+			<artifactId>h2gis</artifactId>
+		</dependency>
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
@@ -122,5 +131,4 @@
           </resource>
         </resources>
     </build>
-
 </project>
