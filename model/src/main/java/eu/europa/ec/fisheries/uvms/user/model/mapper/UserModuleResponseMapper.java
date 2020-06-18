@@ -170,4 +170,12 @@ public class UserModuleResponseMapper {
         findEndpointResponse.setEndpoint(endpoint);
         return JAXBMarshaller.marshallJaxBObjectToString(findEndpointResponse);
     }
+
+    public static String mapToFindOrganizationByEndpointAndChannelResponse(Long channelId,Long endpointId, Long organizationId) throws ModelMarshallException {
+        FindOrganizationByEndpointAndChannelResponse findOrganizationByEndpointAndChannelResponse = new FindOrganizationByEndpointAndChannelResponse();
+        findOrganizationByEndpointAndChannelResponse.setChannelId(channelId);
+        findOrganizationByEndpointAndChannelResponse.setEndpointId(endpointId);
+        findOrganizationByEndpointAndChannelResponse.setOrganisationId(organizationId);
+        return JAXBMarshaller.marshallJaxBObjectToString(findOrganizationByEndpointAndChannelResponse);
+    }
 }
