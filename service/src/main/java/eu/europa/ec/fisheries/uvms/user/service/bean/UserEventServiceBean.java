@@ -42,9 +42,9 @@ import eu.europa.ec.fisheries.uvms.user.message.producer.bean.UserMessageProduce
 import eu.europa.ec.fisheries.uvms.user.model.exception.ModelMarshallException;
 import eu.europa.ec.fisheries.uvms.user.model.mapper.JAXBMarshaller;
 import eu.europa.ec.fisheries.uvms.user.model.mapper.UserModuleResponseMapper;
+import eu.europa.ec.fisheries.uvms.user.service.OrganisationService;
 import eu.europa.ec.fisheries.uvms.user.service.UserEventService;
 import eu.europa.ec.fisheries.uvms.user.service.UserService;
-import eu.europa.ec.fisheries.uvms.user.service.dto.OrganizationByEndpointAndChannelDto;
 import eu.europa.ec.fisheries.uvms.user.service.exception.UserServiceException;
 import eu.europa.ec.fisheries.wsdl.user.module.CreateDatasetRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.CreatePreferenceRequest;
@@ -54,7 +54,7 @@ import eu.europa.ec.fisheries.wsdl.user.module.DeployApplicationRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.FilterDatasetRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.FindEndpointRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.FindOrganisationsRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.FindOrganizationByEndpointAndChannelRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.FindOrganisationByEndpointAndChannelRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetAllOrganisationRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetContactDetailsRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetDeploymentDescriptorRequest;
@@ -74,6 +74,7 @@ import eu.europa.ec.fisheries.wsdl.user.types.ContactDetails;
 import eu.europa.ec.fisheries.wsdl.user.types.DatasetList;
 import eu.europa.ec.fisheries.wsdl.user.types.EndPoint;
 import eu.europa.ec.fisheries.wsdl.user.types.Organisation;
+import eu.europa.ec.fisheries.wsdl.user.types.OrganisationEndpointAndChannelId;
 import eu.europa.ec.fisheries.wsdl.user.types.UserContext;
 import java.util.List;
 import javax.ejb.EJB;
@@ -102,7 +103,7 @@ public class UserEventServiceBean implements UserEventService {
     private UserMessageProducerBean messageProducer;
 
     @Inject
-    private OrganisationServiceBean serviceBean;
+    private OrganisationService serviceBean;
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -687,29 +688,37 @@ public class UserEventServiceBean implements UserEventService {
     }
 
     @Override
-    public void findOrganizationByEndpointAndChannel(@Observes @OrganizationByEndpointAndChannelEvent EventMessage message){
+    public void findOrganisationByEndpointAndChannel(@Observes @OrganizationByEndpointAndChannelEvent EventMessage message){
         LOG.info("FindOrganizationByEndpointAndChannelRequest Received.. processing request in UserEventServiceBean");
 
         try {
-            FindOrganizationByEndpointAndChannelRequest request = JAXBMarshaller.unmarshallTextMessage(message.getJmsMessage(), FindOrganizationByEndpointAndChannelRequest.class);
+            FindOrganisationByEndpointAndChannelRequest request = JAXBMarshaller.unmarshallTextMessage(message.getJmsMessage(), FindOrganisationByEndpointAndChannelRequest.class);
             String endpointName = request.getEndpointName();
             String channelDataFlow = request.getChannelDataFlow();
             String responseString;
             try {
-                OrganizationByEndpointAndChannelDto organizationByEndpointAndChannel = serviceBean.findOrganizationByEndpointAndChannel(channelDataFlow, endpointName);
-                responseString = UserModuleResponseMapper.mapToFindOrganizationByEndpointAndChannelResponse(organizationByEndpointAndChannel.getChannelId(),organizationByEndpointAndChannel.getEndpointId(),organizationByEndpointAndChannel.getOrganisationId());
+                OrganisationEndpointAndChannelId serviceResult = serviceBean.findOrganizationByEndpointAndChannel(channelDataFlow, endpointName)
+                        .map(o -> {
+                            OrganisationEndpointAndChannelId result = new OrganisationEndpointAndChannelId();
+                            result.setChannelId(o.getChannelId());
+                            result.setEndpointId(o.getEndpointId());
+                            result.setOrganisationId(o.getOrganisationId());
+                            return result;
+                        })
+                        .orElse(null);
+                responseString = UserModuleResponseMapper.mapToFindOrganizationByEndpointAndChannelResponse(serviceResult);
             } catch(Exception e){
                 if (e.getCause() != null && e.getCause() instanceof IllegalArgumentException) {
                     IllegalArgumentException cause = (IllegalArgumentException) e.getCause();
-                    LOG.debug("Invalid findOrganizationByEndpointAndChannel : ", cause.getMessage());
-                    responseString = UserModuleResponseMapper.mapToUserFault(cause, UserModuleMethod.FIND_ENDPOINT);
+                    LOG.debug("Invalid findOrganisationByEndpointAndChannel : {}", cause.getMessage());
+                    responseString = UserModuleResponseMapper.mapToUserFault(cause, UserModuleMethod.FIND_ORGANISATION_BY_ENDPOINT_AND_CHANNEL);
                 } else {
                     throw e;
                 }
             }
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
-        } catch (ModelMarshallException |MessageException e) {
-            LOG.error("[ Error wile finding organization] ", e);
+        } catch (ModelMarshallException | MessageException e) {
+            LOG.error("[ Error while finding organization] ", e);
             errorEvent.fire(message);
         }
     }

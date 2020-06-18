@@ -1,10 +1,7 @@
 package eu.europa.ec.fisheries.uvms.user.service.bean;
 
 import eu.europa.ec.fisheries.uvms.user.service.dao.OrganisationDao;
-import eu.europa.ec.fisheries.uvms.user.service.dto.OrganizationByEndpointAndChannelDto;
 import eu.europa.ec.fisheries.uvms.user.service.entity.OrganisationChannelEntityId;
-import eu.europa.ec.mare.usm.information.entity.ChannelEntity;
-import eu.europa.ec.mare.usm.information.entity.OrganisationEntity;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.InjectMocks;
@@ -13,9 +10,11 @@ import org.mockito.MockitoAnnotations;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
+import java.util.Collections;
+import java.util.Optional;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 import static org.mockito.Mockito.when;
 
 
@@ -33,15 +32,23 @@ public class OrganisationServiceBeanTest{
     }
 
     @Test
-    public void findOrganizationByEndpointAndChannelTest() {
-
+    public void testFindOrganizationByEndpointAndChannel() {
         OrganisationChannelEntityId organisationChannelEntityId = new OrganisationChannelEntityId(1l,5l,4l);
 
-        when(organisationDao.findOrganizationByDataFlowAndEndpointName("dataflow","FLUX.GRC_backup")).thenReturn(new ArrayList<>(Arrays.asList(organisationChannelEntityId)));
+        when(organisationDao.findOrganizationByDataFlowAndEndpointName("dataflow","FLUX.GRC_backup")).thenReturn(new ArrayList<>(Collections.singletonList(organisationChannelEntityId)));
 
-        OrganizationByEndpointAndChannelDto organization = serviceBean.findOrganizationByEndpointAndChannel("dataflow", "FLUX.GRC_backup");
-        assertEquals((long)organization.getOrganisationId(),4);
-        assertEquals((long)organization.getChannelId(),1);
-        assertEquals((long)organization.getEndpointId(),5);
+        Optional<OrganisationChannelEntityId> result = serviceBean.findOrganizationByEndpointAndChannel("dataflow", "FLUX.GRC_backup");
+        assertTrue(result.isPresent());
+        assertEquals(organisationChannelEntityId,result.get());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testFindOrganizationByEndpointAndChannelException() {
+        OrganisationChannelEntityId id1 = new OrganisationChannelEntityId(1l,5l,4l);
+        OrganisationChannelEntityId id2 = new OrganisationChannelEntityId(2l,6l,7l);
+
+        when(organisationDao.findOrganizationByDataFlowAndEndpointName("dataflow","FLUX.GRC_backup")).thenReturn(new ArrayList<>(Arrays.asList(id1, id2)));
+
+        serviceBean.findOrganizationByEndpointAndChannel("dataflow", "FLUX.GRC_backup");
     }
 }

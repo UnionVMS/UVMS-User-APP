@@ -17,13 +17,13 @@ package eu.europa.ec.fisheries.uvms.user.service.bean;
 
 import eu.europa.ec.fisheries.uvms.user.service.OrganisationService;
 import eu.europa.ec.fisheries.uvms.user.service.dao.OrganisationDao;
-import eu.europa.ec.fisheries.uvms.user.service.dto.OrganizationByEndpointAndChannelDto;
 import eu.europa.ec.fisheries.uvms.user.service.entity.OrganisationChannelEntityId;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import java.util.List;
+import java.util.Optional;
 
 @ApplicationScoped
 @Transactional
@@ -37,22 +37,11 @@ public class OrganisationServiceBean implements OrganisationService {
     }
 
     @Override
-    public OrganizationByEndpointAndChannelDto findOrganizationByEndpointAndChannel(String dataFlow,String endpointName) {
-        List<OrganisationChannelEntityId> channelByDataFlow = organisationDao.findOrganizationByDataFlowAndEndpointName(dataFlow,endpointName);
-        OrganizationByEndpointAndChannelDto responseDTO = new OrganizationByEndpointAndChannelDto();
-
-        if(channelByDataFlow.isEmpty() ) {
-            return  responseDTO;
-        }
-
-        if(channelByDataFlow.size() > 1 ) {
+    public Optional<OrganisationChannelEntityId> findOrganizationByEndpointAndChannel(String dataFlow, String endpointName) {
+        List<OrganisationChannelEntityId> result = organisationDao.findOrganizationByDataFlowAndEndpointName(dataFlow,endpointName);
+        if (result.size() > 1 ) {
             throw new IllegalArgumentException("There are more than one results for the given argument. Cannot return a single Object.");
         }
-
-        responseDTO.setChannelId(channelByDataFlow.get(0).getChannelId());
-        responseDTO.setEndpointId(channelByDataFlow.get(0).getEndpointId());
-        responseDTO.setOrganisationId(channelByDataFlow.get(0).getOrganisationId());
-        return  responseDTO;
+        return result.stream().findFirst();
     }
-
 }
