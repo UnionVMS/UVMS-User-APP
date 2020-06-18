@@ -64,5 +64,5 @@ public interface UserEventService {
 
 	public void findEndpoint(@Observes @FindEndpointEvent EventMessage message);
 
-    void findOrganizationByEndpointAndChannel(@Observes @OrganizationByEndpointAndChannelEvent EventMessage message);
+    void findOrganisationByEndpointAndChannel(@Observes @OrganizationByEndpointAndChannelEvent EventMessage message);
 }

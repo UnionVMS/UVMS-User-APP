@@ -14,12 +14,9 @@
  */
 package eu.europa.ec.fisheries.uvms.user.service;
 
-
-import eu.europa.ec.fisheries.uvms.user.service.dto.OrganizationByEndpointAndChannelDto;
-import javax.ejb.Local;
-
+import eu.europa.ec.fisheries.uvms.user.service.entity.OrganisationChannelEntityId;
+import java.util.Optional;
 
 public interface OrganisationService {
-
-    OrganizationByEndpointAndChannelDto findOrganizationByEndpointAndChannel(String dataFlow,String endpointName);
-} 
+    Optional<OrganisationChannelEntityId> findOrganizationByEndpointAndChannel(String dataFlow, String endpointName);
+}

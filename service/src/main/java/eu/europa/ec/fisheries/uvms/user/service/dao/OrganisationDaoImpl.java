@@ -32,8 +32,15 @@ public class OrganisationDaoImpl implements OrganisationDao{
     private EntityManager em;
 
     @Inject
-    OrganisationDaoImpl(EntityManager em) {
+    public OrganisationDaoImpl(EntityManager em) {
         this.em = em;
+    }
+
+    /**
+     * Default constructor for frameworks.
+     */
+    OrganisationDaoImpl() {
+        // NOOP
     }
 
     @Override

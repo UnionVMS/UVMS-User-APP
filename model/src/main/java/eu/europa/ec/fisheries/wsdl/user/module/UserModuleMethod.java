@@ -19,6 +19,7 @@ import javax.xml.bind.annotation.XmlType;
  *     &lt;enumeration value="GET_ORGANISATIONS"/>
  *     &lt;enumeration value="GET_ALLORGANISATIONS"/>
  *     &lt;enumeration value="FIND_ORGANISATIONS"/>
+ *     &lt;enumeration value="FIND_ORGANISATION_BY_ENDPOINT_AND_CHANNEL"/>
  *     &lt;enumeration value="GET_DEPLOYMENT_DESCRIPTOR"/>
  *     &lt;enumeration value="DEPLOY_APPLICATION"/>
  *     &lt;enumeration value="REDEPLOY_APPLICATION"/>
@@ -49,6 +50,7 @@ public enum UserModuleMethod {
     GET_ORGANISATIONS,
     GET_ALLORGANISATIONS,
     FIND_ORGANISATIONS,
+    FIND_ORGANISATION_BY_ENDPOINT_AND_CHANNEL,
     GET_DEPLOYMENT_DESCRIPTOR,
     DEPLOY_APPLICATION,
     REDEPLOY_APPLICATION,

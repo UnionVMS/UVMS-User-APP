@@ -28,6 +28,7 @@ import eu.europa.ec.fisheries.wsdl.user.types.ContactDetails;
 import eu.europa.ec.fisheries.wsdl.user.types.DatasetList;
 import eu.europa.ec.fisheries.wsdl.user.types.EndPoint;
 import eu.europa.ec.fisheries.wsdl.user.types.Organisation;
+import eu.europa.ec.fisheries.wsdl.user.types.OrganisationEndpointAndChannelId;
 import eu.europa.ec.fisheries.wsdl.user.types.UserContext;
 import eu.europa.ec.fisheries.wsdl.user.types.UserFault;
 
@@ -171,11 +172,9 @@ public class UserModuleResponseMapper {
         return JAXBMarshaller.marshallJaxBObjectToString(findEndpointResponse);
     }
 
-    public static String mapToFindOrganizationByEndpointAndChannelResponse(Long channelId,Long endpointId, Long organizationId) throws ModelMarshallException {
-        FindOrganizationByEndpointAndChannelResponse findOrganizationByEndpointAndChannelResponse = new FindOrganizationByEndpointAndChannelResponse();
-        findOrganizationByEndpointAndChannelResponse.setChannelId(channelId);
-        findOrganizationByEndpointAndChannelResponse.setEndpointId(endpointId);
-        findOrganizationByEndpointAndChannelResponse.setOrganisationId(organizationId);
-        return JAXBMarshaller.marshallJaxBObjectToString(findOrganizationByEndpointAndChannelResponse);
+    public static String mapToFindOrganizationByEndpointAndChannelResponse(OrganisationEndpointAndChannelId result) throws ModelMarshallException {
+        FindOrganisationByEndpointAndChannelResponse findOrganisationByEndpointAndChannelResponse = new FindOrganisationByEndpointAndChannelResponse();
+        findOrganisationByEndpointAndChannelResponse.setResult(result);
+        return JAXBMarshaller.marshallJaxBObjectToString(findOrganisationByEndpointAndChannelResponse);
     }
 }

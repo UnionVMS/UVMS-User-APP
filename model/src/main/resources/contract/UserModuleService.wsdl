@@ -173,21 +173,23 @@
 			</xsd:complexType>
 		</xsd:element>
 
-	<xsd:element name="findOrganizationByEndpointAndChannelRequest">
+	<xsd:element name="findOrganisationByEndpointAndChannelRequest">
 		<xsd:complexType>
-			<xsd:sequence>
-				<xsd:element name="endpointName" type="xsd:string"/>
-				<xsd:element name="channelDataFlow" type="xsd:string"/>
-			</xsd:sequence>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="endpointName" type="xsd:string"/>
+						<xsd:element name="channelDataFlow" type="xsd:string"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
 		</xsd:complexType>
 	</xsd:element>
 
-	<xsd:element name="findOrganizationByEndpointAndChannelResponse">
+	<xsd:element name="findOrganisationByEndpointAndChannelResponse">
 		<xsd:complexType>
 			<xsd:sequence>
-				<xsd:element name="organisationId" type="xsd:long"/>
-				<xsd:element name="endpointId" type="xsd:long"/>
-				<xsd:element name="channelId" type="xsd:long"/>
+				<xsd:element name="result" type="tv:OrganisationEndpointAndChannelId"/>
 			</xsd:sequence>
 		</xsd:complexType>
 	</xsd:element>
