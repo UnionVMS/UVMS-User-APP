@@ -29,6 +29,7 @@ import eu.europa.ec.fisheries.uvms.user.message.event.GetApplicationEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.GetContactDetailsEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.GetOrganizationEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.GetUserContexEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.OrganizationByEndpointAndChannelEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.PingEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.PutPreferenceEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.RedeployApplicationEvent;
@@ -43,6 +44,7 @@ import eu.europa.ec.fisheries.uvms.user.model.mapper.JAXBMarshaller;
 import eu.europa.ec.fisheries.uvms.user.model.mapper.UserModuleResponseMapper;
 import eu.europa.ec.fisheries.uvms.user.service.UserEventService;
 import eu.europa.ec.fisheries.uvms.user.service.UserService;
+import eu.europa.ec.fisheries.uvms.user.service.dto.OrganizationByEndpointAndChannelDto;
 import eu.europa.ec.fisheries.uvms.user.service.exception.UserServiceException;
 import eu.europa.ec.fisheries.wsdl.user.module.CreateDatasetRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.CreatePreferenceRequest;
@@ -51,8 +53,8 @@ import eu.europa.ec.fisheries.wsdl.user.module.DeletePreferenceRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.DeployApplicationRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.FilterDatasetRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.FindEndpointRequest;
-import eu.europa.ec.fisheries.wsdl.user.module.FindEndpointResponse;
 import eu.europa.ec.fisheries.wsdl.user.module.FindOrganisationsRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.FindOrganizationByEndpointAndChannelRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetAllOrganisationRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetContactDetailsRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetDeploymentDescriptorRequest;
@@ -98,6 +100,9 @@ public class UserEventServiceBean implements UserEventService {
 
     @EJB
     private UserMessageProducerBean messageProducer;
+
+    @Inject
+    private OrganisationServiceBean serviceBean;
 
     @Override
     @TransactionAttribute(TransactionAttributeType.REQUIRES_NEW)
@@ -679,6 +684,34 @@ public class UserEventServiceBean implements UserEventService {
             errorEvent.fire(message);
         }
 
+    }
+
+    @Override
+    public void findOrganizationByEndpointAndChannel(@Observes @OrganizationByEndpointAndChannelEvent EventMessage message){
+        LOG.info("FindOrganizationByEndpointAndChannelRequest Received.. processing request in UserEventServiceBean");
+
+        try {
+            FindOrganizationByEndpointAndChannelRequest request = JAXBMarshaller.unmarshallTextMessage(message.getJmsMessage(), FindOrganizationByEndpointAndChannelRequest.class);
+            String endpointName = request.getEndpointName();
+            String channelDataFlow = request.getChannelDataFlow();
+            String responseString;
+            try {
+                OrganizationByEndpointAndChannelDto organizationByEndpointAndChannel = serviceBean.findOrganizationByEndpointAndChannel(channelDataFlow, endpointName);
+                responseString = UserModuleResponseMapper.mapToFindOrganizationByEndpointAndChannelResponse(organizationByEndpointAndChannel.getChannelId(),organizationByEndpointAndChannel.getEndpointId(),organizationByEndpointAndChannel.getOrganisationId());
+            } catch(Exception e){
+                if (e.getCause() != null && e.getCause() instanceof IllegalArgumentException) {
+                    IllegalArgumentException cause = (IllegalArgumentException) e.getCause();
+                    LOG.debug("Invalid findOrganizationByEndpointAndChannel : ", cause.getMessage());
+                    responseString = UserModuleResponseMapper.mapToUserFault(cause, UserModuleMethod.FIND_ENDPOINT);
+                } else {
+                    throw e;
+                }
+            }
+            messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
+        } catch (ModelMarshallException |MessageException e) {
+            LOG.error("[ Error wile finding organization] ", e);
+            errorEvent.fire(message);
+        }
     }
 
     @Override

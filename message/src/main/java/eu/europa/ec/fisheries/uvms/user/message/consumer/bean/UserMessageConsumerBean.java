@@ -29,6 +29,7 @@ import eu.europa.ec.fisheries.uvms.user.message.event.GetApplicationEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.GetContactDetailsEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.GetOrganizationEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.GetUserContexEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.OrganizationByEndpointAndChannelEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.PingEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.PutPreferenceEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.RedeployApplicationEvent;
@@ -59,8 +60,6 @@ import eu.europa.ec.fisheries.wsdl.user.module.UpdatePreferenceRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.UserBaseRequest;
 import javax.ejb.ActivationConfigProperty;
 import javax.ejb.MessageDriven;
-import javax.ejb.TransactionAttribute;
-import javax.ejb.TransactionAttributeType;
 import javax.enterprise.event.Event;
 import javax.inject.Inject;
 import javax.jms.Message;
@@ -155,6 +154,10 @@ public class UserMessageConsumerBean implements MessageListener {
     @Inject
     @FindEndpointEvent
     private Event<EventMessage> findEndpointEvent;
+
+    @Inject
+    @OrganizationByEndpointAndChannelEvent
+    private Event<EventMessage> findOrganizationByEndpointAndChannelEvent;
     
     @Inject
     @PingEvent
@@ -247,6 +250,9 @@ public class UserMessageConsumerBean implements MessageListener {
                     break;
                 case FIND_ENDPOINT:
                     findEndpointEvent.fire(new EventMessage(textMessage));
+                    break;
+                case FIND_ORGANISATION_BY_ENDPOINT_AND_CHANNEL:
+                    findOrganizationByEndpointAndChannelEvent.fire(new EventMessage(textMessage));
                     break;
                 default:
                     break;

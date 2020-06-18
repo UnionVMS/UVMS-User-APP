@@ -27,6 +27,13 @@
         <uvms.logger.version>1.2.0</uvms.logger.version>
         <hibernate.version>5.1.9.Final</hibernate.version>
 		<postgres.version>9.4-1201-jdbc41</postgres.version>
+        <version.hibernate.validator>6.1.2.Final</version.hibernate.validator>
+        <version.jackson>2.10.3</version.jackson>
+        <version.junit.jupiter>5.6.0</version.junit.jupiter>
+        <version.ninja.squad>2.1.0</version.ninja.squad>
+        <version.resteasy-test>4.4.2.Final</version.resteasy-test>
+        <lombok.version>1.16.18</lombok.version>
+
     </properties>
 
     <dependencies>
@@ -132,6 +139,44 @@
                 <artifactId>jcl-over-slf4j</artifactId>
                 <version>${slf4j.version}</version>
             </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-jpamodelgen</artifactId>
+                <version>5.4.12.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>${lombok.version}</version>
+            </dependency>
+
+            <!-- test -->
+            <dependency>
+                <groupId>com.ninja-squad</groupId>
+                <artifactId>DbSetup</artifactId>
+                <version>${version.ninja.squad}</version>
+                <scope>test</scope>
+             </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-core</artifactId>
+                <version>${hibernate.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.hibernate</groupId>
+                <artifactId>hibernate-entitymanager</artifactId>
+                <version>${hibernate.version}</version>
+                <scope>test</scope>
+            </dependency>
+
+
         </dependencies>
     </dependencyManagement>
 
