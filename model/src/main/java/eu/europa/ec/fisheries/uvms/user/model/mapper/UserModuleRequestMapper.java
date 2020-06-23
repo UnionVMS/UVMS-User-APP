@@ -21,7 +21,9 @@ import eu.europa.ec.fisheries.wsdl.user.module.DeleteDatasetRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.DeletePreferenceRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.DeployApplicationRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.FilterDatasetRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.FindOrganisationByEndpointAndChannelRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.FindOrganisationsRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.FindOrganizationByEndpointAndChannelRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetContactDetailsRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetDeploymentDescriptorRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetOrganisationRequest;
@@ -171,6 +173,15 @@ public class UserModuleRequestMapper {
         filterDatasetRequest.setMethod(UserModuleMethod.FIND_DATASETS);
         filterDatasetRequest.setDatasetFilter(datasetFilter);
         return JAXBMarshaller.marshallJaxBObjectToString(filterDatasetRequest);
+    }
+
+    public  static  String mapToFindOrganizationByDataFlowAndEndpointName(String dataflow,String endpointName)throws ModelMarshallException {
+
+       FindOrganisationByEndpointAndChannelRequest request = new FindOrganisationByEndpointAndChannelRequest();
+       request.setChannelDataFlow(dataflow);
+       request.setEndpointName(endpointName);
+       request.setMethod(UserModuleMethod.FIND_ORGANISATION_BY_ENDPOINT_AND_CHANNEL);
+        return JAXBMarshaller.marshallJaxBObjectToString(request);
     }
     
 }
