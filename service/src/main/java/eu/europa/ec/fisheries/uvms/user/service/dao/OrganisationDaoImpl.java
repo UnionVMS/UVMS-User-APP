@@ -61,7 +61,8 @@ public class OrganisationDaoImpl implements OrganisationDao{
     public List<OrganisationEntity> findOrganisations() {
         CriteriaQuery<OrganisationEntity> criteria = em.getCriteriaBuilder().createQuery(OrganisationEntity.class);
 
-        criteria.from(OrganisationEntity.class)
+        criteria.distinct(true)
+                .from(OrganisationEntity.class)
                 .fetch("endPointList", JoinType.LEFT);
 
         return em.createQuery( criteria ).getResultList();
