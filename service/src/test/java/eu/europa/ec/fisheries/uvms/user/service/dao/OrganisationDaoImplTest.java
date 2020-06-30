@@ -18,7 +18,6 @@ import static org.junit.Assert.assertNotNull;
 
 public class OrganisationDaoImplTest extends BaseUserInMemoryTest {
 
-
     @Before
     public void prepare() {
         Operation operation = sequenceOf(INSERT_ORGANIZATION,INSERT_ENDPOINT,INSERT_CHANNEL);
@@ -28,7 +27,7 @@ public class OrganisationDaoImplTest extends BaseUserInMemoryTest {
 
     @Test
     public void findOrganizationByDataFlow() {
-        List<OrganisationChannelEntityId> organisationChannelEntityId = (new OrganisationDaoImpl(em)).findOrganizationByDataFlowAndEndpointName("dataflow","FLUX.GRC_backup");
+        List<OrganisationChannelEntityId> organisationChannelEntityId = new OrganisationDaoImpl(em).findOrganizationByDataFlowAndEndpoint("service","http://backup.flux.gr/");
         assertFalse(organisationChannelEntityId.isEmpty());
         assertEquals((long)organisationChannelEntityId.get(0).getOrganisationId(),4);
         assertEquals((long)organisationChannelEntityId.get(0).getChannelId(),1);
