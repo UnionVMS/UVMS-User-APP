@@ -33,21 +33,21 @@ public class OrganisationServiceBeanTest{
 
     @Test
     public void testFindOrganizationByEndpointAndChannel() {
-        OrganisationChannelEntityId organisationChannelEntityId = new OrganisationChannelEntityId(1l,5l,4l);
+        OrganisationChannelEntityId organisationChannelEntityId = new OrganisationChannelEntityId(1L,5L,4L);
 
-        when(organisationDao.findOrganizationByDataFlowAndEndpointName("dataflow","FLUX.GRC_backup")).thenReturn(new ArrayList<>(Collections.singletonList(organisationChannelEntityId)));
+        when(organisationDao.findOrganizationByDataFlowAndEndpoint("service","GRC:backup")).thenReturn(new ArrayList<>(Collections.singletonList(organisationChannelEntityId)));
 
-        Optional<OrganisationChannelEntityId> result = serviceBean.findOrganizationByEndpointAndChannel("dataflow", "FLUX.GRC_backup");
+        Optional<OrganisationChannelEntityId> result = serviceBean.findOrganizationByEndpointAndChannel("service", "GRC:backup");
         assertTrue(result.isPresent());
         assertEquals(organisationChannelEntityId,result.get());
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testFindOrganizationByEndpointAndChannelException() {
-        OrganisationChannelEntityId id1 = new OrganisationChannelEntityId(1l,5l,4l);
-        OrganisationChannelEntityId id2 = new OrganisationChannelEntityId(2l,6l,7l);
+        OrganisationChannelEntityId id1 = new OrganisationChannelEntityId(1L,5L,4L);
+        OrganisationChannelEntityId id2 = new OrganisationChannelEntityId(2L,6L,7L);
 
-        when(organisationDao.findOrganizationByDataFlowAndEndpointName("dataflow","FLUX.GRC_backup")).thenReturn(new ArrayList<>(Arrays.asList(id1, id2)));
+        when(organisationDao.findOrganizationByDataFlowAndEndpoint("dataflow","FLUX.GRC_backup")).thenReturn(new ArrayList<>(Arrays.asList(id1, id2)));
 
         serviceBean.findOrganizationByEndpointAndChannel("dataflow", "FLUX.GRC_backup");
     }

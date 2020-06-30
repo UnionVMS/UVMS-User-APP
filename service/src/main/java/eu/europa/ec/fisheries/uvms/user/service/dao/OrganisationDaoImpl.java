@@ -46,14 +46,14 @@ public class OrganisationDaoImpl implements OrganisationDao{
     }
 
     @Override
-    public List<OrganisationChannelEntityId> findOrganizationByDataFlowAndEndpointName(String dataFlow, String endpointName) {
+    public List<OrganisationChannelEntityId> findOrganizationByDataFlowAndEndpoint(String dataflow, String endpoint) {
         TypedQuery<OrganisationChannelEntityId> query = em.createQuery(
              "SELECT new eu.europa.ec.fisheries.uvms.user.service.entity.OrganisationChannelEntityId(c.id, c.endPoint.id, c.endPoint.organisation.id) " +
                 "FROM ChannelEntity c " +
-                "WHERE c.dataflow = :dataflow " +
-                "AND c.endPoint.name = :name", OrganisationChannelEntityId.class);
-        query.setParameter("dataflow",dataFlow);
-        query.setParameter("name",endpointName);
+                "WHERE c.service = :dataflow " +
+                "AND c.endPoint.uri = :endpoint", OrganisationChannelEntityId.class);
+        query.setParameter("dataflow", dataflow);
+        query.setParameter("endpoint", endpoint);
         return query.getResultList();
     }
 

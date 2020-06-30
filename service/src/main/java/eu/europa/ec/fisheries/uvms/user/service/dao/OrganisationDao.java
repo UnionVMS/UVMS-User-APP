@@ -22,7 +22,7 @@ import java.util.List;
 
 public interface OrganisationDao {
 
-    List<OrganisationChannelEntityId> findOrganizationByDataFlowAndEndpointName(String dataFlow, String endpointName);
+    List<OrganisationChannelEntityId> findOrganizationByDataFlowAndEndpoint(String dataflow, String endpoint);
 
     List<OrganisationEntity> findOrganisations();
 }
