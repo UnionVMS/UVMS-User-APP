@@ -111,6 +111,11 @@
                 <version>${uvms.commonsLibrary.version}</version>
             </dependency>
             <dependency>
+                <groupId>eu.europa.ec.fisheries.uvms.commons</groupId>
+                <artifactId>uvms-commons-xml</artifactId>
+                <version>${uvms.commonsLibrary.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>eu.europa.ec.fisheries.uvms.user</groupId>
                 <artifactId>user-model</artifactId>
                 <version>${uvms.user.module.version}</version>
