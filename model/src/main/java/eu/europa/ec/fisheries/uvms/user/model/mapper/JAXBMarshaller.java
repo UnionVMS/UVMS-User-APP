@@ -48,7 +48,6 @@ public class JAXBMarshaller {
             marshaller.marshal(data, sw);
             return sw.toString();
         } catch (JAXBException ex) {
-            LOG.error("[ Error when marshalling object to string ] {} ", ex.getMessage());
             throw new ModelMarshallException("[ Error when marshalling Object to String ]", ex);
         }
     }
@@ -71,7 +70,6 @@ public class JAXBMarshaller {
             StringReader sr = new StringReader(textMessage.getText());
             return (R) unmarshaller.unmarshal(sr);
         } catch (JMSException | JAXBException ex) {
-            LOG.error("[ Error when Text message to object ] {} ", ex.getMessage());
             throw new ModelMarshallException("[Error when unmarshalling response in ResponseMapper ]", ex);
         }
     }
