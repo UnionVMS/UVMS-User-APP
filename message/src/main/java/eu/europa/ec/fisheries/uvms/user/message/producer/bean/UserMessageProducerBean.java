@@ -54,7 +54,6 @@ public class UserMessageProducerBean extends AbstractProducer {
             sendResponseMessageToSender(requestMessage, text);
 
         } catch (ModelMarshallException e) {
-            LOG.error("[ Error when sending message. ] {}", e.getMessage());
             throw new MessageException("[ Error when sending message. ]", e);
         }
     }
