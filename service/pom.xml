@@ -12,11 +12,6 @@
     </parent>
     
     <properties>
-    <!-- PROPERTIES USED FOR LOGBACK -->
-        <application.name>${project.parent.artifactId}</application.name> 
-        <application.version>${project.parent.version}</application.version>
-        <application.logfile>/app/logs/${project.parent.artifactId}/${project.parent.artifactId}.log</application.logfile>
-        <application.error.logfile>/app/logs/${project.parent.artifactId}/${project.parent.artifactId}-error.log</application.error.logfile>
         <sun.jersey.version>1.19.4</sun.jersey.version>
     </properties>
 

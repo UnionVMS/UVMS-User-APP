@@ -180,6 +180,11 @@
             </jarModule>
           </modules>
           <skinnyWars>true</skinnyWars>
+          <archive>
+            <manifestEntries>
+              <Logging-Profile>user</Logging-Profile>
+            </manifestEntries>
+          </archive>
         </configuration>
       </plugin>
     </plugins>
