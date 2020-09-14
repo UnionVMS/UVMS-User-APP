@@ -5,7 +5,7 @@
         <groupId>fish.focus.uvms.maven</groupId>
         <artifactId>uvms-pom</artifactId>
         <relativePath />
-        <version>3.3</version>
+        <version>3.4</version>
     </parent>
 
     <groupId>eu.europa.ec.fisheries.uvms.user</groupId>
@@ -27,11 +27,6 @@
             <artifactId>jakarta.jakartaee-api</artifactId>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>fish.focus.uvms.maven</groupId>
-            <artifactId>uvms-pom-logging-deps</artifactId>
-            <type>pom</type>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
@@ -39,12 +34,6 @@
             <dependency>
                 <groupId>fish.focus.uvms.maven</groupId>
                 <artifactId>uvms-pom-gis-deps</artifactId>
-                <version>${parent.pom.version}</version>
-                <type>pom</type>
-            </dependency>
-            <dependency>
-                <groupId>fish.focus.uvms.maven</groupId>
-                <artifactId>uvms-pom-logging-deps</artifactId>
                 <version>${parent.pom.version}</version>
                 <type>pom</type>
             </dependency>
