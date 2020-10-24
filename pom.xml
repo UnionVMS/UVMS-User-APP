@@ -261,5 +261,6 @@
         <module>model</module>
         <module>module</module>
 		<module>user-client</module>
-	</modules>
+        <module>user-authentication-rest</module>
+    </modules>
 </project>
