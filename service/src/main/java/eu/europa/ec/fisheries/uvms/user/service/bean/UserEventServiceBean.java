@@ -23,6 +23,7 @@ import eu.europa.ec.fisheries.uvms.user.message.event.DeployApplicationEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.ErrorEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.FindDatasetsEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.FindEndpointEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.FindFeaturesEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.FindOrganizationsEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.GetAllOrganizationEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.GetApplicationEvent;
@@ -53,6 +54,7 @@ import eu.europa.ec.fisheries.wsdl.user.module.DeletePreferenceRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.DeployApplicationRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.FilterDatasetRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.FindEndpointRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.FindFeaturesRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.FindOrganisationsRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.FindOrganisationByEndpointAndChannelRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetAllOrganisationRequest;
@@ -751,6 +753,19 @@ public class UserEventServiceBean implements UserEventService {
             messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
         } catch (MessageException | ModelMarshallException | UserServiceException ex) {
             LOG.error("[ Error when get all organisations ] ", ex);
+            errorEvent.fire(message);
+        }
+    }
+
+    @Override
+    public void findFeatures(@Observes @FindFeaturesEvent EventMessage message) {
+        try {
+            FindFeaturesRequest request = JAXBMarshaller.unmarshallTextMessage(message.getJmsMessage(), FindFeaturesRequest.class);
+            List<Integer> result = userService.findFeatures(request.getUsername());
+            String responseString = UserModuleResponseMapper.mapToFindFeaturesResponse(result);
+            messageProducer.sendMessageBackToRecipient(message.getJmsMessage(), responseString);
+        } catch (Exception e) {
+            LOG.error("Error finding features", e);
             errorEvent.fire(message);
         }
     }

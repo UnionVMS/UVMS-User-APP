@@ -177,4 +177,10 @@ public class UserModuleResponseMapper {
         findOrganisationByEndpointAndChannelResponse.setResult(result);
         return JAXBMarshaller.marshallJaxBObjectToString(findOrganisationByEndpointAndChannelResponse);
     }
+
+    public static String mapToFindFeaturesResponse(List<Integer> features) throws ModelMarshallException {
+        FindFeaturesResponse response = new FindFeaturesResponse();
+        response.getFeatures().addAll(features);
+        return JAXBMarshaller.marshallJaxBObjectToString(response);
+    }
 }

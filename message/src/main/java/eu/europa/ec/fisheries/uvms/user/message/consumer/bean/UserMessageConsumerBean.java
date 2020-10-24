@@ -23,6 +23,7 @@ import eu.europa.ec.fisheries.uvms.user.message.event.DeployApplicationEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.ErrorEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.FindDatasetsEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.FindEndpointEvent;
+import eu.europa.ec.fisheries.uvms.user.message.event.FindFeaturesEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.FindOrganizationsEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.GetAllOrganizationEvent;
 import eu.europa.ec.fisheries.uvms.user.message.event.GetApplicationEvent;
@@ -156,6 +157,10 @@ public class UserMessageConsumerBean implements MessageListener {
     private Event<EventMessage> findEndpointEvent;
 
     @Inject
+    @FindFeaturesEvent
+    private Event<EventMessage> findFeaturesEvent;
+
+    @Inject
     @OrganizationByEndpointAndChannelEvent
     private Event<EventMessage> findOrganizationByEndpointAndChannelEvent;
     
@@ -250,6 +255,9 @@ public class UserMessageConsumerBean implements MessageListener {
                     break;
                 case FIND_ENDPOINT:
                     findEndpointEvent.fire(new EventMessage(textMessage));
+                    break;
+                case FIND_FEATURES:
+                    findFeaturesEvent.fire(new EventMessage(textMessage));
                     break;
                 case FIND_ORGANISATION_BY_ENDPOINT_AND_CHANNEL:
                     findOrganizationByEndpointAndChannelEvent.fire(new EventMessage(textMessage));

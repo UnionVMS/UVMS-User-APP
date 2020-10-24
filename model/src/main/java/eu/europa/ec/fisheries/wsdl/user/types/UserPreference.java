@@ -197,7 +197,7 @@ public class UserPreference
      *     byte[]
      */
     public void setOptionValue(byte[] value) {
-        this.optionValue = value;
+        this.optionValue = ((byte[]) value);
     }
 
 }

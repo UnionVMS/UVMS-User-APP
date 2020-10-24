@@ -69,5 +69,5 @@ public interface UserService {
 
     public EndPoint findEndpoint(Long id) throws UserServiceException;
 
-
+    List<Integer> findFeatures(String username);
 }

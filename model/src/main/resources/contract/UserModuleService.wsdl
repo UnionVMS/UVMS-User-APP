@@ -35,6 +35,7 @@
 					<xsd:enumeration value="UPDATE_DATASET" />
 					<xsd:enumeration value="FIND_DATASETS" />
 					<xsd:enumeration value="FIND_ENDPOINT" />
+					<xsd:enumeration value="FIND_FEATURES" />
 				</xsd:restriction>
 			</xsd:simpleType>
 
@@ -252,6 +253,32 @@
 				<xsd:extension base="module:UserBaseRequest">
 					<xsd:sequence>
 						<xsd:element name="endpoint" type="tv:EndPoint"/>
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- find features for a user name -->
+	<xsd:element name="findFeaturesRequest">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="username" type="xsd:string" />
+					</xsd:sequence>
+				</xsd:extension>
+			</xsd:complexContent>
+		</xsd:complexType>
+	</xsd:element>
+
+	<!-- find features for a user name response -->
+	<xsd:element name="findFeaturesResponse">
+		<xsd:complexType>
+			<xsd:complexContent>
+				<xsd:extension base="module:UserBaseRequest">
+					<xsd:sequence>
+						<xsd:element name="features" type="xsd:int" minOccurs="0" maxOccurs="unbounded" />
 					</xsd:sequence>
 				</xsd:extension>
 			</xsd:complexContent>
@@ -523,7 +550,7 @@
 
 	
 	<!-- fault section  -->
-	
+
 	<message name="UserModuleFaultException">
 		<part name="body" element="tv:UserFault" />
 	</message>
@@ -689,7 +716,7 @@
 			<output message="module:GetUserContextResponse" />
 			<fault name="UserModuleFaultException" message="module:UserModuleFaultException" />
 		</operation>
-		
+
 		<operation name="PutUserPreferences">
 			<input message="module:PutUserPreferencesRequest"/>
 			<output message="module:PutUserPreferencesResponse" />
@@ -811,7 +838,7 @@
 				<soap:fault name="UserModuleFaultException" use="literal" />
 			</fault>
 		</operation>
-		
+
 		<operation name="PutUserPreferences">
 			<input>
 				<soap:body use="literal" />

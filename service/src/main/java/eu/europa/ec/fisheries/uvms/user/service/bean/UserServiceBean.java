@@ -177,4 +177,9 @@ public class UserServiceBean implements UserService {
         eu.europa.ec.mare.usm.administration.domain.EndPoint endpoint = organisationService.getEndPoint(request);
         return EndPointConverter.convertAdministrationModelToUserModel(endpoint);
     }
+
+    @Override
+    public List<Integer> findFeatures(String username) {
+        return informationService.getUserFeatures(username);
+    }
 }
