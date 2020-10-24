@@ -106,6 +106,16 @@
                 <type>pom</type>
             </dependency>
             <dependency>
+                <groupId>eu.europa.ec.fisheries.uvms.commons</groupId>
+                <artifactId>uvms-commons-message</artifactId>
+                <version>${uvms.commonsLibrary.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>eu.europa.ec.fisheries.uvms.user</groupId>
+                <artifactId>user-model</artifactId>
+                <version>${uvms.user.module.version}</version>
+            </dependency>
+            <dependency>
                 <groupId>ch.qos.logback</groupId>
                 <artifactId>logback-core</artifactId>
                 <version>${logback.version}</version>
@@ -250,5 +260,6 @@
         <module>message</module>
         <module>model</module>
         <module>module</module>
-    </modules>
+		<module>user-client</module>
+	</modules>
 </project>

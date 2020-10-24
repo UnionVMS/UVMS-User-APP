@@ -21,6 +21,7 @@ import eu.europa.ec.fisheries.wsdl.user.module.DeleteDatasetRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.DeletePreferenceRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.DeployApplicationRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.FilterDatasetRequest;
+import eu.europa.ec.fisheries.wsdl.user.module.FindFeaturesRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.FindOrganisationsRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetContactDetailsRequest;
 import eu.europa.ec.fisheries.wsdl.user.module.GetDeploymentDescriptorRequest;
@@ -172,5 +173,11 @@ public class UserModuleRequestMapper {
         filterDatasetRequest.setDatasetFilter(datasetFilter);
         return JAXBMarshaller.marshallJaxBObjectToString(filterDatasetRequest);
     }
-    
+
+    public static String mapToFindFeaturesRequest(String username) throws ModelMarshallException {
+        FindFeaturesRequest request = new FindFeaturesRequest();
+        request.setMethod(UserModuleMethod.FIND_FEATURES);
+        request.setUsername(username);
+        return JAXBMarshaller.marshallJaxBObjectToString(request);
+    }
 }
