@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" 
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog 
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.3.xsd
+           http://www.liquibase.org/xml/ns/dbchangelog-ext 
+           http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd"
+           logicalFilePath="changelog/v2.2.1/db-changelog-application_2.2.1.xml">
+
+    <changeSet author="peerik" id="add_more_frontend_applications" context="test" runInTransaction="true"
+    failOnError="true">
+        <insert tableName="application_t">
+            <column name="application_id" valueNumeric="18"/>
+            <column name="name" value="VMSMapLocations"/>
+            <column name="description" value="VMS Map Locations"/>
+            <column name="created_by" value="USM"/>
+            <column name="created_on" valueDate="now()"/>
+            <column name="modified_by" value="USM"/>
+            <column name="modified_on" valueDate="now()"/>
+            <column name="parent_id" valueNumeric="2"/>
+        </insert>
+        <insert tableName="option_t">
+            <column name="option_id" valueNumeric="11"/>
+            <column name="name" value="settings"/>
+            <column name="description" value="VMSMapLocations"/>
+            <column name="data_type" value="String"/>
+            <column name="default_value" value="SYSTEM_DEFAULT_VALUE" type="BLOB"/>
+            <column name="application_id" valueNumeric="18"/>
+            <column name="group_name" value="VMS Map Locations"/>
+        </insert>
+
+        <rollback>
+            <sql><![CDATA[delete from APPLICATION_T where APPLICATION_ID = 18]]></sql>
+            <sql><![CDATA[Delete from option_t where option_id = 11]]></sql>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
