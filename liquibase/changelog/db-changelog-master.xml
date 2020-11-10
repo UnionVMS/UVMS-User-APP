@@ -100,5 +100,10 @@
   <changeSet author="joemat" id="tag-2.0.21">
     <tagDatabase tag="version_2.0.21"/>
   </changeSet>
+
+  <include file="v2.2.1/db-changelog-application_2.2.1.xml" relativeToChangelogFile="true"/>
+  <changeSet author="peerik" id="tag-2.2.1">
+    <tagDatabase tag="version_2.2.1"/>
+  </changeSet>
     
 </databaseChangeLog>
