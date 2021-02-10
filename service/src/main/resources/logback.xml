@@ -12,13 +12,11 @@
     <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <append>true</append>
         <file>${LOG_FILE_BASE_PATH}/${application.logfile}</file>
-        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_FILE_BASE_PATH}/${application.logfile}.%d{yyyy-MM-dd}.%i.log.gz
-            </fileNamePattern>
-            <maxHistory>10</maxHistory>
-            <TimeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
-                <MaxFileSize>100MB</MaxFileSize>
-            </TimeBasedFileNamingAndTriggeringPolicy>
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <fileNamePattern>${LOG_FILE_BASE_PATH}/${application.logfile}.%d{yyyy-MM-dd}.%i.log.gz</fileNamePattern>
+            <!-- each archived file, size max 100MB -->
+            <maxFileSize>100MB</maxFileSize>
+            <!-- total size of all archive files, if total size > 1GB, it will delete old archived file -->
             <totalSizeCap>1GB</totalSizeCap>
         </rollingPolicy>
         <encoder>
