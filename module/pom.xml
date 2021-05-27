@@ -87,7 +87,6 @@
             <artifactId>Authentication-Model</artifactId>
             <version>${usm.authentication.version}</version>
         </dependency>
-
         <dependency>
             <groupId>eu.europa.ec.mare.usm</groupId>
             <artifactId>Information-Model</artifactId>
