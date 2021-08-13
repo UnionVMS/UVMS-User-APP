@@ -90,4 +90,7 @@
         <tagDatabase tag="version_2.0.12"/>
     </changeSet>
 
+
+    <include file="changelog/v2.0.12/UNIONVMS-4534.xml"/>
+
 </databaseChangeLog>
