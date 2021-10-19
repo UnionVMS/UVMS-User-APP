@@ -1,11 +1,12 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-		<groupId>eu.europa.ec.fisheries.uvms</groupId>
-		<artifactId>mare-pom</artifactId>
-		<version>1.6.0-MARE-SNAPSHOT</version>
-		<relativePath />
+        <groupId>eu.europa.ec.fisheries.uvms</groupId>
+        <artifactId>mare-pom</artifactId>
+        <version>1.6.0-MARE-SNAPSHOT</version>
+        <relativePath/>
     </parent>
 
     <groupId>eu.europa.ec.fisheries.uvms.user</groupId>
@@ -22,11 +23,9 @@
         <javaee.version>8.0</javaee.version>
         <swagger.version>1.3.1</swagger.version>
         <jersey.version>1.16</jersey.version>
-        <slf4j.version>1.7.2</slf4j.version>
-        <logback.version>1.1.2</logback.version>
         <uvms.logger.version>1.2.0</uvms.logger.version>
         <hibernate.version>5.3.17.Final</hibernate.version>
-		<postgres.version>42.2.18</postgres.version>
+        <postgres.version>42.2.18</postgres.version>
         <version.ninja.squad>2.1.0</version.ninja.squad>
         <lombok.version>1.16.18</lombok.version>
         <mapstruct.version>1.3.1.Final</mapstruct.version>
@@ -36,8 +35,6 @@
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-api</artifactId>
-            <version>${javaee.version}</version>
-            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>fish.focus.uvms.maven</groupId>
@@ -51,30 +48,25 @@
                 </exclusion>
             </exclusions>
         </dependency>
-        <dependency>
-            <groupId>fish.focus.uvms.maven</groupId>
-            <artifactId>uvms-pom-logging-deps</artifactId>
-            <type>pom</type>
-        </dependency>
     </dependencies>
 
     <dependencyManagement>
         <dependencies>
             <!--<dependency>-->
-                <!--<groupId>fish.focus.uvms.maven</groupId>-->
-                <!--<artifactId>uvms-pom-gis-deps</artifactId>-->
-                <!--<version>${uvms-pom-deps.version}</version>-->
-                <!--<type>pom</type>-->
-                <!--<exclusions>-->
-                    <!--<exclusion>-->
-                        <!--<groupId>org.hibernate</groupId>-->
-                        <!--<artifactId>hibernate-core</artifactId>-->
-                    <!--</exclusion>-->
-                    <!--<exclusion>-->
-                        <!--<groupId>org.hibernate</groupId>-->
-                        <!--<artifactId>hibernate-entitymanager</artifactId>-->
-                    <!--</exclusion>-->
-                <!--</exclusions>-->
+            <!--<groupId>fish.focus.uvms.maven</groupId>-->
+            <!--<artifactId>uvms-pom-gis-deps</artifactId>-->
+            <!--<version>${uvms-pom-deps.version}</version>-->
+            <!--<type>pom</type>-->
+            <!--<exclusions>-->
+            <!--<exclusion>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-core</artifactId>-->
+            <!--</exclusion>-->
+            <!--<exclusion>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-entitymanager</artifactId>-->
+            <!--</exclusion>-->
+            <!--</exclusions>-->
             <!--</dependency>-->
             <dependency>
                 <groupId>org.hibernate</groupId>
@@ -91,13 +83,6 @@
                 <artifactId>hibernate-spatial</artifactId>
                 <version>${hibernate.version}</version>
             </dependency>
-            <dependency>
-                <groupId>fish.focus.uvms.maven</groupId>
-                <artifactId>uvms-pom-logging-deps</artifactId>
-                <version>${uvms-pom-deps.version}</version>
-                <type>pom</type>
-            </dependency>
-
             <dependency>
                 <groupId>fish.focus.uvms.maven</groupId>
                 <artifactId>uvms-pom-test-deps</artifactId>
@@ -196,9 +181,8 @@
         <profile>
             <id>enforce-jdk-version</id>
             <activation>
-                <!-- To disable profile, define property -Dfocus-pom.enforce.jdk.version.disabled=true -->
                 <property>
-                    <name>!focus-pom.enforce.jdk.version.disabled</name>
+                    <name>focus-pom.enforce.jdk.version.enabled</name>
                 </property>
             </activation>
             <build>
@@ -245,7 +229,7 @@
         <module>message</module>
         <module>model</module>
         <module>module</module>
-		<module>user-client</module>
+        <module>user-client</module>
         <module>user-authentication-rest</module>
     </modules>
 </project>
