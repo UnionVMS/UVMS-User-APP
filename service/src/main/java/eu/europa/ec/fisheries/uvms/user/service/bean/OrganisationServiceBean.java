@@ -52,9 +52,6 @@ public class OrganisationServiceBean implements OrganisationService {
     @Override
     public Optional<OrganisationChannelEntityId> findOrganizationByEndpointAndChannel(String dataFlow, String endpointName) {
         List<OrganisationChannelEntityId> result = organisationDao.findOrganizationByDataFlowAndEndpoint(dataFlow, endpointName);
-        if (result.size() > 1) {
-            throw new IllegalArgumentException("There are more than one results for the given argument. Cannot return a single Object.");
-        }
         return result.stream().findFirst();
     }
 
