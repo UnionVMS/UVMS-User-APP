@@ -61,12 +61,12 @@
             <version>${usm.administration.version}</version>
             <type>war</type>
         </dependency>
-        <dependency>
-            <groupId>eu.europa.ec.mare.usm</groupId>
-            <artifactId>Administration-https-Rest-Service</artifactId>
-            <version>${usm.administration.version}</version>
-            <type>pom</type>
-        </dependency>
+        <!--        <dependency>-->
+        <!--            <groupId>eu.europa.ec.mare.usm</groupId>-->
+        <!--            <artifactId>Administration-https-Rest-Service</artifactId>-->
+        <!--            <version>${usm.administration.version}</version>-->
+        <!--            <type>pom</type>-->
+        <!--        </dependency>-->
         <dependency>
             <groupId>eu.europa.ec.mare.usm</groupId>
             <artifactId>Information-Service</artifactId>
@@ -148,20 +148,20 @@
                             <bundleFileName>Authentication-Rest-Service.war</bundleFileName>
                             <unpack>true</unpack>
                         </webModule>
-                        <jarModule>
-                            <groupId>eu.europa.ec.mare.usm</groupId>
-                            <artifactId>Information-Model</artifactId>
-                            <bundleFileName>Information-Model.jar</bundleFileName>
-                            <includeInApplicationXml>true</includeInApplicationXml>
-                            <bundleDir>/</bundleDir>
-                        </jarModule>
-                        <jarModule>
-                            <groupId>eu.europa.ec.mare.usm</groupId>
-                            <artifactId>Authentication-Model</artifactId>
-                            <bundleFileName>Authentication-Model.jar</bundleFileName>
-                            <includeInApplicationXml>true</includeInApplicationXml>
-                            <bundleDir>/</bundleDir>
-                        </jarModule>
+                        <!--                        <jarModule>-->
+                        <!--                            <groupId>eu.europa.ec.mare.usm</groupId>-->
+                        <!--                            <artifactId>Information-Model</artifactId>-->
+                        <!--                            <bundleFileName>Information-Model.jar</bundleFileName>-->
+                        <!--                            <includeInApplicationXml>true</includeInApplicationXml>-->
+                        <!--                            <bundleDir>/</bundleDir>-->
+                        <!--                        </jarModule>-->
+                        <!--                        <jarModule>-->
+                        <!--                            <groupId>eu.europa.ec.mare.usm</groupId>-->
+                        <!--                            <artifactId>Authentication-Model</artifactId>-->
+                        <!--                            <bundleFileName>Authentication-Model.jar</bundleFileName>-->
+                        <!--                            <includeInApplicationXml>true</includeInApplicationXml>-->
+                        <!--                            <bundleDir>/</bundleDir>-->
+                        <!--                        </jarModule>-->
                         <jarModule>
                             <groupId>eu.europa.ec.mare.usm</groupId>
                             <artifactId>Information-Service</artifactId>
