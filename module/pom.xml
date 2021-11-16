@@ -107,6 +107,11 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-ear-plugin</artifactId>
                 <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Logging-Profile>user-usm-logging-profile</Logging-Profile>
+                        </manifestEntries>
+                    </archive>
                     <defaultLibBundleDir>lib</defaultLibBundleDir>
                     <modules>
                         <ejbModule>
