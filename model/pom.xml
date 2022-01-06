@@ -56,7 +56,7 @@
                                 <id>generate-user-module</id>
                                 <phase>generate-sources</phase>
                                 <configuration>
-                                    <sourceRoot>${basedir}/src/main/java/</sourceRoot>
+                                    <sourceRoot>${project.build.directory}/generated-sources/cxf</sourceRoot>
                                     <wsdlOptions>
                                         <wsdlOption>
                                             <!-- This is for incoming and outgoing messages to the module -->
